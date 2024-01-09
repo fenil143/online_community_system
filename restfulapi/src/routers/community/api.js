@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Community = require("../../models/community");
 
+router.get("/allCommunities", async (req, res) => {
+  try {
+    const allCommunities = await Community.find();
+    res.status(200).json(allCommunities);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 router.post("/checkCommunityName", async (req, res) => {
   try {
@@ -15,7 +24,7 @@ router.post("/checkCommunityName", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(200).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -40,8 +49,8 @@ router.post("/storeCommunity", async (req, res) => {
     try {
       const { community_name } = req.params;
       const updatedCommunity = await Community.findOneAndUpdate(
-        { community_name, community_status: false }, 
-        { $set: { community_status: true } }, 
+        { community_name :community_name, verified_status: false }, 
+        { $set: { verified_status: true } }, 
         { new: true } 
       );
   
@@ -72,13 +81,13 @@ router.post("/storeCommunity", async (req, res) => {
       const community = await Community.findOne({ community_name });
   
       if (!community) {
-        return res.status(404).json({ error: 'Community not found' });
+        return res.status(200).json({ error: 'Community not found' });
       }
   
       res.status(200).json(community);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(200).json({ error: 'Internal Server Error' });
     }
   });
 
@@ -92,9 +101,14 @@ router.post("/storeCommunity", async (req, res) => {
         return res.status(404).json({ error: 'Community not found' });
       }
   
-      if (existingCommunity.pending_join_requests.includes(student_email)) {
-        return res.status(400).json({ message: 'Join request already pending for this student' });
+      console.log(existingCommunity.pending_join_requests);
+      if(existingCommunity.pending_join_requests == undefined){
+        existingCommunity.pending_join_requests = [];
       }
+      if (existingCommunity.pending_join_requests.includes(student_email)) {
+        return res.status(200).json({ message: 'Join request already pending for this student' });
+      }
+
       existingCommunity.pending_join_requests.push(student_email);
   
       const updatedCommunity = await existingCommunity.save();
@@ -115,11 +129,15 @@ router.post("/storeCommunity", async (req, res) => {
       if (!existingCommunity) {
         return res.status(404).json({ error: 'Community not found' });
       }
-  
+      if(existingCommunity.joined_students == undefined){
+        existingCommunity.joined_students = [];
+      }
       if (existingCommunity.joined_students.includes(student_email)) {
         return res.status(400).json({ message: 'Student already joined this community' });
       }
-  
+      existingCommunity.pending_join_requests = existingCommunity.pending_join_requests.filter(
+        email => email !== student_email
+      );
       existingCommunity.joined_students.push(student_email);
  
       const updatedCommunity = await existingCommunity.save();

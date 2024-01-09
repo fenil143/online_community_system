@@ -3,6 +3,7 @@ require("./db/conn");
 // const Student = require("./models/students");
 
 const studentApi = require("./routers/student/api");
+const communityApi = require("./routers/community/api");
 const app = express();
 const port = process.env.PORT || 8000;
 const cors = require("cors");
@@ -12,7 +13,8 @@ app.use(cors({
     origin:"http://localhost:8000"
 }
 ));
-app.use(studentApi)
+app.use(studentApi);
+app.use(communityApi);
 // app.get("/students",(req,res) =>{
 //     res.send("Hello world hello ")
 // })

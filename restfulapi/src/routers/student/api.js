@@ -33,7 +33,7 @@ router.post("/storeStudent", async (req, res) => {
     const existingStudent = await Student.findOne({email : email });
 
     if (existingStudent) {
-      return res.status(400).json({ error: 'Student with this email already exists' });
+      return res.status(200).json({ error: 'Student with this email already exists' });
     }
 
     const newStudent = new Student({
@@ -71,7 +71,7 @@ router.post("/storeStudent", async (req, res) => {
     res.status(201).json({ message: 'Student and StudentInfo saved successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(200).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -202,7 +202,9 @@ router.get("/getStudentInfo/:email", async (req, res) => {
       if (!existingStudent) {
         return res.status(404).json({ error: 'User not found' });
       }
-
+      if(existingStudent.joined_community_id == undefined){
+        existingStudent.joined_community_id = [];
+      }
       if (!existingStudent.joined_community_id.includes(newCommunityId)) {
         existingStudent.joined_community_id.push(newCommunityId);
         const updatedStudent = await existingStudent.save();
