@@ -47,7 +47,8 @@ router.post("/storeStudent", async (req, res) => {
       joined_community_id,
       created_community_id
     });
-
+    newStudent.joined_community_id = [];
+    newStudent.created_community_id = [];
     const savedStudent = await newStudent.save();
     const newStudentInfo = new StudentInfo({
       email,
@@ -206,8 +207,11 @@ router.get("/getStudentInfo/:email", async (req, res) => {
         existingStudent.joined_community_id = [];
       }
       if (!existingStudent.joined_community_id.includes(newCommunityId)) {
-        existingStudent.joined_community_id.push(newCommunityId);
-        const updatedStudent = await existingStudent.save();
+        const updatedStudent = await Student.findOneAndUpdate(
+          { email },
+          { $push: { joined_community_id: newCommunityId } },
+          { new: true }
+        );
         res.status(200).json(updatedStudent);
       } else {
         res.status(400).json({ message: 'Community ID already exists in joined_community_id' });
@@ -227,10 +231,15 @@ router.get("/getStudentInfo/:email", async (req, res) => {
       if (!existingStudent) {
         return res.status(404).json({ error: 'User not found' });
       }
-
+      if(existingStudent.created_community_id == undefined){
+        existingStudent.created_community_id = [];
+      }
       if (!existingStudent.created_community_id.includes(newCommunityId)) {
-        existingStudent.created_community_id.push(newCommunityId);
-        const updatedStudent = await existingStudent.save();
+        const updatedStudent = await Student.findOneAndUpdate(
+          { email },
+          { $push: { created_community_id: newCommunityId } },
+          { new: true }
+        );
         res.status(200).json(updatedStudent);
       } else {
         res.status(400).json({ message: 'Community ID already exists in joined_community_id' });
@@ -240,5 +249,28 @@ router.get("/getStudentInfo/:email", async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+  router.patch("/leaveCommunity/:email", async (req, res) => {
+    try {
+      const { email } = req.params;
+      const { communityIdToRemove } = req.body;
+      
+      const updatedStudent = await Student.findOneAndUpdate(
+        { email },
+        { $pull: { joined_community_id: communityIdToRemove } },
+        { new: true }
+      );
+  
+      if (!updatedStudent) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      res.status(200).json(updatedStudent);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
 
 module.exports = router;
