@@ -147,5 +147,27 @@ router.get("/getEventById/:event_id", async (req, res) => {
   });
   
 
+  router.post('/checkStudentInEvent/:event_id', async (req, res) => {
+    try {
+      const { event_id } = req.params;
+      const { student_id } = req.body;
+      if (!event_id || !student_id) {
+        return res.status(400).json({ error: 'Event ID and Student ID are required.' });
+      }
+  
+      const event = await Event.findOne({ event_id });
+  
+      if (!event) {
+        return res.status(404).json({ error: 'Event not found.' });
+      }
+  
+      const isStudentJoined = event.joined_students && event.joined_students.includes(student_id);
+  
+      res.status(200).json({ isStudentJoined });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
 
 module.exports = router;
