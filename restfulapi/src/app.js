@@ -1,10 +1,12 @@
 const express = require("express");
 require("./db/conn");
-// const Student = require("./models/students");
 
 const studentApi = require("./routers/student/api");
 const communityApi = require("./routers/community/api");
 const eventApi = require("./routers/event/api");
+const postApi = require("./routers/post/api");
+const commentApi = require("./routers/comment/api");
+const adminApi = require("./routers/admin/api");
 const app = express();
 const port = process.env.PORT || 8000;
 const cors = require("cors");
@@ -17,20 +19,10 @@ app.use(cors({
 app.use(studentApi);
 app.use(communityApi);
 app.use(eventApi);
-// app.get("/students",(req,res) =>{
-//     res.send("Hello world hello ")
-// })
-// // app.use("studentApi",studentApi);
-// app.post("/students", (req,res)=>{
-//     // res.send("Hello from the other sides");
-//     console.log(req.body.name);
-//     const user = new Student(req.body);
-//     user.save().then(()=>{
-//         res.send(user);
-//     }).catch((e)=>{
-//         res.send(e);
-//     });
-// })
+app.use(postApi);
+app.use(commentApi);
+app.use(adminApi);
+
 
 app.listen(port, () => {
     console.log(`connection is setup at ${port}`)
