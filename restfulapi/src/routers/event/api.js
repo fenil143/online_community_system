@@ -48,7 +48,7 @@ router.post("/addEvent", async (req, res) => {
     res.status(201).json(savedEvent);
   } catch (error) {
     console.error(error);
-    res.status(200).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -65,7 +65,7 @@ router.get("/getEventById/:event_id", async (req, res) => {
       res.status(200).json(event);
     } catch (error) {
       console.error(error);
-      res.status(200).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   });
   
@@ -76,13 +76,13 @@ router.get("/getEventById/:event_id", async (req, res) => {
       const deletedEvent = await Event.findOneAndDelete({ event_id });
   
       if (!deletedEvent) {
-        return res.status(200).json({ error: 'Event not found' });
+        return res.status(404).json({ error: 'Event not found' });
       }
   
       res.status(200).json(deletedEvent);
     } catch (error) {
       console.error(error);
-      res.status(200).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   });
 
@@ -98,7 +98,7 @@ router.get("/getEventById/:event_id", async (req, res) => {
       }
   
       if (event.current_attendees >= event.max_attendees) {
-        return res.status(200).json({ error: 'Event is already full' });
+        return res.status(404).json({ error: 'Event is already full' });
       }
   
       const updatedEvent = await Event.findOneAndUpdate(

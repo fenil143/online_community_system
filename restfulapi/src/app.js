@@ -4,6 +4,7 @@ require("./db/conn");
 
 const studentApi = require("./routers/student/api");
 const communityApi = require("./routers/community/api");
+const eventApi = require("./routers/event/api");
 const app = express();
 const port = process.env.PORT || 8000;
 const cors = require("cors");
@@ -15,6 +16,7 @@ app.use(cors({
 ));
 app.use(studentApi);
 app.use(communityApi);
+app.use(eventApi);
 // app.get("/students",(req,res) =>{
 //     res.send("Hello world hello ")
 // })

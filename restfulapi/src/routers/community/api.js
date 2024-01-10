@@ -218,17 +218,18 @@ router.post("/addCommunityEvent/:community_name", async (req, res) => {
     });
 
     if (!existingCommunity) {
-      return res.status(200).json({ error: "Community not found" });
+      return res.status(404).json({ error: "Community not found" });
     }
-
-    existingCommunity.community_events.push(event_id);
-
-    const updatedCommunity = await existingCommunity.save();
+    const updatedCommunity = await Community.findOneAndUpdate(
+      { community_name },
+      { $push: { community_events: event_id } },
+      { new: true }
+    );
 
     res.status(200).json(updatedCommunity);
   } catch (error) {
     console.error(error);
-    res.status(200).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -240,19 +241,18 @@ router.delete("/removeCommunityEvent/:community_name", async (req, res) => {
     const existingCommunity = await Community.findOne({ community_name });
 
     if (!existingCommunity) {
-      return res.status(200).json({ error: "Community not found" });
+      return res.status(404).json({ error: "Community not found" });
     }
 
-    existingCommunity.community_events =
-      existingCommunity.community_events.filter(
-        (eventId) => eventId !== event_id
-      );
-
-    const updatedCommunity = await existingCommunity.save();
+    const updatedCommunity = await Community.findOneAndUpdate(
+      { community_name },
+      { $pull: { community_events: event_id }},
+      { new: true }
+    );
     res.status(200).json(updatedCommunity);
   } catch (error) {
     console.error(error);
-    res.status(200).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -264,12 +264,14 @@ router.post("/addCommunityPost/:community_name", async (req, res) => {
     const existingCommunity = await Community.findOne({ community_name });
 
     if (!existingCommunity) {
-      return res.status(200).json({ error: "Community not found" });
+      return res.status(404).json({ error: "Community not found" });
     }
 
-    existingCommunity.community_posts.push(post_id);
-
-    const updatedCommunity = await existingCommunity.save();
+    const updatedCommunity = await Community.findOneAndUpdate(
+      { community_name },
+      { $push: { community_posts: post_id } },
+      { new: true }
+    );
 
     res.status(200).json(updatedCommunity);
   } catch (error) {
@@ -286,17 +288,17 @@ router.delete("/removeCommunityPost/:community_name", async (req, res) => {
     const existingCommunity = await Community.findOne({ community_name });
 
     if (!existingCommunity) {
-      return res.status(200).json({ error: "Community not found" });
+      return res.status(404).json({ error: "Community not found" });
     }
-
-    existingCommunity.community_posts =
-      existingCommunity.community_posts.filter((post) => post !== post_id);
-
-    const updatedCommunity = await existingCommunity.save();
+    const updatedCommunity = await Community.findOneAndUpdate(
+      { community_name },
+      { $pull: { community_posts: post_id } },
+      { new: true }
+    );
     res.status(200).json(updatedCommunity);
   } catch (error) {
     console.error(error);
-    res.status(200).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
