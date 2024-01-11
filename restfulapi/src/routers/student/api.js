@@ -159,12 +159,12 @@ router.get("/getStudentInfo/:email", async (req, res) => {
         existingStudentInfo = new StudentInfo({ email });
       }
 
-      for (const field in req.body.additionalInfo) {
+      for (const field in req.body) {
         if (existingStudentInfo[field] !== undefined) {
-          existingStudentInfo[field] = req.body.additionalInfo[field];
+          existingStudentInfo[field] = req.body[field];
         }
       }
-  
+        
         // Save the updated student info
         await existingStudentInfo.save();
   
