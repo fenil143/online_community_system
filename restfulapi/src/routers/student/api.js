@@ -138,9 +138,8 @@ router.get("/getStudentInfo/:email", async (req, res) => {
   router.patch("/updateStudentInfo/:email", async (req, res) => {
     try {
       const { email } = req.params;
-  
       const existingStudent = await Student.findOne({ email });
-  
+      
       if (!existingStudent) {
         return res.status(404).json({ error: 'User not found' });
       }
@@ -154,7 +153,7 @@ router.get("/getStudentInfo/:email", async (req, res) => {
       const updatedStudent = await existingStudent.save();
   
       let existingStudentInfo = await StudentInfo.findOne({ email });
-
+      console.log(existingStudentInfo);
       if (!existingStudentInfo) {
         existingStudentInfo = new StudentInfo({ email });
       }
@@ -164,7 +163,7 @@ router.get("/getStudentInfo/:email", async (req, res) => {
           existingStudentInfo[field] = req.body[field];
         }
       }
-        
+        console.log(existingStudentInfo);
         // Save the updated student info
         await existingStudentInfo.save();
   
