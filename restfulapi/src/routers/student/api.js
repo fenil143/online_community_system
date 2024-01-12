@@ -115,10 +115,8 @@ router.get("/getStudentInfo/:email", async (req, res) => {
       const { email } = req.params;
   
       const existingStudent = await Student.findOne({ email : email });
-  
       if (existingStudent) {
         const studentInfo = await StudentInfo.findOne({ email : email });
-  
         if (studentInfo) {
           const combinedInfo = { ...existingStudent._doc, ...studentInfo._doc };
           res.status(200).json(combinedInfo);
@@ -153,7 +151,6 @@ router.get("/getStudentInfo/:email", async (req, res) => {
       const updatedStudent = await existingStudent.save();
   
       let existingStudentInfo = await StudentInfo.findOne({ email });
-      console.log(existingStudentInfo);
       if (!existingStudentInfo) {
         existingStudentInfo = new StudentInfo({ email });
       }
@@ -163,7 +160,6 @@ router.get("/getStudentInfo/:email", async (req, res) => {
           existingStudentInfo[field] = req.body[field];
         }
       }
-        console.log(existingStudentInfo);
         // Save the updated student info
         await existingStudentInfo.save();
   
