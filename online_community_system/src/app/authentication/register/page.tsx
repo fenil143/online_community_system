@@ -1,18 +1,102 @@
 'use client'
-import { FormEvent } from "react";
-
+import { FormEvent, useState } from "react";
+import axios from 'axios';
+import Link from "next/link";
 function handleRegistration() {
     console.log('Registration button clicked');
     // ... rest of your registration logic
 }
 
 function register() {
+    const [image, setImage] = useState(undefined);
+
+    const [githubLink, setGithubLink] = useState('');
+    const [githubLinkError, setGithubLinkError] = useState('');
+    const [linkedinLink, setLinkedinLink] = useState('');
+    const [linkedinLinkError, setLinkedinLinkError] = useState('');
+
+    const isGithubLinkValid = (link: any) => {
+        const githubLinkRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+(\/[a-zA-Z0-9-]+)?$/;
+        return githubLinkRegex.test(link);
+    };
+
+    const handleGithubLinkChange = (e: any) => {
+        const newLink = e.target.value;
+        if (isGithubLinkValid(newLink) || newLink === '') {
+            setGithubLink(newLink);
+            setGithubLinkError('');
+        } else {
+            setGithubLinkError('Please paste a valid GitHub link.');
+        }
+    };
+    const isLinkedinLinkValid = (link: any) => {
+        const linkedinLinkRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/.*$/;
+        return linkedinLinkRegex.test(link);
+    };
+
+    const handleLinkedinLinkChange = (e: any) => {
+        const newLink = e.target.value;
+        if (isLinkedinLinkValid(newLink) || newLink === '') {
+            setLinkedinLink(newLink);
+            setLinkedinLinkError('');
+        } else {
+            setLinkedinLinkError('Please paste a valid LinkedIn link.');
+        }
+    };
     function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
-        // throw new Error("Function not implemented.");
+        event.preventDefault();
+        const formData: { [key: string]: any } = {};
+        const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
+
+        // Iterate through form elements and store values in the object
+        for (let i = 0; i < formElements.length; i++) {
+            const element = formElements[i];
+            if (element.id) {
+                formData[element.id] = (element as HTMLInputElement).value;
+            }
+        }
+        const data = new FormData();
+        if (image) {
+            data.append("file", image);
+        } else {
+            console.error("Image is undefined");
+        }
+        data.append("upload_preset", "xtf3nszf");
+        data.append("cloud_name", "da3airmpg");
+
+        fetch("https://api.cloudinary.com/v1_1/da3airmpg/image/upload", {
+            method: "post",
+            body: data
+        }).then((res) => res.json()).then((data) => {
+            console.log(data)
+            formData["starting_date"] = Date.now().toString();
+            formData["image"] = data.url;
+            formData["name"] = formData["firstName"] + " " + formData["lastName"];
+            console.log(formData);
+            axios.post('http://localhost:8000/storeStudent', formData)
+                .then(response => {
+                    console.log(response.data);
+                    if (response.data.message) {
+                        alert('Registration successful!');
+                    } else {
+                        alert(response.data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Registration failed. Internal Server Error.');
+                });
+
+        }).catch((err) => {
+            console.log(err);
+        })
+        console.log('User Data:', formData);
+
+        handleRegistration();
     }
 
     return (
-        <div className="w-full lg:w-7/12 bg-blue-50 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none overflow-y-auto">
+        <div className="w-full lg:w-7/12 bg-blue-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none overflow-y-auto">
             <h3 className="py-4 text-2xl text-center text-gray-800 dark:text-white">Create an Account!</h3>
             <form className="px-8 pt-6 pb-8 mb-4 bg-white dark:bg-gray-800 rounded " onSubmit={handleFormSubmit}>
                 <div className="mb-4 md:flex md:justify-between">
@@ -66,14 +150,21 @@ function register() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="address">
-                        Address
+                    <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="userImage">
+                        User Image
                     </label>
                     <input
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
-                        id="address"
-                        type="text"
-                        placeholder="Address"
+                        id="userImage"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                            const file: any = e.target.files && e.target.files[0];
+
+                            if (file) {
+                                setImage(file);
+                            }
+                        }}
                         required
                     />
                 </div>
@@ -84,7 +175,7 @@ function register() {
                     <input
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
                         id="experience"
-                        type="text"
+                        type="number"
                         placeholder="Experience"
                         required
                     />
@@ -122,6 +213,7 @@ function register() {
                             className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
                             id="cpi"
                             type="number"
+                            step="any"
                             placeholder="CPI"
                             required
                         />
@@ -132,7 +224,7 @@ function register() {
                         </label>
                         <input
                             className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
-                            id="graduationYear"
+                            id="graduation_year"
                             type="number"
                             placeholder="Graduation Year"
                             required
@@ -152,16 +244,36 @@ function register() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="objective">
-                        Objective
+                    <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="linkedin_link">
+                        LinkedIn Link
                     </label>
-                    <textarea
-                        className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
-                        id="objective"
-                        placeholder="Objective"
-                        rows={3 as number}
+                    <input
+                        className={`w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none ${linkedinLinkError ? 'border-red-500' : 'border-blue-300 bg-gray-100'
+                            }`}
+                        id="linkedin_link"
+                        type="text"
+                        placeholder="LinkedIn Link"
+                        value={linkedinLink}
+                        onChange={handleLinkedinLinkChange}
                         required
-                    ></textarea>
+                    />
+                    {linkedinLinkError && <p className="text-red-500 text-xs italic">{linkedinLinkError}</p>}
+                </div>
+                <div className="mb-4">
+                    <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="github_link">
+                        GitHub Link
+                    </label>
+                    <input
+                        className={`w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none ${githubLinkError ? 'border-red-500' : 'border-blue-300 bg-gray-100'
+                            }`}
+                        id="github_link"
+                        type="text"
+                        placeholder="GitHub Link"
+                        value={githubLink}
+                        onChange={handleGithubLinkChange}
+                        required
+                    />
+                    {githubLinkError && <p className="text-red-500 text-xs italic">{githubLinkError}</p>}
                 </div>
                 <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="description">
@@ -177,34 +289,22 @@ function register() {
                 </div>
                 <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="field">
-                        Field
+                        Field *
                     </label>
                     <input
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
                         id="field"
                         type="text"
                         placeholder="Field"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="hobbies">
-                        Hobbies
-                    </label>
-                    <input
-                        className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
-                        id="hobbies"
-                        type="text"
-                        placeholder="Hobbies"
                     />
                 </div>
                 <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="workingLocation">
-                        Working Location
+                        Working Location *
                     </label>
                     <input
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
-                        id="workingLocation"
+                        id="working_location"
                         type="text"
                         placeholder="Working Location"
                     />
@@ -219,9 +319,9 @@ function register() {
                 </div>
                 <hr className="mb-6 border-t" />
                 <div className="text-center">
-                    <a className="inline-block text-sm text-blue-500 dark:text-blue-500 align-baseline hover:text-blue-800" href="./index.html">
+                    <Link className="inline-block text-sm text-blue-500 dark:text-blue-500 align-baseline hover:text-blue-800" href="/authentication/loginStudent">
                         Already have an account? Login!
-                    </a>
+                    </Link>
                 </div>
             </form>
 
@@ -230,4 +330,8 @@ function register() {
     );
 }
 export default register;
+
+function parseString(arg0: number): unknown {
+    throw new Error("Function not implemented.");
+}
 
