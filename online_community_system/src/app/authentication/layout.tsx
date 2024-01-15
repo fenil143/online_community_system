@@ -17,7 +17,7 @@ export default function RootLayout({
     return (
         <div className="h-full bg-gray dark:bg-gray-900">
 
-            <div className="mx-auto">
+            <div className="mx-auto ">
                 <div className="flex justify-center px-6 py-12">
 
                     <div className="w-full xl:w-3/4 lg:w-11/12 flex" style={{ maxHeight: "600px" }}>
@@ -36,3 +36,4 @@ export default function RootLayout({
         </div>
     )
 }
+// https://img.freepik.com/premium-photo/funny-minimalist-design-with-floating-human-brain-wearing-sunglasses-against-blue-background-ideas-creativity-intellect-artificial-intelligence_410516-1290.jpg
