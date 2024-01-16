@@ -34,6 +34,17 @@ router.post("/checkCommunityName", async (req, res) => {
 
 router.post("/storeCommunity", async (req, res) => {
   try {
+    const { community_name } = req.body;
+    const existingCommunity = await Community.findOne({
+      community_name: community_name,
+    });
+
+    if (existingCommunity) {
+      res
+        .status(200)
+        .json({ error: "Community with this name already exists" });
+        return ;
+    }
     const communityData = req.body;
     communityData.verified_status = false;
     communityData.community_likes = 0;

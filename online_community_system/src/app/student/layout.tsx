@@ -71,14 +71,14 @@ export default function RootLayout({
                         className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
                     >
                         <i className="bi bi-chat-left-text"></i>
-                        <span className="text-[15px] ml-4 text-gray-200 font-bold">Join Communities</span>
+                        <span className="text-[15px] ml-4 text-gray-200 font-bold">Joined Communities</span>
                     </div>
                     <div
                         className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
                     >
                         <i className="bi bi-bookmark-fill"></i>
 
-                        <span className="text-[15px] ml-4 text-gray-200 font-bold">Create Communities</span>
+                        <span className="text-[15px] ml-4 text-gray-200 font-bold">Created Communities</span>
                     </div>
                     <div
                         className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
