@@ -1,18 +1,72 @@
 'use client'
-import React, { useState } from 'react';
-import Child from './components/child';
-import communitiesData from './components/data';
+import React, { useState, useEffect } from 'react';
+import Child1 from './components/child1';
+import Child2 from './components/child2';
+import Data from './components/data1';
+
+interface Community {
+    _id: string,
+    community_name:string,
+}
 
 const Parent = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [navbar, setNavbar] = useState("Community");
+    const [communitiesData, setCommunitiesData] = useState<Community[]>([]);
+    const [filteredCommunities, setFilteredCommunities] = useState<Community[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await Data("mahendrafenil8@gmail.com");
+                setCommunitiesData(data);
+                setFilteredCommunities(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const handleSearch = () => {
+        if(searchTerm == ""){
+            setFilteredCommunities(communitiesData);
+            return ;
+        }
+        const filtered = communitiesData.filter(community => {
+            if (community.community_name !== undefined) {
+                return community.community_name.toLowerCase().includes(searchTerm.toLowerCase());
+            }
+            else {
+                return false;
+            }
+        }
+
+        );
+        if(filtered.length == 0){
+            setFilteredCommunities(communitiesData);
+        }
+        else{
+            setFilteredCommunities(filtered);
+        }
+    };
 
     const handleSearchChange = (e: any) => {
         setSearchTerm(e.target.value);
     };
 
-    const filteredCommunities = communitiesData.filter((community) =>
-        community.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    function handleSearch1(e: any) {
+        setNavbar("Community");
+    }
+
+    function handleSearch2(e: any) {
+        setNavbar("Old Community");
+    }
+
+    // const filteredCommunities = communitiesData.filter((community) =>
+    //     community.name.toLowerCase().includes(searchTerm.toLowerCase())
+    // );
 
     return (
         <div className="container mx-auto p-8">
@@ -22,13 +76,13 @@ const Parent = () => {
                         <path d="M0 0h24v24H0z" fill="none" />
                         <path d="M10 1a9 9 0 017.993 12.79l5.727 5.727-1.414 1.414-5.727-5.727A9 9 0 1110 1zm0 2a7 7 0 100 14 7 7 0 000-14z" />
                     </svg>
-                    <h1 className="text-2xl font-bold text-white">Communities</h1>
+                    <h1 className="text-2xl font-bold text-white">{navbar}</h1>
                 </div>
                 <div className="flex space-x-4">
-                    <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110">
+                    <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110" onClick={handleSearch1}>
                         Communities
                     </a>
-                    <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110">
+                    <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110" onClick={handleSearch2}>
                         Old Communities
                     </a>
                 </div>
@@ -44,10 +98,9 @@ const Parent = () => {
                         className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 bg-white text-gray-800 placeholder-gray-500 focus:shadow-md"
                     />
                     <button
-                        type="submit"
-                        className="ml-2 mt-0.5 mb-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md px-2  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
+                        type="submit" onClick={handleSearch}
+                        className={`ml-2 mt-0.5 mb-4 ${navbar === "Community" ? "bg-blue-500 hover:bg-blue-600" : "bg-gradient-to-r from-purple-700 to-pink-500"} text-white rounded-md px-2  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400`}
                     >
-                        {/* Adjusted height and width of the search logo */}
                         <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0h24v24H0z" fill="none" />
                             <path d="M10 1a9 9 0 017.993 12.79l5.727 5.727-1.414 1.414-5.727-5.727A9 9 0 1110 1zm0 2a7 7 0 100 14 7 7 0 000-14z" />
@@ -58,9 +111,15 @@ const Parent = () => {
                 </div>
             </div>
 
-            {filteredCommunities.map((community) => (
-                <Child key={community.id} community={community} />
-            ))}
+            {(navbar === "Community") ? (
+                filteredCommunities.map((community) => (
+                    <Child1 key={community._id} community={community} />
+                ))
+            ) : (
+                filteredCommunities.map((community) => (
+                    <Child2 key={community._id} community={community} />
+                ))
+            )}
         </div>
     );
 };

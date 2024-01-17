@@ -42,6 +42,7 @@ router.post("/storeStudent", async (req, res) => {
       qualification,
       image,
     });
+    newStudent.pending_community_id = [];
     newStudent.joined_community_id = [];
     newStudent.created_community_id = [];
     const savedStudent = await newStudent.save();
@@ -186,6 +187,25 @@ router.get("/getJoinedCommunities/:email", async (req, res) => {
   }
 });
 
+router.get("/getPendingCommunities/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const existingStudent = await Student.findOne({ email: email });
+
+    if (existingStudent) {
+      res
+        .status(200)
+        .json({ pending_community_id: existingStudent.pending_community_id });
+    } else {
+      res.status(200).json({ error: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(200).json({ error: "Internal Server Error" });
+  }
+});
+
 router.get("/getStudentInfo/:email", async (req, res) => {
   try {
     const { email } = req.params;
@@ -235,13 +255,10 @@ router.patch("/updateStudentInfo/:email", async (req, res) => {
         existingStudentInfo[field] = req.body[field];
       }
     }
-    // Save the updated student info
     await existingStudentInfo.save();
 
-    // Respond with the updated student information
     res.status(200).json(updatedStudent);
   } catch (error) {
-    // Handle errors
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -277,6 +294,60 @@ router.post("/login", async (req, res) => {
     } else {
       res.status(401).json({ error: "Invalid email or password" });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.patch("/requestCommunity/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const { newCommunityId } = req.body;
+    const existingStudent = await Student.findOne({ email: email });
+
+    if (!existingStudent) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    if (existingStudent.pending_community_id == undefined) {
+      existingStudent.pending_community_id = [];
+    }
+    if (!existingStudent.pending_community_id.includes(newCommunityId)) {
+      const updatedStudent = await Student.findOneAndUpdate(
+        { email },
+        { $push: { pending_community_id: newCommunityId } },
+        { new: true }
+      );
+      res.status(200).json(updatedStudent);
+    } else {
+      res
+        .status(400)
+        .json({
+          message: "Community ID already exists in joined_community_id",
+        });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.patch("/cancelRequest/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const { communityIdToRemove } = req.body;
+
+    const updatedStudent = await Student.findOneAndUpdate(
+      { email },
+      { $pull: { pending_community_id: communityIdToRemove } },
+      { new: true }
+    );
+
+    if (!updatedStudent) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(updatedStudent);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

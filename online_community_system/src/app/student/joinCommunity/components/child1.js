@@ -1,8 +1,9 @@
 import React from "react";
 
 const Child = ({ community }) => {
-  const { name, owner, image } = community;
-
+  const { community_name, owner_email, image } = community;
+  const owner = owner_email ;
+  const name = community_name;
   return (
     <div className="relative group overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 p-4 mb-4 rounded-md shadow-md hover:shadow-lg transform hover:scale-105 transition-transform duration-300 w-4/5 mx-auto">
       <div className="flex items-center space-x-4">
