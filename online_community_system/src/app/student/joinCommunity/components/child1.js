@@ -1,9 +1,29 @@
 import React from "react";
+import axios from 'axios';
 
-const Child = ({ community }) => {
+const Child = ({ community, removeByName }) => {
   const { community_name, owner_email, image } = community;
   const owner = owner_email ;
   const name = community_name;
+
+  const sendJoinRequest = async () => {
+    try {
+      const studentEmail = 'mahendrafenil32@gmail.com';
+
+      await axios.post(`http://localhost:8000/addJoinRequest/${name}`, { student_email: studentEmail });
+
+      const newCommunityId = community.community_name;
+      await axios.patch(`http://localhost:8000/requestCommunity/${studentEmail}`, { newCommunityId });
+
+      removeByName(newCommunityId);
+
+      alert('Join request sent successfully!');
+    } catch (error) {
+      console.error('Error sending join request:', error);
+      alert('Failed to send join request. Please try again.');
+    }
+  };
+
   return (
     <div className="relative group overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 p-4 mb-4 rounded-md shadow-md hover:shadow-lg transform hover:scale-105 transition-transform duration-300 w-4/5 mx-auto">
       <div className="flex items-center space-x-4">
@@ -21,7 +41,7 @@ const Child = ({ community }) => {
           <p className="text-gray-300">Owner: {owner}</p>
         </div>
       </div>
-      <button className="absolute bottom-4 right-4 px-4 py-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring focus:border-yellow-300 transition duration-300">
+      <button className="absolute bottom-4 right-4 px-4 py-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring focus:border-yellow-300 transition duration-300" onClick={sendJoinRequest}>
         Send Request
       </button>
     </div>

@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Child1 from './components/child1';
 import Child2 from './components/child2';
 import Data from './components/data1';
+import Data2 from './components/data2';
 
 interface Community {
     _id: string,
-    community_name:string,
+    community_name: string,
 }
 
 const Parent = () => {
@@ -14,13 +15,20 @@ const Parent = () => {
     const [navbar, setNavbar] = useState("Community");
     const [communitiesData, setCommunitiesData] = useState<Community[]>([]);
     const [filteredCommunities, setFilteredCommunities] = useState<Community[]>([]);
+    const [datas, setDatas] = useState<Community[]>([]);
+    const [filteredDatas, setFilteredDatas] = useState<Community[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await Data("mahendrafenil8@gmail.com");
+                let data = await Data("mahendrafenil32@gmail.com");
                 setCommunitiesData(data);
                 setFilteredCommunities(data);
+
+                data = await Data2("mahendrafenil32@gmail.com");
+                setDatas(data);
+                setFilteredDatas(data);
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -30,25 +38,49 @@ const Parent = () => {
     }, []);
 
     const handleSearch = () => {
-        if(searchTerm == ""){
-            setFilteredCommunities(communitiesData);
-            return ;
-        }
-        const filtered = communitiesData.filter(community => {
-            if (community.community_name !== undefined) {
-                return community.community_name.toLowerCase().includes(searchTerm.toLowerCase());
+        if (navbar == "Community") {
+            if (searchTerm == "") {
+                setFilteredCommunities(communitiesData);
+                return;
+            }
+            const filtered = communitiesData.filter(community => {
+                if (community.community_name !== undefined) {
+                    return community.community_name.toLowerCase().includes(searchTerm.toLowerCase());
+                }
+                else {
+                    return false;
+                }
+            }
+
+            );
+            if (filtered.length == 0) {
+                setFilteredCommunities(communitiesData);
             }
             else {
-                return false;
+                setFilteredCommunities(filtered);
             }
         }
-
-        );
-        if(filtered.length == 0){
-            setFilteredCommunities(communitiesData);
-        }
         else{
-            setFilteredCommunities(filtered);
+            if (searchTerm == "") {
+                setFilteredDatas(datas);
+                return;
+            }
+            const filtered = datas.filter(community => {
+                if (community.community_name !== undefined) {
+                    return community.community_name.toLowerCase().includes(searchTerm.toLowerCase());
+                }
+                else {
+                    return false;
+                }
+            }
+
+            );
+            if (filtered.length == 0) {
+                setFilteredDatas(datas);
+            }
+            else {
+                setFilteredDatas(filtered);
+            }
         }
     };
 
@@ -64,6 +96,23 @@ const Parent = () => {
         setNavbar("Old Community");
     }
 
+    const removeCommunityByName = (name: string) => {
+        
+        const newCommunityValue:Community | undefined = communitiesData.find((community) => community.community_name === name);
+
+        let updatedData = communitiesData.filter(community => community.community_name !== name);
+        setCommunitiesData(updatedData);
+
+        updatedData = filteredCommunities.filter(community => community.community_name !== name);
+        setFilteredCommunities(updatedData);
+
+        if (newCommunityValue) {
+            setDatas((prevDatas) => [...prevDatas, newCommunityValue]);
+            setFilteredDatas((prevDatas) => [...prevDatas, newCommunityValue]);
+          } else {
+            console.error("Community not found:", name);
+          }
+    };
     // const filteredCommunities = communitiesData.filter((community) =>
     //     community.name.toLowerCase().includes(searchTerm.toLowerCase())
     // );
@@ -113,10 +162,10 @@ const Parent = () => {
 
             {(navbar === "Community") ? (
                 filteredCommunities.map((community) => (
-                    <Child1 key={community._id} community={community} />
+                    <Child1 key={community._id} removeByName={removeCommunityByName} community={community} />
                 ))
             ) : (
-                filteredCommunities.map((community) => (
+                filteredDatas.map((community) => (
                     <Child2 key={community._id} community={community} />
                 ))
             )}
