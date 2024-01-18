@@ -1,6 +1,7 @@
 'use client'
 import React from 'react';
 import imgBanner from "../assets/rocket.png";
+import Lottie from "../assets/lottie";
 import Img from "next/image"
 import Link from "next/link"
 import { useState } from "react";
@@ -25,12 +26,14 @@ function Banner() {
                     </div>
                 </div>
                 <div className="w-1/2">
-                    <Img src={imgBanner} alt="Img Banner" className="ml-10 w-[553px] h-[598px]" />
-                </div>
+                 <Lottie ></Lottie>
+                   </div>
             </div>
+
 
         </div>
     )
 }
+
 
 export default Banner;
