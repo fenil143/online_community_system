@@ -60,7 +60,7 @@ const Parent = () => {
                 setFilteredCommunities(filtered);
             }
         }
-        else{
+        else {
             if (searchTerm == "") {
                 setFilteredDatas(datas);
                 return;
@@ -97,21 +97,40 @@ const Parent = () => {
     }
 
     const removeCommunityByName = (name: string) => {
-        
-        const newCommunityValue:Community | undefined = communitiesData.find((community) => community.community_name === name);
 
-        let updatedData = communitiesData.filter(community => community.community_name !== name);
-        setCommunitiesData(updatedData);
+        if (navbar == "Community") {
+            const newCommunityValue: Community | undefined = communitiesData.find((community) => community.community_name === name);
 
-        updatedData = filteredCommunities.filter(community => community.community_name !== name);
-        setFilteredCommunities(updatedData);
+            let updatedData = communitiesData.filter(community => community.community_name !== name);
+            setCommunitiesData(updatedData);
 
-        if (newCommunityValue) {
-            setDatas((prevDatas) => [...prevDatas, newCommunityValue]);
-            setFilteredDatas((prevDatas) => [...prevDatas, newCommunityValue]);
-          } else {
-            console.error("Community not found:", name);
-          }
+            updatedData = filteredCommunities.filter(community => community.community_name !== name);
+            setFilteredCommunities(updatedData);
+
+            if (newCommunityValue) {
+                setDatas((prevDatas) => [...prevDatas, newCommunityValue]);
+                setFilteredDatas((prevDatas) => [...prevDatas, newCommunityValue]);
+            } else {
+                console.error("Community not found:", name);
+            }
+        }
+        else{
+            const communityDetails : Community | undefined = datas.find((community) => community.community_name === name);
+            
+            let updatedData = datas.filter(community => community.community_name !== name);
+            setDatas(updatedData);
+
+            updatedData = filteredDatas.filter(community => community.community_name !== name);
+            setFilteredDatas(updatedData);
+
+            if(communityDetails){
+                setCommunitiesData((prevDatas) => [...prevDatas, communityDetails]);
+                setFilteredCommunities((prevDatas) => [...prevDatas, communityDetails]);
+            }
+            else{
+                console.error("Community not found:", name);
+            }
+        }
     };
     // const filteredCommunities = communitiesData.filter((community) =>
     //     community.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -166,7 +185,7 @@ const Parent = () => {
                 ))
             ) : (
                 filteredDatas.map((community) => (
-                    <Child2 key={community._id} community={community} />
+                    <Child2 key={community._id} removeByName={removeCommunityByName} community={community} />
                 ))
             )}
         </div>
