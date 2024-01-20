@@ -83,6 +83,23 @@ router.patch("/activateCommunity/:community_name", async (req, res) => {
   }
 });
 
+router.delete('/deleteCommunity/:communityName', async (req, res) => {
+  const communityName = req.params.communityName;
+
+  try {
+    const community = await Community.findOneAndDelete({ community_name: communityName });
+
+    if (!community) {
+      return res.status(404).json({ error: 'Community not found' });
+    }
+
+    return res.status(200).json({ message: 'Community deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.get("/unverifiedCommunities", async (req, res) => {
   try {
     const unverifiedCommunities = await Community.find({
