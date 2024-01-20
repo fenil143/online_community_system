@@ -2,8 +2,10 @@
 import axios from "axios";
 import Link from "next/link";
 import { FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 function login() {
+    const Router = useRouter();
     function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault();
         const formData: { [key: string]: any } = {};
@@ -20,6 +22,7 @@ function login() {
             .then(response => {
                 if (response.data.correct) {
                     alert("Welcome, sir");
+                    Router.push("/admin/unverifiedStudents");
                 } else {
                     alert("Email or password incorrect");
                 }
@@ -31,7 +34,7 @@ function login() {
 
     }
     return (
-        <div className="w-full lg:w-7/12  bg-blue-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none overflow-y-auto">
+        <div className="h-full w-full lg:w-7/12  bg-blue-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none overflow-y-auto">
             <h3 className="py-4 text-2xl text-center text-gray-800 dark:text-white">Welcome, Sir</h3>
             <form className="px-8 pt-6 pb-8 mb-4 bg-white dark:bg-gray-800 rounded" onSubmit={handleFormSubmit}>
                 <div className="mb-4">

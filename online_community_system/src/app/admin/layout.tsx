@@ -1,5 +1,6 @@
 'use client';
 import { Inter } from 'next/font/google'
+import Link from "next/link"
 import "./admin.css";
 
 const inter = Inter({ subsets: ['latin'] })
@@ -53,12 +54,12 @@ export default function RootLayout({
                         </div>
                         <div className="my-2 bg-gray-600 h-[1px]"></div>
                     </div>
-                    <div
+                    <Link href="/admin/unverifiedStudents"><div
                         className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
                     >
                         <i className="bi bi-person-fill"></i>
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Students</span>
-                    </div>
+                    </div></Link>
                     <div
                         className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
                     >
@@ -83,9 +84,9 @@ export default function RootLayout({
                         className="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold"
                         id="submenu"
                     >
-                        <h1 className="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
+                        <Link href="/admin/verifiedStudents"><h1 className="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
                             Students
-                        </h1>
+                        </h1></Link>
                         <h1 className="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
                             Communities
                         </h1>
@@ -97,7 +98,7 @@ export default function RootLayout({
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Logout</span>
                     </div>
                 </div>
-                <div style={{ marginLeft: "300px" }}>
+                <div style={{ marginLeft: "300px" }} className="h-full bg-blue-100">
                     {children}
                 </div>
             </body>

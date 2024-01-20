@@ -15,12 +15,12 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <div className="h-full bg-gray dark:bg-gray-900">
+        <div className="h-full bg-white">
 
-            <div className="mx-auto ">
-                <div className="flex justify-center px-6 py-12">
+            <div className="mx-auto bg-white">
+                <div className="flex justify-center px-6 py-12 bg-white">
 
-                    <div className="w-full xl:w-3/4 lg:w-11/12 flex" style={{ maxHeight: "600px" }}>
+                    <div className="h-full w-full bg-white xl:w-3/4 lg:w-11/12 flex" style={{ maxHeight: "600px" }}>
 
                         <div
                             className="w-full h-auto bg-gray-400 dark:bg-gray-800 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"

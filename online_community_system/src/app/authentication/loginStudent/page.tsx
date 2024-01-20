@@ -3,8 +3,10 @@
 import axios from "axios";
 import Link from "next/link";
 import { FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 function login() {
+    const Router = useRouter();
     function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault();
         const formData: { [key: string]: any } = {};
@@ -21,6 +23,7 @@ function login() {
             .then(response => {
                 if (response.data.message) {
                     alert(response.data.message);
+                    Router.push("/student/joinCommunity");
                 } else {
                     alert(response.data.error);
                 }

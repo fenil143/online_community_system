@@ -56,7 +56,7 @@ function students() {
     };
     
     return (
-        <div className="App">
+        <div className="App bg-blue-100">
             <Welcome onSearch={handleSearch} />
             {filteredStudents.map((e) => {
                 return <Product data={e} removeStudentByEmail={removeStudentByEmail} />
