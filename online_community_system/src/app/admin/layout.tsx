@@ -2,6 +2,8 @@
 import { Inter } from 'next/font/google'
 import Link from "next/link"
 import "./admin.css";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -10,6 +12,10 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
+
+    const [navbar, setNavbar] = useState("uStudents");
+    const router = useRouter();
+
     function dropdown() {
         const submenu = document.querySelector("#submenu");
         const arrow = document.querySelector("#arrow");
@@ -28,6 +34,11 @@ export default function RootLayout({
         if (sidebar) {
             sidebar.classList.toggle("hidden");
         }
+    }
+
+    function handleLogout(){
+        localStorage.removeItem('admin');
+        router.replace("/");
     }
     return (
         <html>
@@ -54,14 +65,15 @@ export default function RootLayout({
                         </div>
                         <div className="my-2 bg-gray-600 h-[1px]"></div>
                     </div>
-                    <Link href="/admin/unverifiedStudents"><div
-                        className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+                    <Link href="/admin/unverifiedStudents" onClick={()=>setNavbar('uStudents')}><div
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'uStudents' ? 'bg-blue-600' : ''
+                            }`}
                     >
                         <i className="bi bi-person-fill"></i>
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Students</span>
                     </div></Link>
-                    <Link href="/admin/unverifiedCommunities"><div
-                        className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+                    <Link href="/admin/unverifiedCommunities" onClick={()=>setNavbar('uCommunities')}><div
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'uCommunities' ? 'bg-blue-600' : '' }`}
                     >
                         <i className="bi bi-bookmark-fill"></i>
 
@@ -84,16 +96,16 @@ export default function RootLayout({
                         className="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold"
                         id="submenu"
                     >
-                        <Link href="/admin/verifiedStudents"><h1 className="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
+                        <Link href="/admin/verifiedStudents" onClick={()=>setNavbar('vStudents')}><h1 className={`cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1 ${navbar === 'vStudents' ? 'bg-blue-600' : '' }`}>
                             Students
                         </h1></Link>
-                        <Link href="/admin/verifiedCommunities"><h1 className="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
+                        <Link href="/admin/verifiedCommunities" onClick={()=>setNavbar('vCommunities')}><h1 className={`cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1 ${navbar === 'vCommunities' ? 'bg-blue-600' : ''}`}>
                             Communities
                         </h1></Link>
                     </div>
                     <div
                         className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
-                    >
+                    onClick={handleLogout}>
                         <i className="bi bi-box-arrow-in-right"></i>
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Logout</span>
                     </div>
