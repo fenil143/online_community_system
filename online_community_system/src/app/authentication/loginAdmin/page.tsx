@@ -11,7 +11,6 @@ function login() {
         const formData: { [key: string]: any } = {};
         const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
 
-        // Iterate through form elements and store values in the object
         for (let i = 0; i < formElements.length; i++) {
             const element = formElements[i];
             if (element.id) {
@@ -22,6 +21,7 @@ function login() {
             .then(response => {
                 if (response.data.correct) {
                     alert("Welcome, sir");
+                    localStorage.setItem('admin','yes');
                     Router.push("/admin/unverifiedStudents");
                 } else {
                     alert("Email or password incorrect");

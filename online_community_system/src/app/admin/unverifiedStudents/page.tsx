@@ -3,6 +3,7 @@ import Product from './components/product';
 import Welcome from './components/welcome';
 import Data from './components/data';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from "next/navigation";
 
 interface Student {
     name: string;
@@ -10,9 +11,14 @@ interface Student {
     email: string;
 }
 
+
 function students() {
     const [studentsData, setStudentsData] = useState<Student[]>([]);
     const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+    const router = useRouter();
+    if (localStorage.getItem('admin') === null) {
+        router.replace("/authentication/loginAdmin");
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,7 +27,6 @@ function students() {
                 setStudentsData(data);
                 setFilteredStudents(data);
             } catch (error) {
-                // Handle the error, e.g., display an error message to the user
                 console.error('Error fetching data:', error);
             }
         };
@@ -30,10 +35,9 @@ function students() {
     }, []);
 
     const handleSearch = (searchTerm: string) => {
-        // Filter students based on the search term
-        if(searchTerm == ""){
+        if (searchTerm == "") {
             setFilteredStudents(studentsData);
-            return ;
+            return;
         }
         const filtered = studentsData.filter(student => {
             if (student.name !== undefined) {
@@ -55,12 +59,12 @@ function students() {
         const updatedFilteredStudents = filteredStudents.filter(student => student.email !== email);
         setFilteredStudents(updatedFilteredStudents);
     };
-    
+
     return (
         <div className="App bg-blue-100">
             <Welcome onSearch={handleSearch} />
             {filteredStudents.map((e) => {
-                return <Product data={e} removeStudentByEmail={removeStudentByEmail} />
+                return <div><Product data={e} removeStudentByEmail={removeStudentByEmail} /></div>
             })}
         </div>
     );

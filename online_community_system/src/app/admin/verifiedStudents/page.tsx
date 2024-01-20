@@ -3,6 +3,7 @@ import Product from './components/product';
 import Welcome from './components/welcome';
 import Data from './components/data';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from "next/navigation";
 
 interface Student {
     name: string;
@@ -13,6 +14,10 @@ interface Student {
 function students() {
     const [studentsData, setStudentsData] = useState<Student[]>([]);
     const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+    const router = useRouter();
+    if (localStorage.getItem('admin') === null) {
+        router.replace("/authentication/loginAdmin");
+    }
 
     useEffect(() => {
         const fetchData = async () => {

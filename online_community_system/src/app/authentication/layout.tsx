@@ -29,7 +29,7 @@ export default function RootLayout({
                         ></div> */}
                         <div
                             className="w-full h-auto bg-blue-500 bg-opacity-70  dark:bg-gray-800 hidden lg:block lg:w-6/12 bg-cover rounded-l-lg"
-                            style={{  backgroundSize: 'cover', backgroundPosition: 'center'}}
+                            style={{ textAlign:"center", backgroundSize: 'cover', backgroundPosition: 'center'}}
                         ><Lottie ></Lottie></div>
 
                         {children}
