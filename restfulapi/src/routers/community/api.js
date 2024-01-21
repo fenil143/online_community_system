@@ -186,24 +186,20 @@ router.post("/addJoinedStudent/:community_name", async (req, res) => {
   }
 });
 
-router.delete("/rejectJoinRequest/:community_name", async (req, res) => {
+router.post("/rejectJoinRequest/:community_name", async (req, res) => {
   try {
     const { community_name } = req.params;
     const { student_email } = req.body;
-
     const existingCommunity = await Community.findOne({ community_name });
-
     if (!existingCommunity) {
       return res.status(404).json({ error: "Community not found" });
     }
-
 
     const updatedCommunity = await Community.findOneAndUpdate(
         { community_name },
         { $pull: { pending_join_requests: student_email }},
         { new: true }
     );
-
     res.status(200).json(updatedCommunity);
   } catch (error) {
     console.error(error);
@@ -211,7 +207,7 @@ router.delete("/rejectJoinRequest/:community_name", async (req, res) => {
   }
 });
 
-router.delete("/removeJoinedStudent/:community_name", async (req, res) => {
+router.post("/removeJoinedStudent/:community_name", async (req, res) => {
   try {
     const { community_name } = req.params;
     const { student_email } = req.body;
