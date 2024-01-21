@@ -1,0 +1,42 @@
+import axios from 'axios';
+
+const getJoinedCommunities = async (email) => {
+  try {
+    const apiUrl = `http://localhost:8000/getCreatedCommunities/${email}`;
+    
+    const response = await axios.get(apiUrl);
+
+    if (response.data.created_community_id) {
+      const createdCommunityIds = response.data.created_community_id;
+      const createdCommunities = await fetchCreatedCommunitiesDetails(createdCommunityIds);
+      // console.log(createdCommunities);
+      return createdCommunities;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+const fetchCreatedCommunitiesDetails = async (communityIds) => {
+  try {
+    const apiUrl = `http://localhost:8000/allCommunities`;
+
+    const response = await axios.get(apiUrl);
+    // console.log(communityIds);
+    // console.log(response);
+    if (response.data) {
+      const createdCommunities = response.data.filter(community => communityIds.includes(community.community_name));
+      return createdCommunities;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export default getJoinedCommunities;

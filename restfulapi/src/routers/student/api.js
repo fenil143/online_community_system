@@ -187,6 +187,25 @@ router.get("/getJoinedCommunities/:email", async (req, res) => {
   }
 });
 
+router.get("/getCreatedCommunities/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const existingStudent = await Student.findOne({ email: email });
+
+    if (existingStudent) {
+      res
+        .status(200)
+        .json({ created_community_id: existingStudent.created_community_id });
+    } else {
+      res.status(200).json({ error: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(200).json({ error: "Internal Server Error" });
+  }
+});
+
 router.get("/getPendingCommunities/:email", async (req, res) => {
   try {
     const { email } = req.params;
