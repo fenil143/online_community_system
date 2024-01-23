@@ -8,8 +8,8 @@ function handleRegistration() {
 }
 
 function register() {
-    const [image, setImage] = useState(undefined);
-
+    const [image, setImage] = useState<string | null>(null);
+    const [temp,setImg]=useState(undefined);
     const [githubLink, setGithubLink] = useState('');
     const [githubLinkError, setGithubLinkError] = useState('');
     const [linkedinLink, setLinkedinLink] = useState('');
@@ -56,8 +56,8 @@ function register() {
             }
         }
         const data = new FormData();
-        if (image) {
-            data.append("file", image);
+        if (temp) {
+            data.append("file", temp);
         } else {
             console.error("Image is undefined");
         }
@@ -153,6 +153,16 @@ function register() {
                     <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="userImage">
                         User Image
                     </label>
+                    {image && (
+                <div className="mt-3">
+                  
+                    <img
+                        src={image}
+                        alt="Selected User Image"
+                        className="w-full h-auto border rounded"
+                    />
+                </div>
+            )}
                     <input
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
                         id="userImage"
@@ -162,7 +172,8 @@ function register() {
                             const file: any = e.target.files && e.target.files[0];
 
                             if (file) {
-                                setImage(file);
+                                setImg(file);
+                                setImage(URL.createObjectURL(file));
                             }
                         }}
                         required
@@ -176,6 +187,7 @@ function register() {
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
                         id="experience"
                         type="number"
+                        min={0}
                         placeholder="Experience"
                         required
                     />
@@ -213,6 +225,8 @@ function register() {
                             className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
                             id="cpi"
                             type="number"
+                            min="1"
+                            max="10"
                             step="any"
                             placeholder="CPI"
                             required
@@ -226,6 +240,7 @@ function register() {
                             className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
                             id="graduation_year"
                             type="number"
+                            min="1999" max="2030"
                             placeholder="Graduation Year"
                             required
                         />
