@@ -6,12 +6,12 @@ const Child = ({ community, removeByName }) => {
     const owner = owner_email ;
     const name = community_name;
     let email = localStorage.getItem("student");
-
+    console.log(email);
     const cancelJoinRequest = async () => {
       try {
         const studentEmail = email;
   
-        await axios.delete(`http://localhost:8000/rejectJoinRequest/${name}`, { student_email: studentEmail });
+        await axios.post(`http://localhost:8000/rejectJoinRequest/${name}`, { student_email: studentEmail });
   
         const CommunityIdToRemove = community.community_name;
         await axios.patch(`http://localhost:8000/cancelRequest/${studentEmail}`, { communityIdToRemove : CommunityIdToRemove });

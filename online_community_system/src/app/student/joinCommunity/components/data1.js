@@ -15,7 +15,7 @@ const getFilteredCommunities = async (studentEmail) => {
     const createdCommunities = createdComunitiesResponse.data.created_community_id || [];
 
     const filteredCommunities = allCommunities.filter(community =>
-      !joinedCommunities.includes(community.community_name) && !pendingCommunities.includes(community.community_name) && !createdCommunities.includes(community.community_name)
+      community.verified_status == true && !joinedCommunities.includes(community.community_name) && !pendingCommunities.includes(community.community_name) && !createdCommunities.includes(community.community_name)
     )
 
     return filteredCommunities;

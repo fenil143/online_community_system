@@ -5,6 +5,8 @@ const Child = ({ data, removeCommunityByName }) => {
   const handleAccept = async () => {
     try {
       await axios.patch(`http://localhost:8000/activateCommunity/${data.community_name}`, { status: true });
+
+      await axios.patch(`http://localhost:8000/addCommunity/${data.owner_email}`,{ newCommunityId : data.community_name})
       removeCommunityByName(data.community_name);
     } catch (error) {
       console.error('Error accepting community:', error);

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Data from "./components/data";
 import Child from "./components/child";
+import Image from 'next/image'
 
 interface Student {
     email : string;
@@ -39,10 +40,21 @@ export default function requests() {
 
     return (
         <div>
-            
-            {filteredStudents.map((e) => {
-                        return <div><Child data={e} removeStudentByEmail={removeStudentByEmail} /></div>
-                    })}
+            {
+                filteredStudents.length == 0 ? (
+                    <div className=" text-center ml-96 mt-8"><Image
+                        src="/assets/noData.png"
+                        width={500}
+                        height={500}
+                        alt="Picture of the author"
+                    /></div>
+                ) :
+                    (
+                        filteredStudents.map((e) => {
+                            return <div><Child data={e} removeStudentByEmail={removeStudentByEmail} /></div>
+                        })
+                    )
+            }
         </div>
     );
 }

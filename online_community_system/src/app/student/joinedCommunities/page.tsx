@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Data from './components/data';
 import Child from "./components/child"
 import { useRouter } from 'next/navigation';
+import Image from 'next/image'
 
 interface Community {
     _id: string,
@@ -14,6 +15,7 @@ export default function community() {
     const [communitiesData, setCommunitiesData] = useState<Community[]>([]);
     const [filteredCommunities, setFilteredCommunities] = useState<Community[]>([]);
     const router = useRouter();
+    const email = localStorage.getItem("student");
 
     useEffect(() => {
         if (localStorage.getItem('student') === null) {
@@ -21,7 +23,7 @@ export default function community() {
         }
         const fetchData = async () => {
             try {
-                let data = await Data("mahendrafenil8@gmail.com");
+                let data = await Data(email);
                 setCommunitiesData(data);
                 setFilteredCommunities(data);
 
@@ -94,10 +96,24 @@ export default function community() {
                 </div>
             </div>
             {
+                filteredCommunities.length === 0 ? (
+                    <div className=" text-center ml-80"><Image
+                        src="/assets/noData.png"
+                        width={500}
+                        height={500}
+                        alt="Picture of the author"
+                    /></div>
+                ) : (
+                    filteredCommunities.map((community) => (
+                        <Child key={community._id} community={community} />
+                    ))
+                )
+            }
+            {/* {
                 filteredCommunities.map((community) => (
                     <Child key={community._id} community={community} />
                 ))
-            }
+            } */}
         </div>
     )
 }

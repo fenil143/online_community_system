@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Child from "./components/child";
 import Welcome from './components/welcome';
 import { useRouter } from "next/navigation";
+import Image from 'next/image'
 
 interface Community {
     community_name: string
@@ -68,9 +69,20 @@ function Community() {
     return (
         <div className="App bg-blue-100">
             <Welcome onSearch={handleSearch} />
-            {filteredCommunities.map((e) => {
-                return <Child data={e} key={e._id} removeCommunityByName={removeCommunityByName}/>
-            })}
+            {
+                filteredCommunities.length === 0 ? (
+                    <div className=" text-center ml-96"><Image
+                        src="/assets/noData.png"
+                        width={500}
+                        height={500}
+                        alt="Picture of the author"
+                    /></div>
+                ) : (
+                    filteredCommunities.map((e) => {
+                        return <Child data={e} key={e._id} removeCommunityByName={removeCommunityByName}/>
+                    })
+                )
+            }
         </div>
     );
 }

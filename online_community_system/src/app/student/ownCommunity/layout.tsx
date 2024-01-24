@@ -1,6 +1,7 @@
 'use client';
 import { Inter } from 'next/font/google'
 import Link from "next/link"
+import { useState } from "react";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -10,6 +11,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     const communityName = localStorage.getItem("ownCommunity");
+    const [navbar,setNavbar] = useState("requests");
     return (
         <div className="container mx-auto p-8">
             <nav className="flex justify-between items-center mb-8 bg-gradient-to-r from-pink-500 to-red-500 p-4 rounded-md shadow-md">
@@ -21,16 +23,16 @@ export default function RootLayout({
                     <h1 className="text-2xl font-bold text-white">{communityName}</h1>
                 </div>
                 <div className="flex space-x-6">
-                    <Link href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110" >
+                    <Link href="#" className={`text-gray-300 ${navbar == "events" ? "text-white" : ""} hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("events")} >
                         Events
                     </Link>
-                    <Link href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110">
+                    <Link href="#" className={`text-gray-300 ${navbar == "posts" ? "text-white" : "" } hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("posts")}>
                         Posts
                     </Link>
-                    <Link href="requests" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110" >
+                    <Link href="requests" className={`text-gray-300 ${navbar == "requests" ? "text-white" : ""} hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("requests")}>
                         Requests
                     </Link>
-                    <Link href="students" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110">
+                    <Link href="students" className={`text-gray-300 ${navbar == "students" ? "text-white" : ""} hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("students")}>
                         Students
                     </Link>
                 </div>

@@ -4,6 +4,7 @@ import Welcome from './components/welcome';
 import Data from './components/data';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation";
+import Image from 'next/image'
 
 interface Student {
     name: string;
@@ -63,11 +64,36 @@ function students() {
     return (
         <div className="App bg-blue-100">
             <Welcome onSearch={handleSearch} />
-            {filteredStudents.map((e) => {
-                return <div><Product data={e} removeStudentByEmail={removeStudentByEmail} /></div>
-            })}
+            {
+                filteredStudents.length == 0 ? (
+                    <div className=" text-center ml-96 mt-8"><Image
+                        src="/assets/noData.png"
+                        width={500}
+                        height={500}
+                        alt="Picture of the author"
+                    /></div>
+                ) :
+                    (
+                        filteredStudents.map((e) => {
+                            return <div><Product data={e} removeStudentByEmail={removeStudentByEmail} /></div>
+                        })
+                    )
+            }
         </div>
     );
 }
 
 export default students;
+
+// filteredCommunities.length === 0 ? (
+//     <div className=" text-center ml-80"><Image
+//         src="/assets/noData.png"
+//         width={500}
+//         height={500}
+//         alt="Picture of the author"
+//     /></div>
+// ) : (
+//     filteredCommunities.map((community) => (
+//         <Child1 key={community._id} removeByName={removeCommunityByName} community={community} />
+//     ))
+// )

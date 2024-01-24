@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react";
 import Data from "./components/data";
 import Child from "./components/child";
+import Image from 'next/image'
 
 interface Student {
-    email : string;
+    email: string;
 }
 
 export default function requests() {
@@ -39,10 +40,35 @@ export default function requests() {
 
     return (
         <div>
-            
-            {filteredStudents.map((e) => {
+            {
+                filteredStudents.length === 0 ? (
+                    <div className=" text-center ml-96"><Image
+                        src="/assets/noData.png"
+                        width={500}
+                        height={500}
+                        alt="Picture of the author"
+                    /></div>
+                ) : (
+                    filteredStudents.map((e) => {
                         return <div><Child data={e} removeStudentByEmail={removeStudentByEmail} /></div>
-                    })}
+                    })
+                )
+            }
         </div>
     );
 }
+
+// {
+//     filteredCommunities.length === 0 ? (
+//         <div className=" text-center ml-96"><Image
+//             src="/assets/noData.png"
+//             width={500}
+//             height={500}
+//             alt="Picture of the author"
+//         /></div>
+//     ) : (
+//         filteredCommunities.map((e) => {
+//             return <Child data={e} key={e._id} removeCommunityByName={removeCommunityByName}/>
+//         })
+//     )
+// }

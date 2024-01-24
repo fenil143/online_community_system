@@ -5,6 +5,7 @@ import Child2 from './components/child2';
 import Data from './components/data1';
 import Data2 from './components/data2';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image'
 
 interface Community {
     _id: string,
@@ -26,7 +27,7 @@ const Parent = () => {
         if (localStorage.getItem('student') === null) {
             router.push("/authentication/loginStudent");
         }
-        
+
         const fetchData = async () => {
             try {
                 let data = await Data(email);
@@ -122,20 +123,20 @@ const Parent = () => {
                 console.error("Community not found:", name);
             }
         }
-        else{
-            const communityDetails : Community | undefined = datas.find((community) => community.community_name === name);
-            
+        else {
+            const communityDetails: Community | undefined = datas.find((community) => community.community_name === name);
+
             let updatedData = datas.filter(community => community.community_name !== name);
             setDatas(updatedData);
 
             updatedData = filteredDatas.filter(community => community.community_name !== name);
             setFilteredDatas(updatedData);
 
-            if(communityDetails){
+            if (communityDetails) {
                 setCommunitiesData((prevDatas) => [...prevDatas, communityDetails]);
                 setFilteredCommunities((prevDatas) => [...prevDatas, communityDetails]);
             }
-            else{
+            else {
                 console.error("Community not found:", name);
             }
         }
@@ -186,15 +187,54 @@ const Parent = () => {
 
                 </div>
             </div>
+            {/* {
+                filteredCommunities.length === 0 ? (
+                    <div className=" text-center ml-80"><Image
+                        src="/assets/noData.png"
+                        width={500}
+                        height={500}
+                        alt="Picture of the author"
+                    /></div>
+                ) : (
+                    filteredCommunities.map((community) => (
+                        <Child key={community._id} community={community} />
+                    ))
+                )
+            } */}
 
             {(navbar === "Community") ? (
-                filteredCommunities.map((community) => (
-                    <Child1 key={community._id} removeByName={removeCommunityByName} community={community} />
-                ))
+
+                filteredCommunities.length === 0 ? (
+                    <div className=" text-center ml-80"><Image
+                        src="/assets/noData.png"
+                        width={500}
+                        height={500}
+                        alt="Picture of the author"
+                    /></div>
+                ) : (
+                    filteredCommunities.map((community) => (
+                        <Child1 key={community._id} removeByName={removeCommunityByName} community={community} />
+                    ))
+                )
+                // filteredCommunities.map((community) => (
+                //     <Child1 key={community._id} removeByName={removeCommunityByName} community={community} />
+                // ))
             ) : (
-                filteredDatas.map((community) => (
-                    <Child2 key={community._id} removeByName={removeCommunityByName} community={community} />
-                ))
+                filteredDatas.length === 0 ? (
+                    <div className=" text-center ml-80"><Image
+                        src="/assets/noData.png"
+                        width={500}
+                        height={500}
+                        alt="Picture of the author"
+                    /></div>
+                ) : (
+                    filteredDatas.map((community) => (
+                        <Child2 key={community._id} removeByName={removeCommunityByName} community={community} />
+                    ))
+                )
+                // filteredDatas.map((community) => (
+                //     <Child2 key={community._id} removeByName={removeCommunityByName} community={community} />
+                // ))
             )}
         </div>
     );
