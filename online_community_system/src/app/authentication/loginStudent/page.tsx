@@ -12,7 +12,6 @@ function login() {
         const formData: { [key: string]: any } = {};
         const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
 
-        // Iterate through form elements and store values in the object
         for (let i = 0; i < formElements.length; i++) {
             const element = formElements[i];
             if (element.id) {
@@ -22,6 +21,7 @@ function login() {
         axios.post('http://localhost:8000/login', formData)
             .then(response => {
                 if (response.data.message) {
+                    localStorage.setItem("student",formData["email"]);
                     alert(response.data.message);
                     Router.push("/student/joinCommunity");
                 } else {

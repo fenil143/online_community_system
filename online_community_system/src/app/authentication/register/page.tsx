@@ -48,7 +48,6 @@ function register() {
         const formData: { [key: string]: any } = {};
         const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
 
-        // Iterate through form elements and store values in the object
         for (let i = 0; i < formElements.length; i++) {
             const element = formElements[i];
             if (element.id) {
@@ -77,7 +76,7 @@ function register() {
                 .then(response => {
                     console.log(response.data);
                     if (response.data.message) {
-                        alert('Registration successful!');
+                        alert('Registration successful! Your details will be varified.');
                     } else {
                         alert(response.data.error);
                     }
