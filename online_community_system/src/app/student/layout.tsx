@@ -2,6 +2,8 @@
 import { Inter } from 'next/font/google'
 import "./student.css";
 import Link from "next/link"
+import { useState } from "react";
+import { useRouter } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -10,6 +12,14 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
+
+    const [navbar, setNavbar] = useState("jCommunity");
+    const router = useRouter();
+
+    if (localStorage.getItem('student') === null) {
+        router.push("/authentication/loginStudent");
+    }
+
     function dropdown() {
         const submenu = document.querySelector("#submenu");
         const arrow = document.querySelector("#arrow");
@@ -54,33 +64,39 @@ export default function RootLayout({
                         </div>
                         <div className="my-2 bg-gray-600 h-[1px]"></div>
                     </div>
-                    <Link href="/student/joinCommunity"><div
-                        className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+                    <Link href="/student/joinCommunity" onClick={()=>setNavbar('jCommunity')}><div
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'jCommunity' ? 'bg-blue-600' : ''
+                    }`}
                     >
                         <i className="bi bi-shop"></i>
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Join Community</span>
                     </div></Link>
-                    <Link href="/student/createCommunity"><div
-                        className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+                    <Link href="/student/createCommunity" onClick={()=>setNavbar('cCommunity')}><div
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'cCommunity' ? 'bg-blue-600' : ''
+                    }`}
                     >
                         <i className="bi bi-collection"></i>
 
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Create Community</span>
                     </div></Link>
                     <div className="my-4 bg-gray-600 h-[1px]"></div>
-                    <div
-                        className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+                    <Link href="/student/joinedCommunities" onClick={()=>setNavbar("jdCommunity")}><div
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'jdCommunity' ? 'bg-blue-600' : ''
+                    }`}
                     >
                         <i className="bi bi-chat-left-text"></i>
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Joined Communities</span>
-                    </div>
+                    </div></Link>
+                    <Link href="/student/createdCommunities" onClick={()=>setNavbar("cdCommunity")}>
                     <div
-                        className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'cdCommunity' ? 'bg-blue-600' : ''
+                    }`}
                     >
                         <i className="bi bi-bookmark-fill"></i>
 
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Created Communities</span>
                     </div>
+                    </Link>
                     <div
                         className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
                     >

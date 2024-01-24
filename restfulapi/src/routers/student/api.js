@@ -78,7 +78,7 @@ router.post("/login", async (req, res) => {
 
     const existingStudent = await Student.findOne({ email: email });
 
-    if(existingStudent.status === false){
+    if(existingStudent && existingStudent.status === false){
       return res.status(200).json({ error: "You will be varified by admin soon" });
     }
 

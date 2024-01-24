@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Data from './components/data';
 import Child from "./components/child"
+import { useRouter } from 'next/navigation';
 
 interface Community {
     _id: string,
@@ -12,8 +13,12 @@ export default function community() {
     const [searchTerm, setSearchTerm] = useState('');
     const [communitiesData, setCommunitiesData] = useState<Community[]>([]);
     const [filteredCommunities, setFilteredCommunities] = useState<Community[]>([]);
+    const router = useRouter();
 
     useEffect(() => {
+        if (localStorage.getItem('student') === null) {
+            router.push("/authentication/loginStudent");
+        }
         const fetchData = async () => {
             try {
                 let data = await Data("mahendrafenil8@gmail.com");

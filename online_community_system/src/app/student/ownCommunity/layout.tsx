@@ -21,18 +21,18 @@ export default function RootLayout({
                     <h1 className="text-2xl font-bold text-white">{communityName}</h1>
                 </div>
                 <div className="flex space-x-6">
-                    <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110" >
+                    <Link href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110" >
                         Events
-                    </a>
-                    <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110">
+                    </Link>
+                    <Link href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110">
                         Posts
-                    </a>
-                    <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110" >
+                    </Link>
+                    <Link href="requests" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110" >
                         Requests
-                    </a>
-                    <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110">
+                    </Link>
+                    <Link href="students" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110">
                         Students
-                    </a>
+                    </Link>
                 </div>
             </nav>
             {children}

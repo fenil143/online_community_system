@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { FormEvent, useState } from "react";
+import { useRouter } from 'next/navigation';
 
 function handleRegistration() {
     console.log('Registration button clicked');
@@ -9,13 +10,18 @@ function handleRegistration() {
 
 export default function student() {
     const [image, setImage] = useState(undefined);
+    const router = useRouter();
+    let email = localStorage.getItem("student");
+
+    if (localStorage.getItem('student') === null) {
+        router.push("/authentication/loginStudent");
+    }
 
     function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault();
         const formData: { [key: string]: any } = {};
         const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
 
-        // Iterate through form elements and store values in the object
         for (let i = 0; i < formElements.length; i++) {
             const element = formElements[i];
             if (element.id) {
@@ -36,7 +42,7 @@ export default function student() {
             body: data
         }).then((res) => res.json()).then((data) => {
             console.log(data);
-            formData["owner_email"] = "mahendrafenil32@gmail.com";
+            formData["owner_email"] = email;
             formData["image"] = data.url;
             console.log(formData);
             axios.post('http://localhost:8000/storeCommunity', formData)

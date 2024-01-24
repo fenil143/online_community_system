@@ -11,9 +11,12 @@ const getFilteredCommunities = async (studentEmail) => {
     const pendingCommunitiesResponse = await axios.get(`http://localhost:8000/getPendingCommunities/${studentEmail}`);
     const pendingCommunities = pendingCommunitiesResponse.data.pending_community_id || [];
 
+    const createdComunitiesResponse = await axios.get(`http://localhost:8000/getCreatedCommunities/${studentEmail}`);
+    const createdCommunities = createdComunitiesResponse.data.created_community_id || [];
+
     const filteredCommunities = allCommunities.filter(community =>
-      !joinedCommunities.includes(community.community_name) && !pendingCommunities.includes(community.community_name)
-    );
+      !joinedCommunities.includes(community.community_name) && !pendingCommunities.includes(community.community_name) && !createdCommunities.includes(community.community_name)
+    )
 
     return filteredCommunities;
   } catch (error) {

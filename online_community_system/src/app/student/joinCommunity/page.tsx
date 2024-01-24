@@ -4,7 +4,7 @@ import Child1 from './components/child1';
 import Child2 from './components/child2';
 import Data from './components/data1';
 import Data2 from './components/data2';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface Community {
     _id: string,
@@ -12,7 +12,7 @@ interface Community {
 }
 
 const Parent = () => {
-    // const router = useRouter();
+    const router = useRouter();
 
     const [searchTerm, setSearchTerm] = useState('');
     const [navbar, setNavbar] = useState("Community");
@@ -20,19 +20,20 @@ const Parent = () => {
     const [filteredCommunities, setFilteredCommunities] = useState<Community[]>([]);
     const [datas, setDatas] = useState<Community[]>([]);
     const [filteredDatas, setFilteredDatas] = useState<Community[]>([]);
+    let email = localStorage.getItem("student");
 
     useEffect(() => {
-        // if (localStorage.getItem('admin') === null) {
-        //     router.push("/authentication/loginStudent");
-        // }
+        if (localStorage.getItem('student') === null) {
+            router.push("/authentication/loginStudent");
+        }
         
         const fetchData = async () => {
             try {
-                let data = await Data("mahendrafenil32@gmail.com");
+                let data = await Data(email);
                 setCommunitiesData(data);
                 setFilteredCommunities(data);
 
-                data = await Data2("mahendrafenil32@gmail.com");
+                data = await Data2(email);
                 setDatas(data);
                 setFilteredDatas(data);
 
