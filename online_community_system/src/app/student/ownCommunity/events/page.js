@@ -41,10 +41,19 @@ const EventListComponent = () => {
 
   return (
     <div className="event-list flex flex-col items-end gap-4 p-4">
-      {events.map((event) => (
-        <Child event={event} key={event.event_id} />
+      <div className="overflow-y-auto">
+       {events.map((event, index) => (
+        <div
+          key={event.event_id}
+          className={`flex ${
+            index % 2 === 0 ? "flex-row-reverse w-full" : "flex-row w-full"
+          } items-center`}
+        >
+          <Child event={event} />
+        </div>
       ))}
-      {/* Add a "+" option to add a new event at the right-bottom corner */}
+      </div>
+
       <div
         className="add-event-button fixed bottom-4 right-4 bg-blue-500 text-white p-4 w-12 h-12 rounded-full cursor-pointer flex items-center justify-center hover:bg-blue-600 transition"
         onClick={openAddEventModal}
