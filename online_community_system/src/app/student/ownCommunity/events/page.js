@@ -66,7 +66,6 @@ const EventListComponent = () => {
           <div className="bg-white p-8 rounded-lg w-96">
             <h2 className="text-2xl font-bold mb-4">Create New Event</h2>
 
-            {/* Form fields */}
             <div className="mb-4 flex items-center">
               <div className="w-1/2 pr-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
