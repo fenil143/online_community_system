@@ -26,7 +26,7 @@ const Child = ({ post, index }) => {
   return (
     <div
       key={index}
-      className="bg-white p-6 rounded-md shadow-md transition-transform transform hover:scale-105 h-fit"
+      className="bg-white p-6 rounded-md shadow-md transition-transform transform hover:scale-105 h-fit duration-300"
     >
       <img
         src={post.post_image}
