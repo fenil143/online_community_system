@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-// import events from "./components/data";
 
 const EventListComponent = ({ event }) => {
   const [readMore, setReadMore] = useState(false);

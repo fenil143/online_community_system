@@ -141,9 +141,6 @@ const Parent = () => {
             }
         }
     };
-    // const filteredCommunities = communitiesData.filter((community) =>
-    //     community.name.toLowerCase().includes(searchTerm.toLowerCase())
-    // );
 
     return (
         <div className="container mx-auto p-8">
@@ -187,21 +184,6 @@ const Parent = () => {
 
                 </div>
             </div>
-            {/* {
-                filteredCommunities.length === 0 ? (
-                    <div className=" text-center ml-80"><Image
-                        src="/assets/noData.png"
-                        width={500}
-                        height={500}
-                        alt="Picture of the author"
-                    /></div>
-                ) : (
-                    filteredCommunities.map((community) => (
-                        <Child key={community._id} community={community} />
-                    ))
-                )
-            } */}
-
             {(navbar === "Community") ? (
 
                 filteredCommunities.length === 0 ? (
@@ -216,9 +198,6 @@ const Parent = () => {
                         <Child1 key={community._id} removeByName={removeCommunityByName} community={community} />
                     ))
                 )
-                // filteredCommunities.map((community) => (
-                //     <Child1 key={community._id} removeByName={removeCommunityByName} community={community} />
-                // ))
             ) : (
                 filteredDatas.length === 0 ? (
                     <div className=" text-center ml-80"><Image
@@ -232,9 +211,6 @@ const Parent = () => {
                         <Child2 key={community._id} removeByName={removeCommunityByName} community={community} />
                     ))
                 )
-                // filteredDatas.map((community) => (
-                //     <Child2 key={community._id} removeByName={removeCommunityByName} community={community} />
-                // ))
             )}
         </div>
     );

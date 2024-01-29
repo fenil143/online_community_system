@@ -111,11 +111,6 @@ export default function community() {
                 )
             }
 
-            {/* {
-                filteredCommunities.map((community) => (
-                    <Child key={community._id} community={community} />
-                ))
-            } */}
         </div>
     )
 }

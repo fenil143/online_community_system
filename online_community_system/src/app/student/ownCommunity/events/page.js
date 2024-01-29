@@ -35,7 +35,6 @@ const EventListComponent = () => {
     // You can add logic here to send the new event data to your server/database
     console.log("Creating Event:", newEvent);
 
-    // Close the modal after creating the event
     closeAddEventModal();
   };
 

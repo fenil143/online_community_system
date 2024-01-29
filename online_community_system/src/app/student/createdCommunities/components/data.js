@@ -9,7 +9,6 @@ const getJoinedCommunities = async (email) => {
     if (response.data.created_community_id) {
       const createdCommunityIds = response.data.created_community_id;
       const createdCommunities = await fetchCreatedCommunitiesDetails(createdCommunityIds);
-      // console.log(createdCommunities);
       return createdCommunities;
     } else {
       return [];
