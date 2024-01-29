@@ -57,18 +57,3 @@ export default function requests() {
         </div>
     );
 }
-
-// {
-//     filteredCommunities.length === 0 ? (
-//         <div className=" text-center ml-96"><Image
-//             src="/assets/noData.png"
-//             width={500}
-//             height={500}
-//             alt="Picture of the author"
-//         /></div>
-//     ) : (
-//         filteredCommunities.map((e) => {
-//             return <Child data={e} key={e._id} removeCommunityByName={removeCommunityByName}/>
-//         })
-//     )
-// }
