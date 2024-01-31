@@ -3,15 +3,6 @@ const router = express.Router();
 const Comment = require("../../models/comment");
 const { v4: uuidv4 } = require('uuid');
 
-// const commentSchema = new mongoose.Schema({
-//     comment_id : String,
-//     post_id: String,
-//     user_email : String,
-//     comment_message: String,
-//     likes: { type: Number, default: 0 },
-//     created_at: { type: Date, default: Date.now },
-//   });
-
 router.post("/createComment", async (req, res) => {
   try {
     const {
