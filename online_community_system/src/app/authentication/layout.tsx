@@ -16,32 +16,28 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <div className="h-full bg-white">
+      
+        <div className="min-h-screen bg-white">
 
-            <div className="mx-auto bg-white">
-                <div className="flex justify-center px-6 py-12 bg-white">
+        <div className="mx-auto bg-white">
+            <div className="flex justify-center px-6 py-12 bg-white">
 
-                    <div className="h-full w-full bg-white xl:w-3/4 lg:w-11/12 flex" style={{ maxHeight: "600px" }}>
+                <div className="h-full w-full bg-white xl:w-3/4 lg:w-11/12 flex" style={{ maxHeight: "600px" }}>
 
-                        {/* <div
-                            className="w-full h-auto bg-gray-400 dark:bg-gray-800 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
-                            style={{ backgroundImage: 'url("https://img.freepik.com/premium-photo/funny-minimalist-design-with-floating-human-brain-wearing-sunglasses-against-blue-background-ideas-creativity-intellect-artificial-intelligence_410516-1290.jpg")', backgroundSize: 'cover', backgroundPosition: 'center' }}
-                        ></div> */}
-                        <div
-                            className="w-full h-auto lg:w-6/12 lg:flex-shrink-0 bg-blue-500 bg-opacity-70 dark:bg-gray-800 lg:block"
-                            style={{ backgroundSize: 'cover', backgroundPosition: 'center', alignItems: 'center' }}
-                        >
-                            <Lottie />
-                        </div>
-
-
-                        {children}
-
-
+                    <div
+                        className="w-full h-auto lg:w-6/12 lg:flex-shrink-0 bg-blue-500 bg-opacity-70 dark:bg-gray-800 lg:block hidden md:flex"
+                        style={{ backgroundSize: 'cover', backgroundPosition: 'center', alignItems: 'center' }}
+                    >
+                        <Lottie />
                     </div>
+
+                    {children}
+
                 </div>
             </div>
         </div>
+    </div>
     )
-}
+ }
+ // style={{ backgroundSize: 'cover', backgroundPosition: 'center', alignItems: 'center' }}
 // https://img.freepik.com/premium-photo/funny-minimalist-design-with-floating-human-brain-wearing-sunglasses-against-blue-background-ideas-creativity-intellect-artificial-intelligence_410516-1290.jpg
