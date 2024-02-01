@@ -23,10 +23,10 @@ export default function RootLayout({
                     <h1 className="text-2xl font-bold text-white">{communityName}</h1>
                 </div>
                 <div className="flex space-x-6">
-                    <Link href="#" className={`text-gray-300 ${navbar == "events" ? "text-white" : ""} hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("events")} >
+                    <Link href="events" className={`text-gray-300 ${navbar == "events" ? "text-white" : ""} hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("events")} >
                         Events
                     </Link>
-                    <Link href="#" className={`text-gray-300 ${navbar == "posts" ? "text-white" : "" } hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("posts")}>
+                    <Link href="posts" className={`text-gray-300 ${navbar == "posts" ? "text-white" : "" } hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("posts")}>
                         Posts
                     </Link>
                     <Link href="requests" className={`text-gray-300 ${navbar == "requests" ? "text-white" : ""} hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("requests")}>
