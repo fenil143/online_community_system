@@ -72,13 +72,6 @@ const EventListComponent = () => {
           ></path>
         </svg>
       </div>
-      
-      {/* <div
-        className="add-event-button fixed bottom-4 right-4 bg-blue-500 text-white p-4 w-12 h-12 rounded-full cursor-pointer flex items-center justify-center hover:bg-blue-600 transition"
-        onClick={openAddEventModal}
-      >
-        +
-      </div> */}
 
       {isAddEventModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
