@@ -1,10 +1,27 @@
 "use client";
-import React, { useState } from "react";
-import events from "./components/data";
+import React, { useState, useEffect } from "react";
+import Data from "./components/data";
 import Child from "./components/child";
 
 const EventListComponent = () => {
   const [isAddEventModalOpen, setAddEventModalOpen] = useState(false);
+  const [eventsData,setEventsData] = useState([]);
+  useEffect(() => {
+    if (localStorage.getItem('student') === null) {
+        router.push("/authentication/loginStudent");
+    }
+    const fetchData = async () => {
+        try {
+            let data = await Data(localStorage.getItem("ownCommunity"));
+            setEventsData(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    fetchData();
+}, []);
+
   const [newEvent, setNewEvent] = useState({
     name: "",
     event_time: new Date(),
@@ -41,7 +58,7 @@ const EventListComponent = () => {
   return (
     <div className="event-list flex flex-col items-end gap-4 p-4">
       <div className="overflow-y-auto">
-       {events.map((event, index) => (
+       {eventsData.map((event, index) => (
         <div
           key={event.event_id}
           className={`flex ${

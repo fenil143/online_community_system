@@ -96,12 +96,12 @@ const EventListComponent = ({ event }) => {
       </div>
 
       <div class="flex items-center justify-center">
-        <div class="event-actions mt-2">
+        <div class="event-actions mt-2 space-x-4">
           <button
             class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
             onClick={() => console.log(`Join Event: ${event.name}`)}
           >
-            Join Event
+             Get Details
           </button>
         </div>
       </div>
