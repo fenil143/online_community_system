@@ -26,7 +26,7 @@ const EventListComponent = () => {
     name: "",
     event_time: new Date(),
     event_description: "",
-    event_image: null,
+    event_images: [],
     location: "",
     organizer: "Unknown",
     max_attendees: 100,
@@ -41,14 +41,30 @@ const EventListComponent = () => {
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewEvent((prevEvent) => ({
-      ...prevEvent,
-      [name]: value,
-    }));
+    const { name, value, files } = e.target;
+
+    if (name === "event_image") {
+        const imagesArray = Array.from(files); 
+        setNewEvent((prevEvent) => ({
+            ...prevEvent,
+            event_images: imagesArray,
+        }));
+    } else {
+        setNewEvent((prevEvent) => ({
+            ...prevEvent,
+            [name]: value,
+        }));
+    }
   };
 
   const handleCreateEvent = () => {
+    const requiredFields = ["name", "event_time", "event_description", "event_images", "location", "organizer"];
+    const isEmptyField = requiredFields.some(field => !newEvent[field]);
+
+    if (isEmptyField) {
+        alert("Please fill out all required fields.");
+        return;
+    }
     // You can add logic here to send the new event data to your server/database
     console.log("Creating Event:", newEvent);
 
@@ -141,9 +157,9 @@ const EventListComponent = () => {
               <input
                 type="file"
                 name="event_image"
-                value={newEvent.event_image}
                 onChange={handleInputChange}
                 className="border p-2 w-full"
+                multiple
               />
             </div>
 
