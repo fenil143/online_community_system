@@ -1,12 +1,12 @@
 "use client";
 // child.js
 import React, { useState } from "react";
-import dummyComments from "./data1";
+import Data from "./data1";
 
 const Child = ({ post, index }) => {
   const [expandedPost, setExpandedPost] = useState(false);
   const [showComments, setShowComments] = useState(false);
-
+  const [comments,setComments] = useState([]);
   const handleReadMore = () => {
     setExpandedPost(true);
   };
@@ -16,6 +16,17 @@ const Child = ({ post, index }) => {
   };
 
   const handleViewComments = () => {
+    const fetchData = async () => {
+      try {
+        let data = await Data(post.post_id);
+        setComments(data);
+        console.log(comments);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
     setShowComments(true);
   };
 
@@ -100,10 +111,10 @@ const Child = ({ post, index }) => {
               </button>
             </div>
             <ul className="max-h-48 overflow-y-auto">
-              {dummyComments.length === 0 ? (
+              {comments.length === 0 ? (
                 <li className="mb-6 text-gray-500">No comments yet.</li>
               ) : (
-                dummyComments.map((comment, commentIndex) => (
+                comments.map((comment, commentIndex) => (
                   <li key={commentIndex} className="mb-6 border-b pb-4">
                     <p className="text-gray-700 text-sm">
                       {comment.comment_message}

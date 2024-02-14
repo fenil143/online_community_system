@@ -1,15 +1,30 @@
 "use client";
-import React, { useState } from "react";
-import dummyPosts from "./components/data";
+import React, { useState , useEffect } from "react";
+import Data from "./components/data";
 import Child from "./components/child";
 
 const Posts = () => {
   const [showModal, setShowModal] = useState(false);
+  const [temp,setImg]=useState(undefined);
   const [newPost, setNewPost] = useState({
-    post_name: "",
-    post_description: "",
-    post_image: "",
   });
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    if (localStorage.getItem("student") === null) {
+      router.push("/authentication/loginStudent");
+    }
+    const fetchData = async () => {
+      try {
+        let data = await Data(localStorage.getItem("ownCommunity"));
+        setPosts(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,16 +35,14 @@ const Posts = () => {
     if (
       !newPost.post_name ||
       !newPost.post_description ||
-      !newPost.post_image
+      !temp
     ) {
       alert("All fields are required.");
       return;
     }
     console.log("New Post:", newPost);
+    console.log(temp);
     setNewPost({
-      post_name: "",
-      post_description: "",
-      post_image: "",
     });
     setShowModal(false);
   };
@@ -39,7 +52,7 @@ const Posts = () => {
       <h1 className="text-2xl font-bold mb-4">Community Posts</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {dummyPosts.map((post, index) => (
+        {posts.map((post, index) => (
           <Child post={post} key={index} index={index} />
         ))}
       </div>
@@ -119,7 +132,13 @@ const Posts = () => {
                   id="post_image"
                   name="post_image"
                   value={newPost.post_image}
-                  onChange={handleInputChange}
+                  onChange={(e) => {
+                    const file = e.target.files && e.target.files[0];
+
+                    if (file) {
+                        setImg(file);
+                    }
+                  }}
                   className="mt-1 p-2 border rounded-md w-full focus:outline-none focus:ring focus:border-blue-300 transition"
                   required
                 />
