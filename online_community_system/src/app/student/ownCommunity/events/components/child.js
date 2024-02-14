@@ -84,7 +84,7 @@ const EventListComponent = ({ event }) => {
                 <div
                   style={{
                     width: `${
-                      (event.current_attendees / event.max_attendees) * 100
+                      (((event.current_attendees == undefined)? 0 : event.current_attendees) / event.max_attendees) * 100
                     }%`,
                   }}
                   className="absolute top-0 left-0 h-full bg-indigo-500 rounded-full transition-transform transform"

@@ -1,0 +1,9 @@
+.event-list {
+    overflow-y: auto;
+    transition: scroll-behavior 0.5s ease-in-out; /* Add transition to scroll behavior */
+  }
+  
+  .event-list-scroll {
+    scroll-behavior: smooth; /* Apply smooth scroll behavior */
+  }
+  

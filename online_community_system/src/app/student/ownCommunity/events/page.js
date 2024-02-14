@@ -1,26 +1,37 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Data from "./components/data";
 import Child from "./components/child";
+import "./event.css";
+import axios from "axios";
 
 const EventListComponent = () => {
   const [isAddEventModalOpen, setAddEventModalOpen] = useState(false);
-  const [eventsData,setEventsData] = useState([]);
+  const [eventsData, setEventsData] = useState([]);
+  const eventsEndRef = useRef(null);
   useEffect(() => {
-    if (localStorage.getItem('student') === null) {
-        router.push("/authentication/loginStudent");
+    if (localStorage.getItem("student") === null) {
+      router.push("/authentication/loginStudent");
     }
     const fetchData = async () => {
-        try {
-            let data = await Data(localStorage.getItem("ownCommunity"));
-            setEventsData(data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+      try {
+        let data = await Data(localStorage.getItem("ownCommunity"));
+        setEventsData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
     fetchData();
-}, []);
+    window.scrollTo(0, document.body.scrollHeight);
+  }, []);
+
+  useEffect(() => {
+    if (eventsEndRef.current) {
+      eventsEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [eventsData]);
+
 
   const [newEvent, setNewEvent] = useState({
     name: "",
@@ -44,29 +55,98 @@ const EventListComponent = () => {
     const { name, value, files } = e.target;
 
     if (name === "event_image") {
-        const imagesArray = Array.from(files); 
-        setNewEvent((prevEvent) => ({
-            ...prevEvent,
-            event_images: imagesArray,
-        }));
+      const imagesArray = Array.from(files);
+      setNewEvent((prevEvent) => ({
+        ...prevEvent,
+        event_images: imagesArray,
+      }));
     } else {
-        setNewEvent((prevEvent) => ({
-            ...prevEvent,
-            [name]: value,
-        }));
+      setNewEvent((prevEvent) => ({
+        ...prevEvent,
+        [name]: value,
+      }));
     }
   };
 
   const handleCreateEvent = () => {
-    const requiredFields = ["name", "event_time", "event_description", "event_images", "location", "organizer"];
-    const isEmptyField = requiredFields.some(field => !newEvent[field]);
-
+    const requiredFields = [
+      "name",
+      "event_time",
+      "event_description",
+      "event_images",
+      "location",
+      "organizer",
+    ];
+    const isEmptyField = requiredFields.some((field) => !newEvent[field]);
     if (isEmptyField) {
-        alert("Please fill out all required fields.");
-        return;
+      alert("Please fill out all required fields.");
+      return;
     }
-    // You can add logic here to send the new event data to your server/database
+
     console.log("Creating Event:", newEvent);
+    let promises = [];
+
+    newEvent.event_images.forEach((image) => {
+      const data = new FormData();
+      if (image) {
+        data.append("file", image);
+      } else {
+        console.error("Image is undefined");
+      }
+      data.append("upload_preset", "xtf3nszf");
+      data.append("cloud_name", "da3airmpg");
+
+      const promise = fetch(
+        "https://api.cloudinary.com/v1_1/da3airmpg/image/upload",
+        {
+          method: "post",
+          body: data,
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          return data.url;
+        })
+        .catch((err) => {
+          console.error(err);
+          return null;
+        });
+
+      promises.push(promise);
+    });
+
+    Promise.all(promises)
+      .then((urls) => {
+        console.log(urls);
+        let addEvent = newEvent;
+        addEvent.event_image = urls;
+        addEvent.community_id = localStorage.getItem("ownCommunity");
+
+        axios
+          .post("http://localhost:8000/addEvent", addEvent)
+          .then((response) => {
+            const event_id = response.data.event_id;
+            const url =
+              "http://localhost:8000/addCommunityEvent/" +
+              response.data.community_id;
+            axios
+              .post(url, { event_id: event_id })
+              .then((response) => {
+                console.log("event added successfully");
+                addEvent.current_attendees = 0;
+                setEventsData((prevEvents) => [...prevEvents, addEvent]);
+              })
+              .catch((error) => {
+                alert("Can not add event");
+              });
+          })
+          .catch((error) => {
+            alert("Can not add event");
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     closeAddEventModal();
   };
@@ -74,16 +154,17 @@ const EventListComponent = () => {
   return (
     <div className="event-list flex flex-col items-end gap-4 p-4">
       <div className="overflow-y-auto">
-       {eventsData.map((event, index) => (
-        <div
-          key={event.event_id}
-          className={`flex ${
-            index % 2 === 0 ? "flex-row-reverse w-full" : "flex-row w-full"
-          } items-center`}
-        >
-          <Child event={event} />
-        </div>
-      ))}
+        {eventsData.map((event, index) => (
+          <div
+            key={event.event_id}
+            className={`flex ${
+              index % 2 === 0 ? "flex-row-reverse w-full" : "flex-row w-full"
+            } items-center`}
+          >
+            <Child event={event} />
+          </div>
+        ))}
+        <div ref={eventsEndRef} />
       </div>
 
       <div
