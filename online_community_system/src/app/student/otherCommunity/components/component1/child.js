@@ -1,13 +1,26 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const EventListComponent = ({ event }) => {
   const [readMore, setReadMore] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentAttendees, setCurrentAttendees] = useState(0);
+  const [alreadyPart, setAlreadyPart] = useState(false);
 
   const toggleReadMore = () => {
     setReadMore(!readMore);
   };
+
+  useEffect(() => {
+    setCurrentAttendees(event.current_attendees);
+    const email = localStorage.getItem("student");
+    const arr = event.joined_students || [];
+
+    if (arr.includes(email)) {
+      setAlreadyPart(true);
+    }
+  }, []);
 
   const handleImageNavigation = (direction) => {
     const length = event.event_image.length;
@@ -17,6 +30,37 @@ const EventListComponent = ({ event }) => {
       setCurrentImageIndex((currentImageIndex - 1 + length) % length);
     }
   };
+
+  const joinEvent = () => {
+    if(event.max_attendees == currentAttendees){
+      alert("No space are remaining");
+    }
+    const email = localStorage.getItem("student");
+    const eventId = event.event_id;
+
+    const url = "http://localhost:8000/addStudentToEvent/" + eventId;
+    axios
+      .patch(url, { student_email: email })
+      .then((response) => {
+        setCurrentAttendees(response.data.current_attendees);
+        setAlreadyPart(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const leaveEvent = () => {
+    const email = localStorage.getItem("student");
+    const eventId = event.event_id;
+    const url = "http://localhost:8000/removeStudentFromEvent/" + eventId;
+    axios.patch(url, { student_email : email}).then((response) => {
+        setCurrentAttendees(response.data.current_attendees);
+        setAlreadyPart(false);
+    }).catch((error) => {
+      console.error(error);
+    })
+  }
 
   return (
     <div
@@ -75,7 +119,7 @@ const EventListComponent = ({ event }) => {
               </div>
               <div className="text-right">
                 <span className="text-xs font-semibold inline-block text-indigo-500">
-                  {event.current_attendees} / {event.max_attendees}
+                  {currentAttendees} / {event.max_attendees}
                 </span>
               </div>
             </div>
@@ -84,7 +128,9 @@ const EventListComponent = ({ event }) => {
                 <div
                   style={{
                     width: `${
-                      (((event.current_attendees == undefined)? 0 : event.current_attendees) / event.max_attendees) * 100
+                      ((currentAttendees == undefined ? 0 : currentAttendees) /
+                        event.max_attendees) *
+                      100
                     }%`,
                   }}
                   className="absolute top-0 left-0 h-full bg-indigo-500 rounded-full transition-transform transform"
@@ -97,12 +143,21 @@ const EventListComponent = ({ event }) => {
 
       <div class="flex items-center justify-center">
         <div class="event-actions mt-2 space-x-4">
-          <button
-            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
-            onClick={() => console.log(`Join Event: ${event.name}`)}
-          >
-             Join Event
-          </button>
+          {alreadyPart ? (
+            <button
+              class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+              onClick={leaveEvent}
+            >
+              Leave Event
+            </button>
+          ) : (
+            <button
+              class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+              onClick={joinEvent}
+            >
+              Join Event
+            </button>
+          )}
         </div>
       </div>
     </div>
