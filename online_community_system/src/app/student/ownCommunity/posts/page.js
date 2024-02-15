@@ -168,8 +168,10 @@ const Posts = () => {
                   onChange={(e) => {
                     const file = e.target.files && e.target.files[0];
 
-                    if (file) {
-                      setImg(file);
+                    if (file.size > 5 * 1024 * 1024) {
+                      alert("Image size should be less than 5MB.");
+                    } else {
+                        setImg(file);
                     }
                   }}
                   className="mt-1 p-2 border rounded-md w-full focus:outline-none focus:ring focus:border-blue-300 transition"

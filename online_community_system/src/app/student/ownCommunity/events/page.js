@@ -56,6 +56,16 @@ const EventListComponent = () => {
 
     if (name === "event_image") {
       const imagesArray = Array.from(files);
+      let check = false;
+      imagesArray.forEach((image) => {
+        if (image.size > 5 * 1024 * 1024) {
+          check = true;
+        } 
+      })
+      if(check){
+        alert("Image size should be less than 5 MB. Please try again otherwise some images will not be stored.");
+        return ;
+      }
       setNewEvent((prevEvent) => ({
         ...prevEvent,
         event_images: imagesArray,
@@ -239,6 +249,7 @@ const EventListComponent = () => {
                 type="file"
                 name="event_image"
                 onChange={handleInputChange}
+                // value = {newEvent.event_images}
                 className="border p-2 w-full"
                 multiple
               />
