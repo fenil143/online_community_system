@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@dotlottie/player-component": "^2.7.6",
+    "@react-hook/media-query": "^1.1.1",
     "axios": "^1.6.5",
     "next": "^14.1.0",
     "react": "^18",
