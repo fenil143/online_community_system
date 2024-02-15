@@ -1,481 +1,194 @@
 'use client';
-// import { Inter } from 'next/font/google'
-// import Link from "next/link"
-// import "./admin.css";
-// import { useState } from "react";
-// import { useRouter } from "next/navigation";
 
-// const inter = Inter({ subsets: ['latin'] })
+import { Inter } from 'next/font/google'
+import Link from "next/link"
+import "./admin.css";
+import { useState,useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-// export default function RootLayout({
-//     children,
-// }: {
-//     children: React.ReactNode
-// }) {
-
-//     const [navbar, setNavbar] = useState("uStudents");
-//     const router = useRouter();
-
-//     function dropdown() {
-//         const submenu = document.querySelector("#submenu");
-//         const arrow = document.querySelector("#arrow");
-
-//         if (submenu && arrow) {
-//             submenu.classList.toggle("hidden");
-//             arrow.classList.toggle("rotate-0");
-//         }
-//     }
-
-//     dropdown();
-
-//     function openSidebar() {
-//         const sidebar = document.querySelector(".sidebar");
-
-//         if (sidebar) {
-//             sidebar.classList.toggle("hidden");
-//         }
-//     }
-
-//     function handleLogout(){
-//         localStorage.removeItem('admin');
-//         router.replace("/");
-//     }
-//     return (
-//         <html>
-//             <head>
-//                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-//                 <link href="/dist/tailwind.css" rel="stylesheet" />
-//                 <link
-//                     rel="stylesheet"
-//                     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
-//                 />
-//             </head>
-//             <body className="bg-blue-100">
-//                 <div
-//                     className="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900"
-//                 >
-//                     <div className="text-gray-100 text-xl">
-//                         <div className="p-2.5 mt-1 flex items-center">
-//                             <i className="bi bi-app-indicator px-2 py-1 rounded-md bg-blue-600"></i>
-//                             <h1 className="font-bold text-gray-200 text-[15px] ml-3">Online Community</h1>
-//                             <i
-//                                 className="bi bi-x cursor-pointer ml-28 lg:hidden"
-//                                 onClick={openSidebar}
-//                             ></i>
-//                         </div>
-//                         <div className="my-2 bg-gray-600 h-[1px]"></div>
-//                     </div>
-//                     <Link href="/admin/unverifiedStudents" onClick={()=>setNavbar('uStudents')}><div
-//                         className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'uStudents' ? 'bg-blue-600' : ''
-//                             }`}
-//                     >
-//                         <i className="bi bi-person-fill"></i>
-//                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Students</span>
-//                     </div></Link>
-//                     <Link href="/admin/unverifiedCommunities" onClick={()=>setNavbar('uCommunities')}><div
-//                         className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'uCommunities' ? 'bg-blue-600' : '' }`}
-//                     >
-//                         <i className="bi bi-bookmark-fill"></i>
-
-//                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Communities</span>
-//                     </div></Link>
-//                     <div className="my-4 bg-gray-600 h-[1px]"></div>
-//                     <div
-//                         className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
-//                         onClick={dropdown}
-//                     >
-//                         <i className="bi bi-chat-left-text-fill"></i>
-//                         <div className="flex justify-between w-full items-center">
-//                             <span className="text-[15px] ml-4 text-gray-200 font-bold">Members</span>
-//                             <span className="text-sm rotate-180" id="arrow">
-//                                 <i className="bi bi-chevron-down"></i>
-//                             </span>
-//                         </div>
-//                     </div>
-//                     <div
-//                         className="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold"
-//                         id="submenu"
-//                     >
-//                         <Link href="/admin/verifiedStudents" onClick={()=>setNavbar('vStudents')}><h1 className={`cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1 ${navbar === 'vStudents' ? 'bg-blue-600' : '' }`}>
-//                             Students
-//                         </h1></Link>
-//                         <Link href="/admin/verifiedCommunities" onClick={()=>setNavbar('vCommunities')}><h1 className={`cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1 ${navbar === 'vCommunities' ? 'bg-blue-600' : ''}`}>
-//                             Communities
-//                         </h1></Link>
-//                     </div>
-//                     <div
-//                         className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
-//                     onClick={handleLogout}>
-//                         <i className="bi bi-box-arrow-in-right"></i>
-//                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Logout</span>
-//                     </div>
-//                 </div>
-//                 <div style={{ marginLeft: "300px" }} className="h-full bg-blue-100">
-//                     {children}
-//                 </div>
-//             </body>
-//         </html>
-//     )
-// }
-// // Import necessary libraries and styles
-// Import necessary libraries and styles
-// Import necessary libraries and styles
-// import { Inter } from 'next/font/google'
-// import Link from 'next/link';
-// import './admin.css';
-// import { useState } from 'react';
-// import { useRouter } from 'next/navigation';
-
-// const inter = Inter({ subsets: ['latin'] });
-
-// export default function RootLayout({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) {
-//     const [navbar, setNavbar] = useState("uStudents");
-//     const router = useRouter();
-//     const [isSidebarExpanded, setSidebarExpanded] = useState(false);
-
-//     function dropdown() {
-//         const submenu = document.querySelector("#submenu");
-//         const arrow = document.querySelector("#arrow");
-
-//         if (submenu && arrow) {
-//             submenu.classList.toggle("hidden");
-//             arrow.classList.toggle("rotate-0");
-//         }
-//     }
-
-//     function toggleSidebar() {
-//         setSidebarExpanded((prev) => !prev);
-//     }
-
-//     function handleLogout() {
-//         localStorage.removeItem("admin");
-//         router.replace("/");
-//     }
-//   return (
-//     <html>
-//       <head>
-//         <meta
-//           name="viewport"
-//           content="width=device-width, initial-scale=1.0"
-//         />
-//         <link href="/dist/tailwind.css" rel="stylesheet" />
-//         <link
-//           rel="stylesheet"
-//           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
-//         />
-//        <style>
-//        {`
-//             @media (max-width: 767px) {
-//               .sidebar {
-//                 width: auto; /* Set width to auto for mobile screens */
-//                 text-align: center; /* Center icons in the sidebar */
-//               }
-
-//               .sidebar .text-gray-200 {
-//                 display: none;
-//               }
-
-//               .sidebar .icon-only {
-//                 display: inline-block;
-//               }
-
-//               .submenu .lg-inline {
-//                 display: none;
-//               }
-
-//               /* Additional styles for mobile screens */
-//               .sidebar {
-//                 background-color: #333; /* Example additional styling */
-//               }
-
-//               .sidebar h1 {
-//                 font-size: 18px; /* Example additional styling */
-//               }
-//             }
-//           `}
-//         </style>
-//       </head>
-//       <body className="bg-blue-100">
-//       <div
-//             className={`sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[300px] lg:w-auto overflow-y-auto text-center bg-gray-900 ${
-//                 isSidebarExpanded ? "expanded" : "collapsed"
-//             }`}
-//         >
-//             <div className="text-gray-100 text-xl">
-//                 <div className="p-2.5 mt-1 flex items-center">
-//                     <i className="bi bi-app-indicator px-2 py-1 rounded-md bg-blue-600"></i>
-//                     <h1 className={`font-bold text-gray-200 text-[15px] ml-3 ${isSidebarExpanded ? "hidden" : "lg:inline"}`}>
-//                         Online Community
-//                     </h1>
-//                     <i
-//                         className={`bi bi-x cursor-pointer ml-28 lg:hidden ${isSidebarExpanded ? "lg:inline" : "hidden"}`}
-//                         onClick={toggleSidebar}
-//                     ></i>
-//                 </div>
-//                 <div className="my-2 bg-gray-600 h-[1px]"></div>
-//             </div>
-//    <Link href="/admin/unverifiedStudents" onClick={() => setNavbar('uStudents')}>
-//             <div
-//               className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${
-//                 navbar === 'uStudents' ? 'bg-blue-600' : ''
-//               }`}
-//             >
-//               <i className="bi bi-person-fill"></i>
-//               <span className="lg:inline hidden text-[15px] ml-4 text-gray-200 font-bold">
-//                 Students
-//               </span>
-//               <span className="icon-only lg:hidden">
-//                 <i className="bi bi-person-fill"></i>
-//               </span>
-//             </div>
-//           </Link>
-
-//           <div className="my-4 bg-gray-600 h-[1px]"></div>
-//           <div
-//             className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${
-//               navbar === 'Members' ? 'bg-blue-600' : ''
-//             }`}
-//             onClick={dropdown}
-//           >
-//             <i className="bi bi-chat-left-text-fill"></i>
-//             <div className="flex justify-between w-full items-center">
-//               <span className="lg:inline hidden text-[15px] ml-4 text-gray-200 font-bold">
-//                 Members
-//               </span>
-//               <span className="text-sm rotate-180" id="arrow">
-//                 <i className="bi bi-chevron-down"></i>
-//               </span>
-//             </div>
-//           </div>
-
-//           <div className="submenu text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold" id="submenu">
-//             <Link href="/admin/verifiedStudents" onClick={() => setNavbar('vStudents')}>
-                
-//               <h1 className={`cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1 ${navbar === 'vStudents' ? 'bg-blue-600' : ''} lg-inline`}>
-//               <i className="bi bi-person-fill"></i> Students
-//               </h1>
-//             </Link>
-//             <Link href="/admin/verifiedCommunities" onClick={() => setNavbar('vCommunities')}>
-//               <h1 className={`cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1 ${navbar === 'vCommunities' ? 'bg-blue-600' : ''} lg-inline`}>
-//               <i className="bi bi-person-fill"></i>  Communities
-//               </h1>
-//             </Link>
-//           </div>
-
-//           <div
-//             className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${
-//               navbar === 'Logout' ? 'bg-blue-600' : ''
-//             }`}
-//             onClick={handleLogout}
-//           >
-//             <i className="bi bi-box-arrow-in-right"></i>
-//             <span className="lg:inline hidden text-[15px] ml-4 text-gray-200 font-bold">
-//               Logout
-//             </span>
-//             <span className="icon-only lg:hidden">
-//               <i className="bi bi-box-arrow-in-right"></i>
-//             </span>
-//           </div>
-//         </div>
-
-//         <div style={{ marginLeft: '300px' }} className="h-full bg-blue-100">
-//           {children}
-//         </div>
-//       </body>
-//     </html>
-//   );
-// }
-import { Inter } from 'next/font/google';
-import Link from 'next/link';
-import './admin.css';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode
 }) {
-  const [navbar, setNavbar] = useState('uStudents');
+
+   
+  const [navbar, setNavbar] = useState("uStudents");
   const router = useRouter();
-  const [isSidebarExpanded, setSidebarExpanded] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  function dropdown() {
-  const submenu = document.querySelector('#submenu');
-  const arrow = document.querySelector('#arrow');
+  const toggleSidebar = () => {
+      setIsOpen(!isOpen);
+  };
 
-  if (submenu && arrow) {
-    submenu.classList.toggle('hidden');
-    arrow.classList.toggle('rotate-180');
+  const dropdown = () => {
+      const submenu = document.querySelector("#submenu");
+      const arrow = document.querySelector("#arrow");
 
-    // Show icons in mobile view
-    const icons = document.querySelectorAll('.submenu .lg-inline');
+      if (submenu && arrow) {
+          submenu.classList.toggle("hidden");
+          arrow.classList.toggle("rotate-0");
+      }
+  };
 
-    if (window.innerWidth <= 767) {
-      icons.forEach((icon) => {
-        icon.classList.toggle('hidden');
-      });
-    }
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+          setIsOpen(false);
+      } else {
+          setIsOpen(true);
+      }
+  };
+
+  handleResize(); // Call the resize handler once to set the initial state
+
+  window.addEventListener('resize', handleResize);
+
+  return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  function handleLogout(){
+      localStorage.removeItem('admin');
+      router.replace("/");
   }
-}
 
 
-  function toggleSidebar() {
-    setSidebarExpanded((prev) => !prev);
-  }
+    return (
+        <html>
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <link href="/dist/tailwind.css" rel="stylesheet" />
+                <link
+                    rel="stylesheet"
+                    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
+                />
+            </head>
+            <body className="bg-blue-100">
+            <button
+                    type="button"
+                    onClick={toggleSidebar}
+                    className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                >
+                    <span className="sr-only">{isOpen ? 'Close sidebar' : 'Open sidebar'}</span>
+                    <svg
+                        className="w-6 h-6"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            clipRule="evenodd"
+                            fillRule="evenodd"
+                            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+                        ></path>
+                    </svg>
+                </button>
 
-  function handleLogout() {
-    localStorage.removeItem('admin');
-    router.replace('/');
-  }
 
-  return (
-    <html>
-      <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
-        <link href="/dist/tailwind.css" rel="stylesheet" />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
-        />
-        <style>
-          {`
-            @media (max-width: 767px) {
-              .sidebar {
-                width: auto; /* Set width to auto for mobile screens */
-                text-align: center; /* Center icons in the sidebar */
-              }
+            {/* Sidebar */}
+            {isOpen && typeof window !== 'undefined' && ( // Only render if isOpen is true and window is defined
+                    <aside
+                        id="sidebar-multi-level-sidebar"
+                        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:w-80 lg:w-64 translate-x-0`}
+                        aria-label="Sidebar"
+                    >
+                        {/* Close button for the sidebar on mobile */}
+                        {window.innerWidth <= 768 && (
+                            <button
+                                type="button"
+                                onClick={toggleSidebar}
+                                className="absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-600 focus:outline-none"
+                            >
+                                <span className="sr-only">Close sidebar</span>
+                                <svg
+                                    className="w-6 h-6"
+                                    aria-hidden="true"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+                        )}
 
-              .sidebar .text-gray-200 {
-                display: none;
-              }
-              
-              .sidebar .icon-only {
-                display: inline-block;
-              }
-              .h-full {
-                margin-left: 0;
-              }
 
-              .submenu .lg-inline {
-                display: none;
-              }
 
-              /* Additional styles for mobile screens */
-              .sidebar {
-                background-color: #333; /* Example additional styling */
-              }
+     <div className="h-full px-3 py-4 overflow-y-auto  dark:bg-gray-800 bg-gray-900">
+                    <ul className="space-y-2 font-medium">
+                        {/* Sidebar items */}
+                        {/* Replace this section with your sidebar content */}
+                        <div className="text-gray-100 text-xl">
+                         <div className="p-2.5 mt-1 flex items-center">
+                             <i className="bi bi-app-indicator px-2 py-1 rounded-md bg-blue-600"></i>
+                             <h1 className="font-bold text-gray-200 text-[15px] ml-3">Online Community</h1>
+                             {/* <i
+                                className="bi bi-x cursor-pointer ml-28 lg:hidden"
+                                onClick={openSidebar}
+                            ></i> */}
+                        </div>
+                        <div className="my-2 bg-gray-600 h-[1px]"></div>
+                    </div>
+                    <Link href="/admin/unverifiedStudents" onClick={()=>setNavbar('uStudents')}><div
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'uStudents' ? 'bg-blue-600' : ''
+                            }`}
+                    >
+                        <i className="bi bi-person-fill"></i>
+                        <span className="text-[15px] ml-4 text-gray-200 font-bold">Students</span>
+                    </div></Link>
+                    <Link href="/admin/unverifiedCommunities" onClick={()=>setNavbar('uCommunities')}><div
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'uCommunities' ? 'bg-blue-600' : '' }`}
+                    >
+                        <i className="bi bi-bookmark-fill"></i>
 
-              .sidebar h1 {
-                font-size: 18px; /* Example additional styling */
-              }
-            }
-          `}
-        </style>
-      </head>
-      <body className="bg-blue-100">
-        <div
-          className={`sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[300px] lg:w-auto overflow-y-auto text-center bg-gray-900 ${
-            isSidebarExpanded ? 'expanded' : 'collapsed'
-          }`}
-        >
-          <div className="text-gray-100 text-xl">
-            <div className="p-2.5 mt-1 flex items-center">
-              <i className="bi bi-app-indicator px-2 py-1 rounded-md bg-blue-600"></i>
-              <h1
-                className={`font-bold text-gray-200 text-[15px] ml-3 ${
-                  isSidebarExpanded ? 'hidden' : 'lg:inline'
-                }`}
-              >
-                Online Community
-              </h1>
-              <i
-                className={`bi bi-x cursor-pointer ml-28 lg:hidden ${
-                  isSidebarExpanded ? 'lg:inline' : 'hidden'
-                }`}
-                onClick={toggleSidebar}
-              ></i>
-            </div>
-            <div className="my-2 bg-gray-600 h-[1px]"></div>
-          </div>
-
-          <Link href="/admin/unverifiedStudents" onClick={() => setNavbar('uStudents')}>
-            <div
-              className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${
-                navbar === 'uStudents' ? 'bg-blue-600' : ''
-              }`}
-            >
-              <i className="bi bi-person-fill"></i>
-              <span className="lg:inline hidden text-[15px] ml-4 text-gray-200 font-bold">
-                Students
-              </span>
-              {/* <span className="icon-only lg:hidden">
-                <i className="bi bi-person-fill"></i>
-              </span> */}
-            </div>
-          </Link>
-
-          <div className="my-4 bg-gray-600 h-[1px]"></div>
-
-          <div
-            className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${
-              navbar === 'Members' ? 'bg-blue-600' : ''
-            }`}
-            onClick={dropdown}
-          >
-            <i className="bi bi-chat-left-text-fill"></i>
-            <div className="flex justify-between w-full items-center">
-              <span className="lg:inline hidden text-[15px] ml-4 text-gray-200 font-bold">
-                Members
-              </span>
-              <span className="text-sm rotate-180" id="arrow">
-                <i className="bi bi-chevron-down"></i>
-              </span>
-            </div>
-          </div>
-
-          <div className="submenu text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold" id="submenu">
-            <Link href="/admin/verifiedStudents" onClick={() => setNavbar('vStudents')}>
-              <h1 className={`cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1 ${navbar === 'vStudents' ? 'bg-blue-600' : ''} lg-inline`}>
-                <i className="bi bi-person-fill"></i> Students
-              </h1>
-            </Link>
-            <Link href="/admin/verifiedCommunities" onClick={() => setNavbar('vCommunities')}>
-              <h1 className={`cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1 ${navbar === 'vCommunities' ? 'bg-blue-600' : ''} lg-inline`}>
-                <i className="bi bi-building"></i> Communities
-              </h1>
-            </Link>
-          </div>
-
-          <div
-            className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${
-              navbar === 'Logout' ? 'bg-blue-600' : ''
-            }`}
-            onClick={handleLogout}
-          >
-            <i className="bi bi-box-arrow-in-right"></i>
-            <span className="lg:inline hidden text-[15px] ml-4 text-gray-200 font-bold">
-              Logout
-            </span>
-            <span className="icon-only lg:hidden">
-              <i className="bi bi-box-arrow-in-right"></i>
-            </span>
-          </div>
-        </div>
-
-        <div style={{ marginLeft: '300px' }} className="h-full bg-blue-100">
-          {children}
-        </div>
-      </body>
-    </html>
-  );
+                        <span className="text-[15px] ml-4 text-gray-200 font-bold">Communities</span>
+                    </div></Link>
+                    <div className="my-4 bg-gray-600 h-[1px]"></div>
+                    <div
+                        className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+                        onClick={dropdown}
+                    >
+                        <i className="bi bi-chat-left-text-fill"></i>
+                        <div className="flex justify-between w-full items-center">
+                            <span className="text-[15px] ml-4 text-gray-200 font-bold">Members</span>
+                            <span className="text-sm rotate-180" id="arrow">
+                                <i className="bi bi-chevron-down"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div
+                        className="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold"
+                        id="submenu"
+                    >
+                        <Link href="/admin/verifiedStudents" onClick={()=>setNavbar('vStudents')}><h1 className={`cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1 ${navbar === 'vStudents' ? 'bg-blue-600' : '' }`}>
+                            Students
+                        </h1></Link>
+                        <Link href="/admin/verifiedCommunities" onClick={()=>setNavbar('vCommunities')}><h1 className={`cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1 ${navbar === 'vCommunities' ? 'bg-blue-600' : ''}`}>
+                            Communities
+                        </h1></Link>
+                    </div>
+                    <div
+                        className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+                    onClick={handleLogout}>
+                        <i className="bi bi-box-arrow-in-right"></i>
+                        <span className="text-[15px] ml-4 text-gray-200 font-bold">Logout</span>
+                     </div>
+                    </ul>
+                </div>
+            </aside>
+             )}
+                <div  className="p-4 sm:ml-64 bg-blue-100">
+                    {children}
+                </div>
+            </body>
+        </html>
+    )
 }
