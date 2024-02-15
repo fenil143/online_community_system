@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Data from "./components/data";
-import Child from "./components/child";
+import Data from "./component2/data";
+import Child from "./component2/child";
 import axios from "axios";
 
 const Posts = () => {
@@ -16,7 +16,7 @@ const Posts = () => {
     }
     const fetchData = async () => {
       try {
-        let data = await Data(localStorage.getItem("ownCommunity"));
+        let data = await Data(localStorage.getItem("otherCommunity"));
         setPosts(data);
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -109,6 +109,7 @@ export default function community() {
                     ))
                 )
             }
+            <div className = "mb-24"></div>
             {/* {
                 filteredCommunities.map((community) => (
                     <Child key={community._id} community={community} />
