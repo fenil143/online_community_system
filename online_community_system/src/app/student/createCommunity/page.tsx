@@ -115,7 +115,9 @@ export default function student() {
                             onChange={(e) => {
                                 const file: any = e.target.files && e.target.files[0];
 
-                                if (file) {
+                                if (file.size > 1 * 1024 * 1024) {
+                                    alert("Image size should be less than 1MB.");
+                                } else {
                                     setImage(file);
                                 }
                             }}
