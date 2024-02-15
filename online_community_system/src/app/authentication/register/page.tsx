@@ -170,10 +170,12 @@ function register() {
                         onChange={(e) => {
                             const file: any = e.target.files && e.target.files[0];
 
-                            if (file) {
+                            if (file.size > 5 * 1024 * 1024) {
+                                alert("Image size should be less than 5MB.");
+                              } else{
                                 setImg(file);
-                                setImage(URL.createObjectURL(file));
-                            }
+                                setImage(URL.createObjectURL(file))
+                              }
                         }}
                         required
                     />
