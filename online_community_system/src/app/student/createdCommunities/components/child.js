@@ -9,7 +9,7 @@ const Child = ({ community }) => {
   const router = useRouter();
   function handleClick(e){
     localStorage.setItem("ownCommunity",community_name);
-    router.push("ownCommunity/requests");
+    router.push("ownCommunity/");
   }
 
   return (
