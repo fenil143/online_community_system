@@ -65,7 +65,7 @@ export default function RootLayout({
                     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
                 />
             </head>
-            <body className="bg-blue-100">
+            <body className="bg-blue-100 font-poppins">
             <button
                     type="button"
                     onClick={toggleSidebar}
