@@ -110,7 +110,7 @@ export default function community(obj : any) {
                     ))
                 )
             }
-
+            <div className="mb-24"></div>
         </div>
     )
 }

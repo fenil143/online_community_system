@@ -55,7 +55,7 @@ export default function requests() {
                         })
                     )
             }
-            <div className="mb-36"></div>
+            <div className="mb-24"></div>
         </div>
     );
 }

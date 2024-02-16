@@ -212,6 +212,7 @@ const Parent = () => {
                     ))
                 )
             )}
+            <div className="mb-24"></div>
         </div>
     );
 };
