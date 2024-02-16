@@ -4,17 +4,40 @@ import "./student.css";
 import Link from "next/link"
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
+import CreateCommunity from "./components/createCommunity/page1";
+import CreatedCommunities from "./components/createdCommunities/page1";
+import JoinCommunity from "./components/joinCommunity/page1";
+import JoinedCommunities from "./components/joinedCommunities/page1";
+import OwnCommunity from "./components/ownCommunity/page";
+import OtherCommunity from "./components/otherCommunity/page";
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
+export default function RootLayout() {
 
     const [navbar, setNavbar] = useState("jCommunity");
     const router = useRouter();
+    const changeNavbar = (str : string) => {
+        setNavbar(str);
+    }
+    const renderComponent = () => {
+        switch (navbar) {
+            case "jCommunity":
+                return <JoinCommunity />;
+            case "cCommunity":
+                return <CreateCommunity />;
+            case "jdCommunity":
+                return <JoinedCommunities changeNavbar = {changeNavbar} />;
+            case "cdCommunity":
+                return <CreatedCommunities changeNavbar = {changeNavbar} />;
+            case "ownCommunity":
+                return <OwnCommunity />;
+            case "otherCommunity":
+                return <OtherCommunity />;
+            default:
+                return null;
+        }
+    };
 
     if (localStorage.getItem('student') === null) {
         router.push("/authentication/loginStudent");
@@ -70,14 +93,14 @@ export default function RootLayout({
                         </div>
                         <div className="my-2 bg-gray-600 h-[1px]"></div>
                     </div>
-                    <Link href="/student/joinCommunity" onClick={()=>setNavbar('jCommunity')}><div
+                    <Link href="" onClick={()=>setNavbar('jCommunity')}><div
                         className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'jCommunity' ? 'bg-blue-600' : ''
                     }`}
                     >
                         <i className="bi bi-shop"></i>
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Join Community</span>
                     </div></Link>
-                    <Link href="/student/createCommunity" onClick={()=>setNavbar('cCommunity')}><div
+                    <Link href="" onClick={()=>setNavbar('cCommunity')}><div
                         className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'cCommunity' ? 'bg-blue-600' : ''
                     }`}
                     >
@@ -86,16 +109,16 @@ export default function RootLayout({
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Create Community</span>
                     </div></Link>
                     <div className="my-4 bg-gray-600 h-[1px]"></div>
-                    <Link href="/student/joinedCommunities" onClick={()=>setNavbar("jdCommunity")}><div
-                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'jdCommunity' ? 'bg-blue-600' : ''
+                    <Link href="" onClick={()=>setNavbar("jdCommunity")}><div
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${(navbar === 'jdCommunity' || navbar === "otherCommunity") ? 'bg-blue-600' : ''
                     }`}
                     >
                         <i className="bi bi-chat-left-text"></i>
                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Joined Communities</span>
                     </div></Link>
-                    <Link href="/student/createdCommunities" onClick={()=>setNavbar("cdCommunity")}>
+                    <Link href="" onClick={()=>setNavbar("cdCommunity")}>
                     <div
-                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${navbar === 'cdCommunity' ? 'bg-blue-600' : ''
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${(navbar === 'cdCommunity' || navbar === 'ownCommunity') ? 'bg-blue-600' : ''
                     }`}
                     >
                         <i className="bi bi-bookmark-fill"></i>
@@ -111,7 +134,7 @@ export default function RootLayout({
                     </div>
                 </div>
                 <div style={{ marginLeft: "300px" }} className="bg-blue-100">
-                    {children}
+                    {renderComponent()}
                 </div>
             </body>
         </html>

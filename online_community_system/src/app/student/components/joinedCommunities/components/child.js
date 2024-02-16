@@ -2,14 +2,15 @@ import React from "react";
 import axios from 'axios';
 import { useRouter } from "next/navigation";
 
-const Child = ({ community }) => {
+const Child = ({ community , changeNavbar }) => {
   const { community_name, owner_email, image } = community;
   const owner = owner_email ;
   const name = community_name;
   const router = useRouter();
   function handleClick(e){
     localStorage.setItem("otherCommunity",community_name);
-    router.push("otherCommunity/");
+    // router.push("otherCommunity/");
+    changeNavbar("otherCommunity");
   }
 
   return (

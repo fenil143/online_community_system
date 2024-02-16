@@ -23,7 +23,7 @@ function login() {
                 if (response.data.message) {
                     localStorage.setItem("student",formData["email"]);
                     alert(response.data.message);
-                    Router.push("/student/joinCommunity");
+                    Router.push("/student/");
                 } else {
                     alert(response.data.error);
                 }

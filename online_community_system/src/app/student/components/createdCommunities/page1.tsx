@@ -11,7 +11,7 @@ interface Community {
 
 import { useRouter } from 'next/navigation';
 
-export default function community() {
+export default function community(obj : any) {
     const [searchTerm, setSearchTerm] = useState('');
     const [communitiesData, setCommunitiesData] = useState<Community[]>([]);
     const [filteredCommunities, setFilteredCommunities] = useState<Community[]>([]);
@@ -106,7 +106,7 @@ export default function community() {
                     /></div>
                 ) : (
                     filteredCommunities.map((community) => (
-                        <Child key={community._id} community={community} />
+                        <Child key={community._id} community={community} changeNavbar={obj.changeNavbar} />
                     ))
                 )
             }
