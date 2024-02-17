@@ -5,7 +5,7 @@ import Child from "./components/child";
 import Welcome from './components/welcome';
 import { useRouter } from "next/navigation";
 import Image from 'next/image'
-
+import NotFound from './Not_Found';
 interface Community {
     community_name: string
     _id: string
@@ -71,12 +71,13 @@ function Community() {
             <Welcome onSearch={handleSearch} />
             {
                 filteredCommunities.length === 0 ? (
-                    <div className=" text-center ml-96"><Image
-                        src="/assets/noData.png"
-                        width={500}
-                        height={500}
-                        alt="Picture of the author"
-                    /></div>
+                    <div className="flex items-center justify-center h-screen">
+                    <div className="h-auto max-w-full mx-auto mt-2">
+                        <NotFound/>
+
+                    </div>
+                  </div>
+                  
                 ) : (
                     filteredCommunities.map((e) => {
                         return <Child data={e} key={e._id} removeCommunityByName={removeCommunityByName}/>

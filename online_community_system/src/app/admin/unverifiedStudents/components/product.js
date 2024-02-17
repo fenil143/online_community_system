@@ -177,22 +177,23 @@ export default function Product(props) {
            </div> 
          
               </div>
-            <div className="md:w-48 flex flex-col mt-4 justify-center mr-2 md:mr-10">
+              <div className="flex flex-col  justify-center md:w-30 mr-0 ">
   <button
     onClick={handleAccept}
-    className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2"
+    className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-10 py-3 text-center mb-2"
     type="button"
   >
     Accept
   </button>
   <button
     onClick={handleReject}
-    className="text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2"
+    className="text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-10 py-3 text-center mb-2"
     type="button"
   >
     Reject
   </button>
 </div>
+
 
   </div>
 </div>

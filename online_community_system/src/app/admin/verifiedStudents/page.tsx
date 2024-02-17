@@ -5,6 +5,7 @@ import Data from './components/data';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation";
 import Image from 'next/image'
+import Not_Found from '../unverifiedCommunities/Not_Found';
 
 interface Student {
     name: string;
@@ -66,12 +67,12 @@ function students() {
             <Welcome onSearch={handleSearch} />
             {
                 filteredStudents.length == 0 ? (
-                    <div className=" text-center ml-96 mt-8"><Image
-                        src="/assets/noData.png"
-                        width={500}
-                        height={500}
-                        alt="Picture of the author"
-                    /></div>
+                    <div className="flex items-center justify-center h-screen">
+                    <div className="h-auto max-w-full mx-auto mt-2">
+                        <Not_Found/>
+
+                    </div>
+                  </div>
                 ) :
                     (
                         filteredStudents.map((e) => {

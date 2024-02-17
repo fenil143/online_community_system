@@ -51,7 +51,7 @@ export default function RootLayout({
 
   function handleLogout(){
       localStorage.removeItem('admin');
-      router.replace("/");
+      window.location.href="/landing";
   }
 
 
