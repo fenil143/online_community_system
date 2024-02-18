@@ -4,6 +4,7 @@ import Data from './components/data';
 import Child from "./components/child"
 import { useRouter } from 'next/navigation';
 import Image from 'next/image'
+import Not_Found from '@/app/admin/unverifiedCommunities/Not_Found';
 
 interface Community {
     _id: string,
@@ -63,13 +64,13 @@ export default function community(obj : any) {
     };
 
     return (
-        <div className="container mx-auto p-8">
-            <nav className="flex justify-between items-center mb-8 bg-gradient-to-r from-teal-500 to-indigo-500 p-4 rounded-md shadow-md">
-                <div className="flex items-center space-x-4">
-                    <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path d="M10 1a9 9 0 017.993 12.79l5.727 5.727-1.414 1.414-5.727-5.727A9 9 0 1110 1zm0 2a7 7 0 100 14 7 7 0 000-14z" />
-                    </svg>
+        <div className="container mx-auto p-4 md:p-8 lg:p-1">
+        <nav className="flex flex-col md:flex-row justify-between items-center mb-4 md:mb-8 bg-gradient-to-r from-blue-500 to-purple-500 p-4 rounded-md shadow-md">
+          <div className="flex items-center space-x-4">
+           <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path d="M10 1a9 9 0 017.993 12.79l5.727 5.727-1.414 1.414-5.727-5.727A9 9 0 1110 1zm0 2a7 7 0 100 14 7 7 0 000-14z" />
+            </svg>
                     <h1 className="text-2xl font-bold text-white">Joined Communities</h1>
                 </div>
             </nav>
@@ -97,12 +98,12 @@ export default function community(obj : any) {
             </div>
             {
                 filteredCommunities.length === 0 ? (
-                    <div className=" text-center ml-80"><Image
-                        src="/assets/noData.png"
-                        width={500}
-                        height={500}
-                        alt="Picture of the author"
-                    /></div>
+                    <div className="flex items-center justify-center h-screen">
+            <div className="h-auto max-w-full mx-auto mt-2">
+                <Not_Found/>
+
+            </div>
+          </div>
                 ) : (
                     filteredCommunities.map((community) => (
                         <Child key={community._id} community={community} changeNavbar = {obj.changeNavbar} />
