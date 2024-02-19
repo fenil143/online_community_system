@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Data from "./components/data";
 import Child from "./components/child";
 import Image from 'next/image'
+import Not_Found from "@/app/admin/unverifiedCommunities/Not_Found";
 
 interface Student {
     email: string;
@@ -42,12 +43,12 @@ export default function requests() {
         <div>
             {
                 filteredStudents.length === 0 ? (
-                    <div className=" text-center ml-96"><Image
-                        src="/assets/noData.png"
-                        width={500}
-                        height={500}
-                        alt="Picture of the author"
-                    /></div>
+                    <div className="flex items-center justify-center h-screen">
+                    <div className="h-auto max-w-full mx-auto mt-2">
+                        <Not_Found/>
+        
+                    </div>
+                  </div>
                 ) : (
                     filteredStudents.map((e) => {
                         return <div><Child data={e} removeStudentByEmail={removeStudentByEmail} /></div>

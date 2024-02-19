@@ -163,27 +163,28 @@ const Parent = () => {
           </div>
         </nav>
       
-        <div className="flex flex-col items-center justify-end w-full md:w-5/6 mx-auto">
-  <div className="relative w-full max-w-xs md:max-w-md lg:max-w-lg flex ">
-    <input
-      type="text"
-      placeholder="Search communities"
-      value={searchTerm}
-      onChange={handleSearchChange}
-      className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 bg-white text-gray-800 placeholder-gray-500 focus:shadow-md"
-    />
-    <button
-      type="submit" onClick={handleSearch}
-      className={`ml-2 mt-0.5 mb-4 ${ "bg-blue-500 hover:bg-blue-600"} text-white rounded-md px-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400`}
-    >
-      <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 0h24v24H0z" fill="none" />
-        <path d="M10 1a9 9 0 017.993 12.79l5.727 5.727-1.414 1.414-5.727-5.727A9 9 0 1110 1zm0 2a7 7 0 100 14 7 7 0 000-14z" />
-      </svg>
-    </button>
-  </div>
-</div>
+        <div className="flex items-center justify-end w-5/6 mx-auto">
+                <div className="relative w-full max-w-xs flex">
+                    <input
+                        type="text"
+                        placeholder="Search communities"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 bg-white text-gray-800 placeholder-gray-500 focus:shadow-md"
+                    />
+                    <button
+                        type="submit" onClick={handleSearch}
+                        className={`ml-2 mt-0.5 mb-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md px-2  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400`}
+                    >
+                        <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path d="M10 1a9 9 0 017.993 12.79l5.727 5.727-1.414 1.414-5.727-5.727A9 9 0 1110 1zm0 2a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                    </button>
 
+
+                </div>
+            </div>
       
         {(navbar === "Community") ? (
           filteredCommunities.length === 0 ? (

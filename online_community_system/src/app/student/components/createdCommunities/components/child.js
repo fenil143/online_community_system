@@ -14,8 +14,8 @@ const Child = ({ community, changeNavbar }) => {
   }
 
   return (
-    <div className="relative group overflow-hidden bg-gradient-to-br from-pink-500 to-red-500 p-4 mb-4 rounded-md shadow-md hover:shadow-lg transform hover:scale-105 transition-transform duration-300 w-4/5 mx-auto">
-      <div className="flex items-center space-x-4">
+    <div className="relative group overflow-hidden bg-gradient-to-br bg-purple-950 p-4 mb-4 rounded-md shadow-md hover:shadow-lg transform hover:scale-105 transition-transform duration-300 w-4/5 mx-auto">
+     <div className="flex items-center space-x-4">
         <div className="overflow-hidden rounded-full w-16 h-16 group-hover:rotate-6">
           <img
             src={
@@ -30,9 +30,14 @@ const Child = ({ community, changeNavbar }) => {
           <p className="text-gray-300">Owner: {owner}</p>
         </div>
       </div>
-      <button className="absolute bottom-4 right-4 px-4 py-2 text-white bg-sky-500 rounded-md hover:bg-sky-600 focus:outline-none focus:ring focus:border-yellow-300 transition duration-300" onClick={handleClick}>
-        Explore Community
-      </button>
+      <div class="flex justify-end mt-auto">
+          <button
+            class="bg-sky-500 hover:bg-sky-800  text-white px-4 py-2 rounded-full focus:outline-none focus:shadow-outline-green transition-transform transform hover:scale-110 duration-300 ease-in-out"
+            onClick={handleClick}
+          >
+            Explore Community
+          </button>
+          </div>
     </div>
   );
 };
