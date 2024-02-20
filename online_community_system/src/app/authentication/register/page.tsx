@@ -1,13 +1,16 @@
 'use client'
 import { FormEvent, useState } from "react";
+
 import axios from 'axios';
 import Link from "next/link";
+import { useRouter } from 'next/router';
 function handleRegistration() {
     console.log('Registration button clicked');
     // ... rest of your registration logic
 }
 
 function register() {
+    // const router = useRouter();
     const [image, setImage] = useState<string | null>(null);
     const [temp,setImg]=useState(undefined);
     const [githubLink, setGithubLink] = useState('');
@@ -44,6 +47,7 @@ function register() {
         }
     };
     function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
+       
         event.preventDefault();
         const formData: { [key: string]: any } = {};
         const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
@@ -76,7 +80,9 @@ function register() {
                 .then(response => {
                     console.log(response.data);
                     if (response.data.message) {
-                        alert('Registration successful! Your details will be varified.');
+                        alert('Registration successful! Your details will be verified.');
+                       // router.replace("/landing")
+                       // history("/landing");
                     } else {
                         alert(response.data.error);
                     }
@@ -97,7 +103,7 @@ function register() {
     return (
         <div className="w-full lg:w-7/12 bg-blue-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none overflow-y-auto mx-auto">
             <h3 className="py-4 text-2xl text-center text-gray-800 dark:text-white">Create an Account!</h3>
-            <form className="px-4 sm:px-8 pt-6 pb-8 mb-4 bg-white dark:bg-gray-800 rounded ">
+            <form className="px-4 sm:px-8 pt-6 pb-8 mb-4 bg-white dark:bg-gray-800 rounded " onSubmit={handleFormSubmit}>
                  <div className="mb-4 md:flex md:justify-between">
                     <div className="mb-4 md:mr-2 md:mb-0">
                         <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="firstName">
@@ -328,7 +334,7 @@ function register() {
                 <div className="mb-6 text-center">
                     <button
                         className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-900 focus:outline-none focus:shadow-outline border-blue-300"
-                        type="submit" onClick={handleRegistration}
+                        type="submit"
                     >
                         Register Account
                     </button>

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+var nodemailer = require('nodemailer');
 const Student = require("../../models/student");
 const StudentInfo = require("../../models/studentInfo");
 
@@ -252,8 +253,35 @@ router.get("/getStudentInfo/:email", async (req, res) => {
 });
 
 router.patch("/updateStudentInfo/:email", async (req, res) => {
+  const { email } = req.params;
+  var transporter = nodemailer.createTransport({
+
+    service: 'gmail',
+    auth: {
+
+      user: 'bhavik5033@gmail.com',
+      pass: 'phblgjyjsosztbhn'
+
+    }
+
+  });
+  var mailOptions = {
+    from: 'bhavik5033@gmail.com',
+    to: email,
+    subject: 'Online Community Management System',
+    html: `
+        <h1 style="color: #333; font-family: Arial, sans-serif;">Verification Status</h1>
+        <p style="color: #666; font-family: Arial, sans-serif;">
+            Congratulations! You are verified by the admin. Now you can log in to the system.
+        </p>
+        <p style="color: #666; font-family: Arial, sans-serif;">
+            Thank you.
+        </p>
+    `
+};
+
   try {
-    const { email } = req.params;
+   
     const existingStudent = await Student.findOne({ email });
 
     if (!existingStudent) {
@@ -278,7 +306,23 @@ router.patch("/updateStudentInfo/:email", async (req, res) => {
         existingStudentInfo[field] = req.body[field];
       }
     }
-    await existingStudentInfo.save();
+    let result=await existingStudentInfo.save();
+    console.log(result);
+    if (result) {
+      transporter.sendMail(mailOptions, function (error, info) {
+
+        if (error) {
+
+          console.log(error);
+
+        } else {
+
+          console.log('Email sent: ' + info.response);
+
+        }
+
+      });
+    }
 
     res.status(200).json(updatedStudent);
   } catch (error) {
@@ -288,40 +332,140 @@ router.patch("/updateStudentInfo/:email", async (req, res) => {
 });
 
 router.delete('/removeStudent/:email', async (req, res) => {
+  console.log("remove Student")
+  const { email } = req.params;
+  console.log(email);
+  var transporter1 = nodemailer.createTransport({
+
+    service: 'gmail',
+    auth: {
+
+      user: 'bhavik5033@gmail.com',
+      pass: 'phblgjyjsosztbhn'
+
+    }
+
+  });
+  var mailOptions2 = {
+    from: 'bhavik5033@gmail.com',
+    to: email,
+    subject: 'Online Community Management System',
+    html: `
+        <h1 style="color: #333; font-family: Arial, sans-serif;">Verification Status</h1>
+        <p style="color: #666; font-family: Arial, sans-serif;">
+            Sorry, you are not verified by the admin. Please register with valid data in the system.
+        </p>
+        <p style="color: #666; font-family: Arial, sans-serif;">
+            Thank you.
+        </p>
+    `
+};
   try {
-    const { email } = req.params;
+   
 
     const deletedStudent = await Student.findOneAndDelete({ email });
 
-    if (!deletedStudent) {
-      return res.status(404).json({ error: 'Student not found' });
+    // if (!deletedStudent) {
+    //   return res.status(404).json({ error: email });
+    // }
+
+    let result=await StudentInfo.findOneAndDelete({ email });
+    if(result)
+    {
+      transporter1.sendMail(mailOptions2, function (error, info) {
+
+        if (error) {
+
+          console.log(error);
+
+        } else {
+
+          console.log('Email sent: ' + info.response);
+
+        }
+
+      });
+
     }
-
-    await StudentInfo.findOneAndDelete({ email });
-
     res.status(200).json({ message: 'Student removed successfully', deletedStudent });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+// router.delete('/removeStudent/:email', async (req, res) => {
+//   try {
+//     const { email } = req.params;
 
-router.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
+//     // Find and delete the student record from the database
+//     const deletedStudent = await Student.findOneAndDelete({ email });
 
-    const existingStudent = await Student.findOne({ email: email });
+//     // If the student record doesn't exist, return a 404 error
+//     if (!deletedStudent) {
+//       return res.status(404).json({ error: 'Student found' });
+//     }
 
-    if (existingStudent && existingStudent.password === password) {
-      res.status(200).json({ message: "Login successful" });
-    } else {
-      res.status(401).json({ error: "Invalid email or password" });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+//     // Also delete any additional information related to the student, if applicable
+//     await StudentInfo.findOneAndDelete({ email });
+
+//     // Send an email notification to the student
+//     const transporter = nodemailer.createTransport({
+//       service: 'gmail',
+//       auth: {
+//         user: 'bhavik5033@gmail.com',
+//         pass: 'phblgjyjsosztbhn'
+//       }
+//     });
+
+//     const mailOptions = {
+//       from: 'bhavik5033@gmail.com',
+//       to: email,
+//       subject: 'Online Community Management System - Account Deletion',
+//       html: `
+//         <h1 style="color: #333; font-family: Arial, sans-serif;">Account Deletion Notification</h1>
+//         <p style="color: #666; font-family: Arial, sans-serif;">
+//           Your account has been successfully deleted from our system.
+//         </p>
+//         <p style="color: #666; font-family: Arial, sans-serif;">
+//           If you believe this is an error or have any questions, please contact us.
+//         </p>
+//         <p style="color: #666; font-family: Arial, sans-serif;">
+//           Thank you.
+//         </p>
+//       `
+//     };
+
+//     transporter.sendMail(mailOptions, (error, info) => {
+//       if (error) {
+//         console.error('Error sending email:', error);
+//       } else {
+//         console.log('Email sent:', info.response);
+//       }
+//     });
+
+//     // Return a success message
+//     res.status(200).json({ message: 'Student removed successfully', deletedStudent });
+//   } catch (error) {
+//     console.error('Error removing student:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+// router.post("/login", async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     const existingStudent = await Student.findOne({ email: email });
+
+//     if (existingStudent && existingStudent.password === password) {
+//       res.status(200).json({ message: "Login successful" });
+//     } else {
+//       res.status(401).json({ error: "Invalid email or password" });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
 router.patch("/requestCommunity/:email", async (req, res) => {
   try {
