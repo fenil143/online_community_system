@@ -7,6 +7,7 @@ const student = mongoose.Schema({
     qualification: String,
     resume: String,
     image: String,
+    university:String,
     status: { type: Boolean, default: false },
     pending_community_id : mongoose.Schema.Types.Mixed,
     joined_community_id: mongoose.Schema.Types.Mixed,

@@ -12,6 +12,7 @@ function handleRegistration() {
 function register() {
     // const router = useRouter();
     const [image, setImage] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
     const [temp,setImg]=useState(undefined);
     const [githubLink, setGithubLink] = useState('');
     const [githubLinkError, setGithubLinkError] = useState('');
@@ -24,6 +25,7 @@ function register() {
     };
 
     const handleGithubLinkChange = (e: any) => {
+        
         const newLink = e.target.value;
         if (isGithubLinkValid(newLink) || newLink === '') {
             setGithubLink(newLink);
@@ -46,10 +48,18 @@ function register() {
             setLinkedinLinkError('Please paste a valid LinkedIn link.');
         }
     };
+    
     function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
        
         event.preventDefault();
+       
+
+        setLoading(true);
+
+       
+        try{
         const formData: { [key: string]: any } = {};
+        
         const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
 
         for (let i = 0; i < formElements.length; i++) {
@@ -90,14 +100,22 @@ function register() {
                 .catch(error => {
                     console.error(error);
                     alert('Registration failed. Internal Server Error.');
+                }).finally(()=>{
+                    setLoading(false);
                 });
 
         }).catch((err) => {
             console.log(err);
         })
         console.log('User Data:', formData);
-
-        handleRegistration();
+    }
+    catch (error) {
+        console.error(error);
+        alert('Registration failed. Internal Server Error.');
+    } finally {
+        setLoading(false); // Set loading back to false when form submission is complete
+    }
+       
     }
 
     return (
@@ -198,6 +216,21 @@ function register() {
                         placeholder="Experience"
                         required
                     />
+                </div>
+                <div className="mb-4">
+                    <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="college">
+                        University
+                    </label>
+                    <select required id="university" className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+    
+      <option value="DDU">Dharmsinh Desai University(DDU)</option>
+      <option value="GTU">Gujarat Technological University(GTU)</option>
+      <option value="Nirma">Nirma University</option>
+      <option value="LJ">LJ University</option>
+      <option value="SOU">Silver Oak University</option>
+      <option value="GU">Gujarat University</option>
+      
+  </select>
                 </div>
                 <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="college">
@@ -332,12 +365,15 @@ function register() {
                     />
                 </div>
                 <div className="mb-6 text-center">
-                    <button
-                        className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-900 focus:outline-none focus:shadow-outline border-blue-300"
+                <button
+                        className={`w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-900 focus:outline-none focus:shadow-outline border-blue-300'
+                            }`}
                         type="submit"
+                        disabled={loading} // Disable the button when loading
                     >
-                        Register Account
+                        {loading ? 'Registering...' : 'Register Account'}
                     </button>
+
                 </div>
                 <hr className="mb-6 border-t" />
                 <div className="text-center">

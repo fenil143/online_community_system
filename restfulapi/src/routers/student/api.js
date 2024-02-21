@@ -5,6 +5,7 @@ const Student = require("../../models/student");
 const StudentInfo = require("../../models/studentInfo");
 
 router.post("/storeStudent", async (req, res) => {
+  console.log(req.body);
   try {
     let {
       name,
@@ -17,6 +18,7 @@ router.post("/storeStudent", async (req, res) => {
       skill,
       linkedin_link,
       college,
+      university,
       graduation_year,
       description,
       starting_date,
@@ -40,6 +42,7 @@ router.post("/storeStudent", async (req, res) => {
       name,
       email,
       password,
+      university,
       qualification,
       image,
     });
@@ -54,6 +57,7 @@ router.post("/storeStudent", async (req, res) => {
       skill,
       linkedin_link,
       college,
+      university,
       graduation_year,
       description,
       starting_date,
@@ -114,6 +118,7 @@ router.get("/students", async (req, res) => {
         joined_community_id: student.joined_community_id,
         created_community_id: student.created_community_id,
         status: student.status,
+        university:student.university,
         cpi: info.cpi,
         skill: info.skill,
         college: info.college,
@@ -150,6 +155,7 @@ router.get("/verifiedStudents", async (req, res) => {
         email: student.email,
         qualification: student.qualification,
         resume: student.resume,
+        university:student.university,
         image: student.image,
         joined_community_id: student.joined_community_id,
         created_community_id: student.created_community_id,

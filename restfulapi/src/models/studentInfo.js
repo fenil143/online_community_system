@@ -11,6 +11,7 @@ const student_info=mongoose.Schema({
     github_link:String,
     description:String,
     starting_date:String,
+    university:String,
     field:String,
     ending_date:String,
     hobbies:String,
