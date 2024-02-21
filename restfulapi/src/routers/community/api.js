@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Community = require("../../models/community");
-
+var nodemailer = require('nodemailer');
 router.get("/allCommunities", async (req, res) => {
   try {
     const allCommunities = await Community.find();
@@ -63,26 +63,65 @@ router.post("/storeCommunity", async (req, res) => {
 });
 
 router.patch("/activateCommunity/:community_name", async (req, res) => {
+  const { email } = req.body; // Extract email from the request body
+  const { community_name } = req.params;
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'bhavik5033@gmail.com',
+      pass: 'phblgjyjsosztbhn'
+    }
+  });
+
+  var mailOptions = {
+    from: 'bhavik5033@gmail.com',
+    to: email,
+    subject: 'Online Community Management System',
+    html: `
+      <h1 style="color: #333; font-family: Arial, sans-serif;">Verification Status</h1>
+      <p style="color: #666; font-family: Arial, sans-serif;">
+        Congratulations! Your Community ${community_name} has been approved by the admin. Now you can add Events and Posts and also invite students to the community.
+      </p>
+      <p style="color: #666; font-family: Arial, sans-serif;">
+        Thank you.
+      </p>
+    `
+  };
   try {
-    const { community_name } = req.params;
+ 
     const updatedCommunity = await Community.findOneAndUpdate(
       { community_name: community_name, verified_status: false },
       { $set: { verified_status: true } },
       { new: true }
     );
+     if(updatedCommunity)
+     {
+      transporter.sendMail(mailOptions, function (error, info) {
 
+        if (error) {
+
+          console.log(error);
+
+        } else {
+
+          console.log('Email sent: ' + info.response);
+
+        }
+
+      });
+     }
     if (!updatedCommunity) {
       return res
         .status(200)
         .json({ error: "Community not found or already active" });
     }
+    
     res.status(200).json(updatedCommunity);
   } catch (error) {
     console.error(error);
     res.status(200).json({ error: "Internal Server Error" });
   }
 });
-
 router.delete('/deleteCommunity/:communityName', async (req, res) => {
   const communityName = req.params.communityName;
 

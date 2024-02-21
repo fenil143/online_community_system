@@ -5,6 +5,7 @@ const Admin = require("../../models/admin")
 router.post("/test",async (req,res) =>{
     const id = req.body.admin_id;
     const pass = req.body.admin_password;
+    
     try{
         const temp = await Admin.find();
         const ans = await Admin.find({admin_id:id,admin_password:pass});

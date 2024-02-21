@@ -68,12 +68,13 @@
 import React from "react";
 import axios from "axios";
 
+
 const Child = ({ data, removeCommunityByName }) => {
   const handleAccept = async () => {
     try {
-      await axios.patch(`http://localhost:8000/activateCommunity/${data.community_name}`, { status: true });
+      await axios.patch(`http://localhost:8000/activateCommunity/${data.community_name}`, { status: true ,email:data.owner_email});
 
-      await axios.patch(`http://localhost:8000/addCommunity/${data.owner_email}`,{ newCommunityId : data.community_name})
+      await axios.patch(`http://localhost:8000/addCommunity/${data.owner_email}`,{ newCommunityId : data.community_name,description:data.description})
       removeCommunityByName(data.community_name);
     } catch (error) {
       console.error('Error accepting community:', error);

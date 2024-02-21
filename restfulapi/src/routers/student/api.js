@@ -83,7 +83,7 @@ router.post("/login", async (req, res) => {
 
     const existingStudent = await Student.findOne({ email: email });
 
-    if(existingStudent && existingStudent.status === false){
+    if (existingStudent && existingStudent.status === false) {
       return res.status(200).json({ error: "You will be varified by admin soon" });
     }
 
@@ -118,7 +118,7 @@ router.get("/students", async (req, res) => {
         joined_community_id: student.joined_community_id,
         created_community_id: student.created_community_id,
         status: student.status,
-        university:student.university,
+        university: student.university,
         cpi: info.cpi,
         skill: info.skill,
         college: info.college,
@@ -127,7 +127,7 @@ router.get("/students", async (req, res) => {
         starting_date: info.starting_date,
         field: info.field,
         hobbies: info.hobbies,
-        working_location: info.working_location 
+        working_location: info.working_location
       };
     });
 
@@ -155,7 +155,7 @@ router.get("/verifiedStudents", async (req, res) => {
         email: student.email,
         qualification: student.qualification,
         resume: student.resume,
-        university:student.university,
+        university: student.university,
         image: student.image,
         joined_community_id: student.joined_community_id,
         created_community_id: student.created_community_id,
@@ -168,7 +168,7 @@ router.get("/verifiedStudents", async (req, res) => {
         starting_date: info.starting_date,
         field: info.field,
         hobbies: info.hobbies,
-        working_location: info.working_location 
+        working_location: info.working_location
       };
     });
 
@@ -284,10 +284,10 @@ router.patch("/updateStudentInfo/:email", async (req, res) => {
             Thank you.
         </p>
     `
-};
+  };
 
   try {
-   
+
     const existingStudent = await Student.findOne({ email });
 
     if (!existingStudent) {
@@ -312,7 +312,7 @@ router.patch("/updateStudentInfo/:email", async (req, res) => {
         existingStudentInfo[field] = req.body[field];
       }
     }
-    let result=await existingStudentInfo.save();
+    let result = await existingStudentInfo.save();
     console.log(result);
     if (result) {
       transporter.sendMail(mailOptions, function (error, info) {
@@ -365,9 +365,9 @@ router.delete('/removeStudent/:email', async (req, res) => {
             Thank you.
         </p>
     `
-};
+  };
   try {
-   
+
 
     const deletedStudent = await Student.findOneAndDelete({ email });
 
@@ -375,9 +375,8 @@ router.delete('/removeStudent/:email', async (req, res) => {
     //   return res.status(404).json({ error: email });
     // }
 
-    let result=await StudentInfo.findOneAndDelete({ email });
-    if(result)
-    {
+    let result = await StudentInfo.findOneAndDelete({ email });
+    if (result) {
       transporter1.sendMail(mailOptions2, function (error, info) {
 
         if (error) {
@@ -474,6 +473,7 @@ router.delete('/removeStudent/:email', async (req, res) => {
 // });
 
 router.patch("/requestCommunity/:email", async (req, res) => {
+
   try {
     const { email } = req.params;
     const { newCommunityId } = req.body;
@@ -560,37 +560,64 @@ router.patch("/joinCommunity/:email", async (req, res) => {
 });
 
 router.patch("/addCommunity/:email", async (req, res) => {
+  const transporter3 = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'bhavik5033@gmail.com',
+      pass: 'phblgjyjsosztbhn'
+    }
+  });
   try {
     const { email } = req.params;
-    const { newCommunityId } = req.body;
+    const { newCommunityId, description } = req.body;
+
     const existingStudent = await Student.findOne({ email: email });
 
     if (!existingStudent) {
       return res.status(404).json({ error: "User not found" });
     }
-    if (existingStudent.created_community_id == undefined) {
-      existingStudent.created_community_id = [];
-    }
-    if (!existingStudent.created_community_id.includes(newCommunityId)) {
-      const updatedStudent = await Student.findOneAndUpdate(
-        { email },
-        { $push: { created_community_id: newCommunityId } },
-        { new: true }
-      );
-      res.status(200).json(updatedStudent);
+
+    const university = existingStudent.university;
+    const students = await Student.find({ email: email, status: true, university: university });
+
+    const recipientEmails = students.map((student) => student.email);
+
+    if (recipientEmails.length > 0) {
+      // Send emails to recipients
+      const mailOptions3 = {
+        from: 'bhavik5033@gmail.com',
+        to: recipientEmails.join(', '), // Assuming 'data' contains the recipient's email
+        subject: 'Online Community Management System',
+        html: `
+          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto;">
+            <h1 style="color: #333; font-size: 24px;">Regarding New Community!</h1>
+            <p>
+              <strong>Community Name:</strong> ${newCommunityId}<br>
+              <strong>Community Description:</strong> ${description}
+            </p>
+            <p style="color: #666; font-size: 16px;">Thank you.</p>
+          </div>
+        `,
+      };
+
+      transporter3.sendMail(mailOptions3, (error, info) => {
+        if (error) {
+          console.error(error);
+          return res.status(500).json({ error: "Error sending emails" });
+        } else {
+          console.log('Emails sent:', info.response);
+          // Continue with the database updates or any other logic
+          res.status(200).json({ message: "Emails sent successfully" });
+        }
+      });
     } else {
-      res
-        .status(400)
-        .json({
-          message: "Community ID already exists in joined_community_id",
-        });
+      return res.status(200).json({ message: "No students found to send emails" });
     }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 router.patch("/leaveCommunity/:email", async (req, res) => {
   try {
     const { email } = req.params;
