@@ -65,7 +65,7 @@ const EventListComponent = ({ event }) => {
   return (
     <div
       key={event.event_id}
-      className="event-card bg-white p-4 rounded-md shadow-md w-1/3"
+      className="event-card bg-white p-4 rounded-md shadow-md w-3/3"
     >
       <div className="event-images mb-4 relative overflow-hidden">
         <div className="w-full h-48 flex items-center justify-center relative">

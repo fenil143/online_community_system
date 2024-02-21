@@ -122,11 +122,11 @@ export default function Product(props) {
             <img class="h-48 w-full object-cover md:h-auto md:w-48 ml-2 mr-2 rounded" src={dummy.image} alt="User Image" />
             <div class="flex justify-center mt-2 md:mt-0">
                 <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="flex p-px pl-2 pb-3 items-center hover:scale-125 transition-transform mr-2 ml-1">
-                    <i class="bi bi-linkedin text-xl text-red-500"></i>
+                    <i class="bi bi-linkedin text-xl text-blue-500"></i>
                     <span class="hidden md:inline-block ml-1">LinkedIn</span>
                 </a>
                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="flex items-center pl-2 pb-3 hover:scale-125 transition-transform mr-1">
-                    <i class="bi bi-github text-xl text-blue-500"></i>
+                    <i class="bi bi-github text-xl text-black-500"></i>
                     <span class="hidden md:inline-block ml-1">GitHub</span>
                 </a>
             </div>
@@ -141,6 +141,10 @@ export default function Product(props) {
             <div className="flex items-center mb-2">
                 <span className="text-gray-700 font-medium">College :</span>
                 <span className="text-gray-600 ml-2">{dummy.college}</span>
+            </div>
+            <div className="flex items-center mb-2">
+                <span className="text-gray-700 font-medium">University :</span>
+                <span className="text-gray-600 ml-2">{dummy.university}</span>
             </div>
             <div className="flex items-center mb-2">
                 <span className="text-gray-700 font-medium">Graduation Year :</span>

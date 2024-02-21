@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-
+import axios from "axios";
 const EventListComponent = ({ event }) => {
   const [readMore, setReadMore] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -17,11 +17,22 @@ const EventListComponent = ({ event }) => {
       setCurrentImageIndex((currentImageIndex - 1 + length) % length);
     }
   };
+  const getDetails = async ()=>{
+    axios.post("http://localhost:8000/getdetails", {
+      email: localStorage.getItem("student"),
+      event:event.event_id
+  }).then((response) => {
+      alert("Students List SuccessFully Sent")
+    //console.log(response.data.Data);
 
+}).catch((error)=>{
+  alert(error)
+})
+  }
   return (
     <div
       key={event.event_id}
-      className="event-card bg-white p-4 rounded-md shadow-md w-1/3"
+      className="event-card bg-white p-4 rounded-md shadow-md w-3/3"
     >
       <div className="event-images mb-4 relative overflow-hidden">
         <div className="w-full h-48 flex items-center justify-center relative">
@@ -99,7 +110,7 @@ const EventListComponent = ({ event }) => {
         <div class="event-actions mt-2 space-x-4">
           <button
             class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
-            onClick={() => console.log(`Join Event: ${event.name}`)}
+            onClick={getDetails}
           >
              Get Details
           </button>

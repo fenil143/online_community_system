@@ -43,7 +43,7 @@ router.post("/storeCommunity", async (req, res) => {
       res
         .status(200)
         .json({ error: "Community with this name already exists" });
-        return ;
+      return;
     }
     const communityData = req.body;
     communityData.verified_status = false;
@@ -88,14 +88,13 @@ router.patch("/activateCommunity/:community_name", async (req, res) => {
     `
   };
   try {
- 
+
     const updatedCommunity = await Community.findOneAndUpdate(
       { community_name: community_name, verified_status: false },
       { $set: { verified_status: true } },
       { new: true }
     );
-     if(updatedCommunity)
-     {
+    if (updatedCommunity) {
       transporter.sendMail(mailOptions, function (error, info) {
 
         if (error) {
@@ -109,13 +108,13 @@ router.patch("/activateCommunity/:community_name", async (req, res) => {
         }
 
       });
-     }
+    }
     if (!updatedCommunity) {
       return res
         .status(200)
         .json({ error: "Community not found or already active" });
     }
-    
+
     res.status(200).json(updatedCommunity);
   } catch (error) {
     console.error(error);
@@ -123,13 +122,54 @@ router.patch("/activateCommunity/:community_name", async (req, res) => {
   }
 });
 router.delete('/deleteCommunity/:communityName', async (req, res) => {
+  const { email } = req.body;
   const communityName = req.params.communityName;
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'bhavik5033@gmail.com',
+      pass: 'phblgjyjsosztbhn'
+    }
+  });
+  const mailOptions = {
+    from: 'bhavik5033@gmail.com',
+    to: email,
+    subject: 'Online Community Management System - Verification Status',
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333;">
+        <h1 style="font-size: 24px;">Verification Status</h1>
+        <p style="font-size: 16px;">
+          Sorry! Your Community <strong>${communityName}</strong> has not been approved by the admin. Please enter valid information.
+        </p>
+        <p style="font-size: 16px;">
+          Thank you.
+        </p>
+      </div>
+    `,
+  };
+
+
 
   try {
     const community = await Community.findOneAndDelete({ community_name: communityName });
 
     if (!community) {
       return res.status(404).json({ error: 'Community not found' });
+    }
+    if (community) {
+      transporter.sendMail(mailOptions, function (error, info) {
+
+        if (error) {
+
+          console.log(error);
+
+        } else {
+
+          console.log('Email sent: ' + info.response);
+
+        }
+
+      });
     }
 
     return res.status(200).json({ message: 'Community deleted successfully' });
@@ -235,9 +275,9 @@ router.post("/rejectJoinRequest/:community_name", async (req, res) => {
     }
 
     const updatedCommunity = await Community.findOneAndUpdate(
-        { community_name },
-        { $pull: { pending_join_requests: student_email }},
-        { new: true }
+      { community_name },
+      { $pull: { pending_join_requests: student_email } },
+      { new: true }
     );
     res.status(200).json(updatedCommunity);
   } catch (error) {
@@ -259,9 +299,9 @@ router.post("/removeJoinedStudent/:community_name", async (req, res) => {
 
     const updatedCommunity = await Community.findOneAndUpdate(
       { community_name },
-      { $pull: { joined_students : student_email }},
+      { $pull: { joined_students: student_email } },
       { new: true }
-   );
+    );
 
     res.status(200).json(updatedCommunity);
   } catch (error) {
@@ -309,7 +349,7 @@ router.delete("/removeCommunityEvent/:community_name", async (req, res) => {
 
     const updatedCommunity = await Community.findOneAndUpdate(
       { community_name },
-      { $pull: { community_events: event_id }},
+      { $pull: { community_events: event_id } },
       { new: true }
     );
     res.status(200).json(updatedCommunity);

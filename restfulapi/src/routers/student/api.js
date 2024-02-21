@@ -491,6 +491,7 @@ router.patch("/requestCommunity/:email", async (req, res) => {
         { $push: { pending_community_id: newCommunityId } },
         { new: true }
       );
+     
       res.status(200).json(updatedStudent);
     } else {
       res
@@ -528,9 +529,37 @@ router.patch("/cancelRequest/:email", async (req, res) => {
 });
 
 router.patch("/joinCommunity/:email", async (req, res) => {
+  const { email } = req.params;
+  const { newCommunityId } = req.body;
+  var transporter5 = nodemailer.createTransport({
+
+    service: 'gmail',
+    auth: {
+
+      user: 'bhavik5033@gmail.com',
+      pass: 'phblgjyjsosztbhn'
+
+    }
+
+  });
+  const mailOptions5= {
+    from: 'bhavik5033@gmail.com',
+    to: email,
+    subject: 'Online Community Management System - Community Joining Status',
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto;">
+        <h1 style="color: #333; font-size: 24px;">Community Joining Status</h1>
+        <p style="color: #666; font-size: 16px;">
+          Congratulations! You have been verified by the Community admin. Now you can explore the community, add posts, and gain knowledge.
+        </p>
+        <p style="color: #666; font-size: 16px;">Thank you.</p>
+      </div>
+    `,
+  };
+  
   try {
-    const { email } = req.params;
-    const { newCommunityId } = req.body;
+  
+    
     const existingStudent = await Student.findOne({ email: email });
 
     if (!existingStudent) {
@@ -545,6 +574,17 @@ router.patch("/joinCommunity/:email", async (req, res) => {
         { $push: { joined_community_id: newCommunityId } },
         { new: true }
       );
+      transporter5.sendMail(mailOptions5, (error, info) => {
+        if (error) {
+          console.error(error);
+          return res.status(500).json({ error: "Error sending emails" });
+        } else {
+          console.log('Emails sent:', info.response);
+          // Continue with the database updates or any other logic
+          res.status(200).json({ message: "Emails sent successfully" });
+        }
+      });
+
       res.status(200).json(updatedStudent);
     } else {
       res

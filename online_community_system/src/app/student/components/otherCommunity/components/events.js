@@ -34,13 +34,11 @@ const EventListComponent = () => {
 
   return (
     <div className="event-list flex flex-col items-end gap-4 p-4">
-      <div className="overflow-y-auto">
-        {eventsData.map((event, index) => (
+     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {eventsData.map((event, index) => (
           <div
             key={event.event_id}
-            className={`flex ${
-              index % 2 === 0 ? "flex-row-reverse w-full" : "flex-row w-full"
-            } items-center`}
+           
           >
             <Child event={event} />
           </div>
