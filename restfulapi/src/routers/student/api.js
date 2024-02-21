@@ -578,39 +578,78 @@ router.patch("/addCommunity/:email", async (req, res) => {
     }
 
     const university = existingStudent.university;
-    const students = await Student.find({ email: email, status: true, university: university });
+    const students = await Student.find({ status: true, university: university });
 
     const recipientEmails = students.map((student) => student.email);
+    console.log(recipientEmails)
+    if (recipientEmails) {
+      res.json({ data: "success" })
+      recipientEmails.map((data) => {
+        const mailOptions3 = {
+                from: 'bhavik5033@gmail.com',
+                to: data, // Assuming 'data' contains the recipient's email
+                subject: 'Online Community Management System',
+                html: `
+                  <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto;">
+                    <h1 style="color: #333; font-size: 24px;">Regarding New Community!</h1>
+                    <p>
+                      <strong>Community Name:</strong> ${newCommunityId}<br>
+                      <strong>Community Description:</strong> ${description}
+                    </p>
+                    <p style="color: #666; font-size: 16px;">Thank you.</p>
+                  </div>
+                `,
+              };
 
-    if (recipientEmails.length > 0) {
-      // Send emails to recipients
-      const mailOptions3 = {
-        from: 'bhavik5033@gmail.com',
-        to: recipientEmails.join(', '), // Assuming 'data' contains the recipient's email
-        subject: 'Online Community Management System',
-        html: `
-          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto;">
-            <h1 style="color: #333; font-size: 24px;">Regarding New Community!</h1>
-            <p>
-              <strong>Community Name:</strong> ${newCommunityId}<br>
-              <strong>Community Description:</strong> ${description}
-            </p>
-            <p style="color: #666; font-size: 16px;">Thank you.</p>
-          </div>
-        `,
-      };
-
-      transporter3.sendMail(mailOptions3, (error, info) => {
-        if (error) {
-          console.error(error);
-          return res.status(500).json({ error: "Error sending emails" });
-        } else {
-          console.log('Emails sent:', info.response);
-          // Continue with the database updates or any other logic
-          res.status(200).json({ message: "Emails sent successfully" });
-        }
-      });
-    } else {
+              transporter3.sendMail(mailOptions3, (error, info) => {
+                      if (error) {
+                        console.error(error);
+                        return res.status(500).json({ error: "Error sending emails" });
+                      } else {
+                        console.log('Emails sent:', info.response);
+                        // Continue with the database updates or any other logic
+                        res.status(200).json({ message: "Emails sent successfully" });
+                      }
+                    });
+                  });
+    
+      }
+    
+    
+    
+    // if (recipientEmails.length > 0) {
+    //   // Send emails to recipients
+    //   recipientEmails.map((data)=>{
+    //     const mailOptions3 = {
+    //       from: 'bhavik5033@gmail.com',
+    //       to: data, // Assuming 'data' contains the recipient's email
+    //       subject: 'Online Community Management System',
+    //       html: `
+    //         <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto;">
+    //           <h1 style="color: #333; font-size: 24px;">Regarding New Community!</h1>
+    //           <p>
+    //             <strong>Community Name:</strong> ${newCommunityId}<br>
+    //             <strong>Community Description:</strong> ${description}
+    //           </p>
+    //           <p style="color: #666; font-size: 16px;">Thank you.</p>
+    //         </div>
+    //       `,
+    //     };
+  
+    //     transporter3.sendMail(mailOptions3, (error, info) => {
+    //       if (error) {
+    //         console.error(error);
+    //         return res.status(500).json({ error: "Error sending emails" });
+    //       } else {
+    //         console.log('Emails sent:', info.response);
+    //         // Continue with the database updates or any other logic
+    //         res.status(200).json({ message: "Emails sent successfully" });
+    //       }
+    //     });
+    //   })
+      
+    // } 
+    else {
       return res.status(200).json({ message: "No students found to send emails" });
     }
   } catch (error) {
