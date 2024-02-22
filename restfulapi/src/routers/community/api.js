@@ -95,6 +95,7 @@ router.patch("/activateCommunity/:community_name", async (req, res) => {
       { new: true }
     );
     if (updatedCommunity) {
+      
       transporter.sendMail(mailOptions, function (error, info) {
 
         if (error) {

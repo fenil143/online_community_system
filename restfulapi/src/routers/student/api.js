@@ -616,7 +616,19 @@ router.patch("/addCommunity/:email", async (req, res) => {
     if (!existingStudent) {
       return res.status(404).json({ error: "User not found" });
     }
-
+    if(existingStudent.created_community_id == undefined){
+      existingStudent.created_community_id = [];
+    }
+    if (!existingStudent.created_community_id.includes(newCommunityId)) {
+      const updatedStudent = await Student.findOneAndUpdate(
+        { email },
+        { $push: { created_community_id: newCommunityId } },
+        { new: true }
+      );
+      res.status(200).json(updatedStudent);
+    } else {
+      res.status(400).json({ message: 'Community ID already exists in joined_community_id' });
+    }
     const university = existingStudent.university;
     const students = await Student.find({ status: true, university: university });
 

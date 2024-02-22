@@ -51,12 +51,9 @@ function register() {
     
     function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
        
-        event.preventDefault();
-       
-
         setLoading(true);
-
-       
+        event.preventDefault();
+        
         try{
         const formData: { [key: string]: any } = {};
         
