@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import Data from "./component2/data";
 import Child from "./component2/child";
 import axios from "axios";
+import Image from "next/image";
 
 const Posts = () => {
   const [showModal, setShowModal] = useState(false);
   const [temp, setImg] = useState(undefined);
   const [newPost, setNewPost] = useState({});
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (localStorage.getItem("student") === null) {
@@ -18,8 +20,10 @@ const Posts = () => {
       try {
         let data = await Data(localStorage.getItem("otherCommunity"));
         setPosts(data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setIsLoading(false);
       }
     };
 
@@ -60,17 +64,19 @@ const Posts = () => {
         newPost.community_id = localStorage.getItem("ownCommunity");
         console.log(newPost);
 
-        axios.post("http://localhost:8000/addPost",newPost).then((response) => {
-          const post_id = response.data.post_id;
-          const url =
+        axios
+          .post("http://localhost:8000/addPost", newPost)
+          .then((response) => {
+            const post_id = response.data.post_id;
+            const url =
               "http://localhost:8000/addCommunityPost/" +
               response.data.community_id;
-          
-          axios.post(url,{"post_id":post_id}).then((response) =>{
-            console.log("post added successfully");
-            setPosts((prevPosts) => [...prevPosts,newPost])
-          })
-        })
+
+            axios.post(url, { post_id: post_id }).then((response) => {
+              console.log("post added successfully");
+              setPosts((prevPosts) => [...prevPosts, newPost]);
+            });
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -82,13 +88,29 @@ const Posts = () => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Community Posts</h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {posts.map((post, index) => (
-          <Child post={post} key={index} index={index} />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="loader"></div>
+        </div>
+      ) : posts.length === 0 ? (
+        <div className="text-center ml-96">
+          <Image
+            src="/assets/noData.png"
+            width={500}
+            height={500}
+            alt="Picture of the author"
+          />
+        </div>
+      ) : (
+        <>
+          <h1 className="text-2xl font-bold mb-4">Community Posts</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post, index) => (
+              <Child post={post} key={index} index={index} />
+            ))}
+          </div>
+        </>
+      )}
 
       <div
         className="add-event-button fixed bottom-4 right-4 bg-blue-500 text-white p-4 w-12 h-12 rounded-full cursor-pointer flex items-center justify-center hover:bg-blue-600 transition duration-300 transform hover:scale-105 shadow-md"
