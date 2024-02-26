@@ -152,6 +152,7 @@ import JoinCommunity from "./components/joinCommunity/page1";
 import JoinedCommunities from "./components/joinedCommunities/page1";
 import OwnCommunity from "./components/ownCommunity/page";
 import OtherCommunity from "./components/otherCommunity/page";
+import Profile from "./components/profile/profile";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -182,6 +183,8 @@ export default function RootLayout() {
                 return <OwnCommunity />;
             case "otherCommunity":
                 return <OtherCommunity />;
+            case "profile":
+                return <Profile/>
             default:
                 return null;
         }
@@ -345,6 +348,12 @@ export default function RootLayout() {
              <span className="text-[15px] ml-4 text-gray-200 font-bold">Created Communities</span>
                     </div></Link>
                     
+                    <Link href="" onClick={()=>setNavbar("profile")}>                     <div
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${(navbar === 'cdCommunity' || navbar === 'ownCommunity') ? 'bg-blue-600' : ''
+                    }`}
+                    ><i className="fa fa-user"></i>
+             <span className="text-[15px] ml-4 text-gray-200 font-bold">Profile</span>
+                    </div></Link>
                     <div className="my-4 bg-gray-600 h-[1px]"></div>
                   
                   
