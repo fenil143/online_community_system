@@ -153,7 +153,7 @@ import JoinedCommunities from "./components/joinedCommunities/page1";
 import OwnCommunity from "./components/ownCommunity/page";
 import OtherCommunity from "./components/otherCommunity/page";
 import Profile from "./components/profile/profile";
-
+import News from "./components/News/news";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout() {
@@ -185,6 +185,8 @@ export default function RootLayout() {
                 return <OtherCommunity />;
             case "profile":
                 return <Profile/>
+            case "news":
+                return <News/>
             default:
                 return null;
         }
@@ -347,7 +349,12 @@ export default function RootLayout() {
 
              <span className="text-[15px] ml-4 text-gray-200 font-bold">Created Communities</span>
                     </div></Link>
-                    
+                    <Link href="" onClick={()=>setNavbar("news")}>                     <div
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${(navbar === 'cdCommunity' || navbar === 'ownCommunity') ? 'bg-blue-600' : ''
+                    }`}
+                    ><i className="fa fa-newspaper-o"></i>
+             <span className="text-[15px] ml-4 text-gray-200 font-bold">News</span>
+                    </div></Link>
                     <Link href="" onClick={()=>setNavbar("profile")}>                     <div
                         className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${(navbar === 'cdCommunity' || navbar === 'ownCommunity') ? 'bg-blue-600' : ''
                     }`}
