@@ -10,7 +10,7 @@ const studentId = localStorage.getItem("student");
     const [image,setImage]=useState();
     const [college,setCollege]=useState();
     const [university,setUniversity]=useState();
-    const [skill,setSkill]=useState();
+    const [skill,setSkill]=useState([]);
     const [description,setDescription]=useState();
     const [github,setGithub]=useState();
     const [linkedin,setLinkedIn]=useState();
@@ -44,54 +44,29 @@ useEffect(() => {
 // However, if you want to log the updated state, you can use another useEffect.
 useEffect(() => {
   console.log(student);
+  console.log(skill)
 }, [student]); // Log when `student` state changes
 
     return (<>
         <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"/>
         <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"/>
         <section>
-  <div class="w-full lg:w-10/12 px-4 mx-auto">
-    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
-      <div class="px-6">
-        <div class="flex flex-wrap justify-center">
-          <div class="flex flex-wrap justify-items-center">
-            <div class="w-full px-4 flex justify-center">
-            <div class="w-full px-4 flex justify-center">
-          <div class="relative">
-            <img alt="..." src={image} class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"/>
-          </div>
-        </div>
-            </div>
-          </div>
-
-                <div class="w-full px-4 text-center mt-5 h-4">
-                  {/* <div class="flex justify-center py-4 lg:pt-4 pt-8">
-                    <div class="mr-4 p-3 text-center">
-                      <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                        22
-                      </span>
-                      <span class="text-sm text-blueGray-400">Friends</span>
+        <div class="w-full lg:w-10/12 px-4 mx-auto">
+    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg ">
+        <div class="px-6">
+            <div class="flex flex-wrap justify-center">
+                <div class="flex flex-wrap justify-items-center">
+                    <div class="w-3/3 px-4 flex justify-items-center mt-3">
+                        <div class="flex justify-center">
+                            <img alt="..." src={image} class="shadow-xl rounded-lg object-cover h-auto  max-w-xs md:max-w-md"/>
+                        </div>
                     </div>
-                    <div class="mr-4 p-3 text-center">
-                      <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                        10
-                      </span>
-                      <span class="text-sm text-blueGray-400">Photos</span>
-                    </div>
-                    <div class="lg:mr-4 p-3 text-center">
-                      <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                        89
-                      </span>
-                      <span class="text-sm text-blueGray-400">Comments</span>
-                    </div>
-                  </div> */}
                 </div>
-              </div>
-              <div class="text-center mt-8">
+            </div><div class="text-center ">
                 <h3 class="text-xl font-semibold leading-normal  text-blueGray-700 mb-2">
                   
                 </h3>
-                <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                <div class="text-sm leading-normal mt-3 mb-2 text-blueGray-400 font-bold uppercase">
                   <i class="fa fa-user-alt mr-2 text-lg text-blueGray-400"></i>
                   {name}
                 </div>
@@ -114,9 +89,10 @@ useEffect(() => {
                   {college},{university}
                 </div>
                 <div class="mb-2 text-blueGray-600">
-                  <i class="fa fa-cogs mr-2 text-lg text-blueGray-400"></i>
-                  {skill}
-                </div>
+                <i className="fa fa-cogs mr-2 text-lg text-blueGray-400"></i>
+                {skill.join(', ')}
+</div>
+
                 
                 
               </div>
@@ -126,9 +102,9 @@ useEffect(() => {
                     <p class="mb-4 text-lg leading-relaxed text-blueGray-700">
                      {description}
                     </p>
-                    <a href="javascript:void(0);" class="font-normal text-pink-500">
+                    {/* <a href="javascript:void(0);" class="font-normal text-pink-500">
                       Show more
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
