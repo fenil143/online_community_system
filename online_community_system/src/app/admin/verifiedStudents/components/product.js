@@ -104,12 +104,14 @@
 // }
 
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function Product(props) {
   let dummy = props.data;
-
+useEffect(()=>{
+console.log(dummy)
+},[])
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:8000/removeStudent/${dummy.email}`);
@@ -125,11 +127,11 @@ export default function Product(props) {
         <div class="md:shrink-0 flex flex-col items-center md:items-start justify-center">
             <img class="h-48 w-full object-cover md:h-auto md:w-48 ml-2 mr-2 rounded" src={dummy.image} alt="User Image" />
             <div class="flex justify-center mt-2 md:mt-3">
-                <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="flex p-px pl-2 pb-3 items-center hover:scale-125 transition-transform mr-2 ml-1">
+                <a href={dummy.linkedin_link} target="_blank" rel="noopener noreferrer" class="flex p-px pl-2 pb-3 items-center hover:scale-125 transition-transform mr-2 ml-1">
                     <i class="bi bi-linkedin text-xl text-blue-500"></i>
                     <span class="hidden md:inline-block ml-1">LinkedIn</span>
                 </a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="flex items-center pl-2 pb-3 hover:scale-125 transition-transform mr-1">
+                <a href={dummy.github_link} target="_blank" rel="noopener noreferrer" class="flex items-center pl-2 pb-3 hover:scale-125 transition-transform mr-1">
                     <i class="bi bi-github text-xl text-black-500"></i>
                     <span class="hidden md:inline-block ml-1">GitHub</span>
                 </a>

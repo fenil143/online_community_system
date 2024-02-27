@@ -1,13 +1,11 @@
 import React from "react";
 
-// const links = [
-//     { text : "Home", href:"#home"},
-//     { text : "Pricing", href:"#pricing"},
-//     { text : "Location", href:"#location"},
-//     { text : "Job", href:"#job"},
-//     { text : "Contact", href:"#contact"},
+const links = [
+   
+    { text : "About us", href:"/about"},
 
-// ]
+]
+
 function Navbar(){
     return(
         <nav className="flex justify-center h-[100px]">
@@ -15,7 +13,7 @@ function Navbar(){
                 <div className="font-bold text-black text-[20px]">
                     Online Community
                 </div>
-                {/* <div className="flex ml-auto">
+                <div className="flex ml-auto">
                     { links.map((link, index) => {
                         return (
                             <a key={index} href={link.href}     className="ml-12 hover:font-bold">
@@ -24,7 +22,7 @@ function Navbar(){
                         );
                         
                     })}
-                </div> */}
+                </div>
             </div>
         </nav>
     )
