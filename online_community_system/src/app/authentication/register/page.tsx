@@ -12,7 +12,7 @@ function handleRegistration() {
 function register() {
     // const router = useRouter();
     const [image, setImage] = useState<string | null>(null);
-    const [loading, setLoading] = useState(Boolean);
+    const [loading, setLoading] = useState(false);
     const [temp,setImg]=useState(undefined);
     const [githubLink, setGithubLink] = useState('');
     const [githubLinkError, setGithubLinkError] = useState('');
@@ -25,7 +25,7 @@ function register() {
     };
 
     const handleGithubLinkChange = (e: any) => {
-        
+
         const newLink = e.target.value;
         if (isGithubLinkValid(newLink) || newLink === '') {
             setGithubLink(newLink);
@@ -49,141 +49,71 @@ function register() {
         }
     };
     
-    // function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
-       
-    //     setLoading(true);
-    //     console.log(loading);
-    //     event.preventDefault();
-        
-    //     try{
-    //     const formData: { [key: string]: any } = {};
-        
-    //     const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
-
-    //     for (let i = 0; i < formElements.length; i++) {
-    //         const element = formElements[i];
-    //         if (element.id) {
-    //             formData[element.id] = (element as HTMLInputElement).value;
-    //         }
-    //     }
-    //     const data = new FormData();
-    //     if (temp) {
-    //         data.append("file", temp);
-    //     } else {
-    //         console.error("Image is undefined");
-    //     }
-    //     data.append("upload_preset", "xtf3nszf");
-    //     data.append("cloud_name", "da3airmpg");
-
-    //     fetch("https://api.cloudinary.com/v1_1/da3airmpg/image/upload", {
-    //         method: "post",
-    //         body: data
-    //     }).then((res) => res.json()).then((data) => {
-    //         console.log(data)
-    //         formData["starting_date"] = Date.now().toString();
-    //         formData["image"] = data.url;
-    //         formData["name"] = formData["firstName"] + " " + formData["lastName"];
-    //         console.log(formData);
-    //         axios.post('http://localhost:8000/storeStudent', formData)
-    //             .then(response => {
-    //                 console.log(response.data);
-    //                 if (response.data.message) {
-    //                     alert('Registration successful! Your details will be verified.');
-    //                    // router.replace("/landing")
-    //                    // history("/landing");
-    //                 } else {
-    //                     alert(response.data.error);
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 console.error(error);
-    //                 alert('Registration failed. Internal Server Error.');
-    //             }).finally(()=>{
-    //                 setLoading(false);
-    //             });
-
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     })
-    //     console.log('User Data:', formData);
-    // }
-    // catch (error) {
-    //     console.error(error);
-    //     alert('Registration failed. Internal Server Error.');
-    // } finally {
-    //     setLoading(false); // Set loading back to false when form submission is complete
-    // }
-       
-    // }
     function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
+       
         setLoading(true);
         console.log(loading);
         event.preventDefault();
-    
-        try {
-            const formData: { [key: string]: any } = {};
-    
-            const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
-    
-            for (let i = 0; i < formElements.length; i++) {
-                const element = formElements[i];
-                if (element.id) {
-                    formData[element.id] = (element as HTMLInputElement).value;
-                }
+        
+        try{
+        const formData: { [key: string]: any } = {};
+        
+        const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
+
+        for (let i = 0; i < formElements.length; i++) {
+            const element = formElements[i];
+            if (element.id) {
+                formData[element.id] = (element as HTMLInputElement).value;
             }
-    
-            const data = new FormData();
-            if (temp) {
-                data.append("file", temp);
-            } else {
-                console.error("Image is undefined");
-            }
-            data.append("upload_preset", "xtf3nszf");
-            data.append("cloud_name", "da3airmpg");
-    
-            fetch("https://api.cloudinary.com/v1_1/da3airmpg/image/upload", {
-                method: "post",
-                body: data
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                formData["starting_date"] = Date.now().toString();
-                formData["image"] = data.url;
-                formData["name"] = formData["firstName"] + " " + formData["lastName"];
-                console.log(formData);
-    
-                axios.post('http://localhost:8000/storeStudent', formData)
-                    .then(response => {
-                        console.log(response.data);
-                        if (response.data.message) {
-                            alert('Registration successful! Your details will be verified.');
-                            // router.replace("/landing")
-                            // history("/landing");
-                        } else {
-                            alert(response.data.error);
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        alert('Registration failed. Internal Server Error.');
-                    })
-                    .finally(() => {
-                        setLoading(false);
-                    });
-            })
-            .catch((err) => {
-                console.log(err);
-                alert('Image upload failed. Please try again.');
-                setLoading(false);
-            });
-    
-            console.log('User Data:', formData);
-        } catch (error) {
-            console.error(error);
-            alert('Registration failed. Internal Server Error.');
-            setLoading(false);
         }
+        const data = new FormData();
+        if (temp) {
+            data.append("file", temp);
+        } else {
+            console.error("Image is undefined");
+        }
+        data.append("upload_preset", "xtf3nszf");
+        data.append("cloud_name", "da3airmpg");
+
+        fetch("https://api.cloudinary.com/v1_1/da3airmpg/image/upload", {
+            method: "post",
+            body: data
+        }).then((res) => res.json()).then((data) => {
+            console.log(data)
+            formData["starting_date"] = Date.now().toString();
+            formData["image"] = data.url;
+            formData["name"] = formData["firstName"] + " " + formData["lastName"];
+            console.log(formData);
+            axios.post('http://localhost:8000/storeStudent', formData)
+                .then(response => {
+                    console.log(response.data);
+                    if (response.data.message) {
+                        alert('Registration successful! Your details will be verified.');
+                       // router.replace("/landing")
+                       // history("/landing");
+                    } else {
+                        alert(response.data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Registration failed. Internal Server Error.');
+                }).finally(()=>{
+                    setLoading(false);
+                });
+
+        }).catch((err) => {
+            console.log(err);
+        })
+        console.log('User Data:', formData);
+    }
+    catch (error) {
+        console.error(error);
+        alert('Registration failed. Internal Server Error.');
+    } finally {
+        setLoading(false); // Set loading back to false when form submission is complete
+    }
+       
     }
     
 
@@ -191,7 +121,7 @@ function register() {
         <div className="w-full lg:w-7/12 bg-blue-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none overflow-y-auto mx-auto">
             <h3 className="py-4 text-2xl text-center text-gray-800 dark:text-white">Create an Account!</h3>
             <form className="px-4 sm:px-8 pt-6 pb-8 mb-4 bg-white dark:bg-gray-800 rounded " onSubmit={handleFormSubmit}>
-                 <div className="mb-4 md:flex md:justify-between">
+                <div className="mb-4 md:flex md:justify-between">
                     <div className="mb-4 md:mr-2 md:mb-0">
                         <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="firstName">
                             First Name
@@ -246,15 +176,15 @@ function register() {
                         User Image
                     </label>
                     {image && (
-                <div className="mt-3">
-                  
-                    <img
-                        src={image}
-                        alt="Selected User Image"
-                        className="w-full h-auto border rounded"
-                    />
-                </div>
-            )}
+                        <div className="mt-3">
+
+                            <img
+                                src={image}
+                                alt="Selected User Image"
+                                className="w-full h-auto border rounded"
+                            />
+                        </div>
+                    )}
                     <input
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
                         id="userImage"
@@ -265,10 +195,10 @@ function register() {
 
                             if (file.size > 5 * 1024 * 1024) {
                                 alert("Image size should be less than 5MB.");
-                              } else{
+                            } else {
                                 setImg(file);
                                 setImage(URL.createObjectURL(file))
-                              }
+                            }
                         }}
                         required
                     />
@@ -291,15 +221,15 @@ function register() {
                         University
                     </label>
                     <select required id="university" className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-    
-      <option value="DDU">Dharmsinh Desai University(DDU)</option>
-      <option value="GTU">Gujarat Technological University(GTU)</option>
-      <option value="Nirma">Nirma University</option>
-      <option value="LJ">LJ University</option>
-      <option value="SOU">Silver Oak University</option>
-      <option value="GU">Gujarat University</option>
-      
-  </select>
+
+                        <option value="DDU">Dharmsinh Desai University(DDU)</option>
+                        <option value="GTU">Gujarat Technological University(GTU)</option>
+                        <option value="Nirma">Nirma University</option>
+                        <option value="LJ">LJ University</option>
+                        <option value="SOU">Silver Oak University</option>
+                        <option value="GU">Gujarat University</option>
+
+                    </select>
                 </div>
                 <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700 dark:text-white" htmlFor="college">
@@ -434,7 +364,7 @@ function register() {
                     />
                 </div>
                 <div className="mb-6 text-center">
-                <button
+                    <button
                         className={`w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-900 focus:outline-none focus:shadow-outline border-blue-300'
                             }`}
                         type="submit"

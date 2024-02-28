@@ -1,7 +1,7 @@
 const mongoose=require("mongoose");
 const student_info=mongoose.Schema({
     email:String,
-    experince:String,
+    experience:String,
     cpi:String,
     skill:[String],
     linkedin_link:String,
