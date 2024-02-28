@@ -120,18 +120,19 @@ function register() {
         setLoading(true);
         console.log(loading);
         event.preventDefault();
-        console.log(loading);
+    
         try {
             const formData: { [key: string]: any } = {};
-
+    
             const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
-
+    
             for (let i = 0; i < formElements.length; i++) {
                 const element = formElements[i];
                 if (element.id) {
                     formData[element.id] = (element as HTMLInputElement).value;
                 }
             }
+    
             const data = new FormData();
             if (temp) {
                 data.append("file", temp);
@@ -140,16 +141,19 @@ function register() {
             }
             data.append("upload_preset", "xtf3nszf");
             data.append("cloud_name", "da3airmpg");
-
+    
             fetch("https://api.cloudinary.com/v1_1/da3airmpg/image/upload", {
                 method: "post",
                 body: data
-            }).then((res) => res.json()).then((data) => {
-                console.log(data)
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
                 formData["starting_date"] = Date.now().toString();
                 formData["image"] = data.url;
                 formData["name"] = formData["firstName"] + " " + formData["lastName"];
                 console.log(formData);
+    
                 axios.post('http://localhost:8000/storeStudent', formData)
                     .then(response => {
                         console.log(response.data);
@@ -164,22 +168,23 @@ function register() {
                     .catch(error => {
                         console.error(error);
                         alert('Registration failed. Internal Server Error.');
-                    }).finally(() => {
+                    })
+                    .finally(() => {
                         setLoading(false);
                     });
-
-            }).catch((err) => {
-                console.log(err);
             })
+            .catch((err) => {
+                console.log(err);
+                alert('Image upload failed. Please try again.');
+                setLoading(false);
+            });
+    
             console.log('User Data:', formData);
-        }
-        catch (error) {
+        } catch (error) {
             console.error(error);
             alert('Registration failed. Internal Server Error.');
-        } finally {
-            setLoading(false); // Set loading back to false when form submission is complete
+            setLoading(false);
         }
-
     }
     
     return (
@@ -232,7 +237,7 @@ function register() {
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
                         id="password"
                         type="password"
-                        placeholder="******************"
+                        placeholder="******"
                         required
                     />
                 </div>
@@ -456,4 +461,3 @@ export default register;
 function parseString(arg0: number): unknown {
     throw new Error("Function not implemented.");
 }
-
