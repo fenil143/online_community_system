@@ -49,74 +49,144 @@ function register() {
         }
     };
     
-    function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
+    // function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
        
+    //     setLoading(true);
+    //     console.log(loading);
+    //     event.preventDefault();
+        
+    //     try{
+    //     const formData: { [key: string]: any } = {};
+        
+    //     const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
+
+    //     for (let i = 0; i < formElements.length; i++) {
+    //         const element = formElements[i];
+    //         if (element.id) {
+    //             formData[element.id] = (element as HTMLInputElement).value;
+    //         }
+    //     }
+    //     const data = new FormData();
+    //     if (temp) {
+    //         data.append("file", temp);
+    //     } else {
+    //         console.error("Image is undefined");
+    //     }
+    //     data.append("upload_preset", "xtf3nszf");
+    //     data.append("cloud_name", "da3airmpg");
+
+    //     fetch("https://api.cloudinary.com/v1_1/da3airmpg/image/upload", {
+    //         method: "post",
+    //         body: data
+    //     }).then((res) => res.json()).then((data) => {
+    //         console.log(data)
+    //         formData["starting_date"] = Date.now().toString();
+    //         formData["image"] = data.url;
+    //         formData["name"] = formData["firstName"] + " " + formData["lastName"];
+    //         console.log(formData);
+    //         axios.post('http://localhost:8000/storeStudent', formData)
+    //             .then(response => {
+    //                 console.log(response.data);
+    //                 if (response.data.message) {
+    //                     alert('Registration successful! Your details will be verified.');
+    //                    // router.replace("/landing")
+    //                    // history("/landing");
+    //                 } else {
+    //                     alert(response.data.error);
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 console.error(error);
+    //                 alert('Registration failed. Internal Server Error.');
+    //             }).finally(()=>{
+    //                 setLoading(false);
+    //             });
+
+    //     }).catch((err) => {
+    //         console.log(err);
+    //     })
+    //     console.log('User Data:', formData);
+    // }
+    // catch (error) {
+    //     console.error(error);
+    //     alert('Registration failed. Internal Server Error.');
+    // } finally {
+    //     setLoading(false); // Set loading back to false when form submission is complete
+    // }
+       
+    // }
+    
+    function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
         setLoading(true);
         console.log(loading);
         event.preventDefault();
-        
-        try{
-        const formData: { [key: string]: any } = {};
-        
-        const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
-
-        for (let i = 0; i < formElements.length; i++) {
-            const element = formElements[i];
-            if (element.id) {
-                formData[element.id] = (element as HTMLInputElement).value;
+    
+        try {
+            const formData: { [key: string]: any } = {};
+    
+            const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
+    
+            for (let i = 0; i < formElements.length; i++) {
+                const element = formElements[i];
+                if (element.id) {
+                    formData[element.id] = (element as HTMLInputElement).value;
+                }
             }
+    
+            const data = new FormData();
+            if (temp) {
+                data.append("file", temp);
+            } else {
+                console.error("Image is undefined");
+            }
+            data.append("upload_preset", "xtf3nszf");
+            data.append("cloud_name", "da3airmpg");
+    
+            fetch("https://api.cloudinary.com/v1_1/da3airmpg/image/upload", {
+                method: "post",
+                body: data
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                formData["starting_date"] = Date.now().toString();
+                formData["image"] = data.url;
+                formData["name"] = formData["firstName"] + " " + formData["lastName"];
+                console.log(formData);
+    
+                axios.post('http://localhost:8000/storeStudent', formData)
+                    .then(response => {
+                        console.log(response.data);
+                        if (response.data.message) {
+                            alert('Registration successful! Your details will be verified.');
+                            // router.replace("/landing")
+                            // history("/landing");
+                        } else {
+                            alert(response.data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('Registration failed. Internal Server Error.');
+                    })
+                    .finally(() => {
+                        setLoading(false);
+                    });
+            })
+            .catch((err) => {
+                console.log(err);
+                alert('Image upload failed. Please try again.');
+                setLoading(false);
+            });
+    
+            console.log('User Data:', formData);
+        } catch (error) {
+            console.error(error);
+            alert('Registration failed. Internal Server Error.');
+            setLoading(false);
         }
-        const data = new FormData();
-        if (temp) {
-            data.append("file", temp);
-        } else {
-            console.error("Image is undefined");
-        }
-        data.append("upload_preset", "xtf3nszf");
-        data.append("cloud_name", "da3airmpg");
-
-        fetch("https://api.cloudinary.com/v1_1/da3airmpg/image/upload", {
-            method: "post",
-            body: data
-        }).then((res) => res.json()).then((data) => {
-            console.log(data)
-            formData["starting_date"] = Date.now().toString();
-            formData["image"] = data.url;
-            formData["name"] = formData["firstName"] + " " + formData["lastName"];
-            console.log(formData);
-            axios.post('http://localhost:8000/storeStudent', formData)
-                .then(response => {
-                    console.log(response.data);
-                    if (response.data.message) {
-                        alert('Registration successful! Your details will be verified.');
-                       // router.replace("/landing")
-                       // history("/landing");
-                    } else {
-                        alert(response.data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert('Registration failed. Internal Server Error.');
-                }).finally(()=>{
-                    setLoading(false);
-                });
-
-        }).catch((err) => {
-            console.log(err);
-        })
-        console.log('User Data:', formData);
-    }
-    catch (error) {
-        console.error(error);
-        alert('Registration failed. Internal Server Error.');
-    } finally {
-        setLoading(false); // Set loading back to false when form submission is complete
-    }
-       
     }
     
-
     return (
         <div className="w-full lg:w-7/12 bg-blue-100 dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none overflow-y-auto mx-auto">
             <h3 className="py-4 text-2xl text-center text-gray-800 dark:text-white">Create an Account!</h3>
