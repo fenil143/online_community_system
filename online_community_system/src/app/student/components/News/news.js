@@ -52,6 +52,7 @@ const News = () => {
     Read More
   </a>
 </div>
+<div className='h-3'></div>
 
 
 
