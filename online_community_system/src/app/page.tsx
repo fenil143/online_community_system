@@ -1,13 +1,3 @@
-// import Image from 'next/image'
-// import './globals.css';
-// import {redirect} from 'next/navigation';
-
-// export default function Home() {
-//   redirect("/landing");
-//   return (
-//     <h3>Welcome to our application</h3>
-//   );
-// }
 'use client'
 import Image from 'next/image';
 import './globals.css';
@@ -28,7 +18,6 @@ export default function Home() {
   }
 
   redirect("/landing");
-  // If neither "admin" nor "student" is present, render the welcome message
   return (
     <h3>Welcome to our application</h3>
   );
