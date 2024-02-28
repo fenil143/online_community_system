@@ -1,4 +1,4 @@
-// 'use client';
+// npm i'use client';
 // import Product from './components/product';
 // import Welcome from './components/welcome';
 // import Data from './components/data';
