@@ -127,7 +127,11 @@ router.get("/students", async (req, res) => {
         starting_date: info.starting_date,
         field: info.field,
         hobbies: info.hobbies,
-        working_location: info.working_location
+        working_location: info.working_location,
+        experience : info.experience,
+        github_link : info.github_link,
+        linkedin_link : info.linkedin_link,
+
       };
     });
 
@@ -168,7 +172,10 @@ router.get("/verifiedStudents", async (req, res) => {
         starting_date: info.starting_date,
         field: info.field,
         hobbies: info.hobbies,
-        working_location: info.working_location
+        working_location: info.working_location,
+        experience : info.experience,
+        github_link : info.github_link,
+        linkedin_link : info.linkedin_link,
       };
     });
 
