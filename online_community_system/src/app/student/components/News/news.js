@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import Loading from "./loading";
 
 const News = () => {
     const [data,setData]=useState([]);
+    const [loading, setLoading] = useState(true);
   const fetchData = async () => {
     const axios = require('axios');
 
@@ -12,11 +13,14 @@ const News = () => {
     };
     
     try {
+      setLoading(true);
         const response = await axios.request(options);
         console.log(response.data);
         setData(response.data.articles);
     } catch (error) {
         console.error(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -26,7 +30,10 @@ const News = () => {
   }, []); // Empty dependency array to run the effect only once on component mount
 
   return (<>
-    {data.map((article, index) => (
+   {loading ? (
+      <Loading/>// Show a loading indicator or message
+    ) : (
+    data.map((article, index) => (
       <div key={index} className='bg-white shadow-lg mt-5 rounded-xl'>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img src={article.urlToImage} alt="Article" style={{ maxWidth: '100%', height: 'auto' }} />
@@ -43,7 +50,7 @@ const News = () => {
   Read More
 </a>
 </div>
-    ))}
+    )))}
   </>);
 }
 export default News;
