@@ -12,11 +12,9 @@ const port = process.env.PORT || 8000;
 const cors = require("cors");
 app.use(express.json());
 app.use(cors());
-app.use(cors({
-    origin:"http://localhost:8000"
-}
-));
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.get("/loading",async(req,res)=>{
+    res.send("server is running")
+ })
 app.use(studentApi);
 app.use(communityApi);
 app.use(eventApi);
