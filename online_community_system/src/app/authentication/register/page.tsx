@@ -237,7 +237,7 @@ function register() {
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline border-blue-300 bg-gray-100"
                         id="password"
                         type="password"
-                        placeholder="******************"
+                        placeholder="******"
                         required
                     />
                 </div>
@@ -461,4 +461,3 @@ export default register;
 function parseString(arg0: number): unknown {
     throw new Error("Function not implemented.");
 }
-
