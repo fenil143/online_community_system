@@ -221,7 +221,7 @@ export default function student() {
     }
 
     return (
-<div className="w-full font-poppins max-w-md mx-auto hover:scale-105 transition-transform duration-500 shadow-md bg-white rounded-xl  overflow-hidden md:max-w-3xl lg:max-w-4xl mt-4">
+<div className="w-full font-poppins max-w-md mx-auto hover:scale-105 transition-transform justify-center duration-500 shadow-md bg-white rounded-xl  overflow-hidden md:max-w-3xl lg:max-w-4xl mt-4">
 <div className="md:flex md:flex-wrap">
 <div className="md:w-2/5 w-auto flex items-center justify-center">
   <Cd /> {/* Replace 32 with your desired fixed height */}
