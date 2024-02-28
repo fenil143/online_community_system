@@ -4,7 +4,7 @@ export default function About_us() {
   const imageUrl = require("../assets/noData.png");
   return (<>
 
-    <div className="flex justify-center font-poppins m-5  rounded-lg p-6 ">
+    <div className="flex justify-center font-poppins m-5  rounded-lg p-6 bg-white ">
 
       <div className="flex flex-col justify-center">
         <h1 className="text-3xl text-blue-800 font-bold mb-2 text-center">Online Community Management System</h1>

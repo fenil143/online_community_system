@@ -350,13 +350,13 @@ export default function RootLayout() {
              <span className="text-[15px] ml-4 text-gray-200 font-bold">Created Communities</span>
                     </div></Link>
                     <Link href="" onClick={()=>setNavbar("news")}>                     <div
-                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${(navbar === 'cdCommunity' || navbar === 'ownCommunity') ? 'bg-blue-600' : ''
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${(navbar === 'news') ? 'bg-blue-600' : ''
                     }`}
                     ><i className="fa fa-newspaper-o"></i>
              <span className="text-[15px] ml-4 text-gray-200 font-bold">News</span>
                     </div></Link>
                     <Link href="" onClick={()=>setNavbar("profile")}>                     <div
-                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${(navbar === 'cdCommunity' || navbar === 'ownCommunity') ? 'bg-blue-600' : ''
+                        className={`p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white ${(navbar === 'profile') ? 'bg-blue-600' : ''
                     }`}
                     ><i className="fa fa-user"></i>
              <span className="text-[15px] ml-4 text-gray-200 font-bold">Profile</span>
