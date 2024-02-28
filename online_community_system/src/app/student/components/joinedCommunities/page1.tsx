@@ -4,7 +4,7 @@ import Data from './components/data';
 import Child from "./components/child"
 import { useRouter } from 'next/navigation';
 import Image from 'next/image'
-import Not_Found from '@/app/admin/unverifiedCommunities/Not_Found';
+import Not_Found from '@/app/admin/components/unverifiedCommunities/Not_Found';
 
 interface Community {
     _id: string,
