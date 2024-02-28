@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getPendingJoinRequests = async (communityName) => {
     try {
-      const response = await axios.get(`http://localhost:8000/getCommunityByName/${communityName}`);
+      const response = await axios.get(`https://online-community-system.onrender.com/getCommunityByName/${communityName}`);
       
       if (response.data.error) {
         console.error(response.data.error);
@@ -22,7 +22,7 @@ const getPendingJoinRequests = async (communityName) => {
     try {
       const requestsDetails = await Promise.all(
         pendingRequests.map(async (studentId) => {
-          const response = await axios.get(`http://localhost:8000/getStudentInfo/${studentId}`);
+          const response = await axios.get(`https://online-community-system.onrender.com/getStudentInfo/${studentId}`);
           return response.data;
         })
       );

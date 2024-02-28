@@ -7,7 +7,7 @@
 
 //   const handleDelete = async () => {
 //     try {
-//       await axios.delete(`http://localhost:8000/removeStudent/${dummy.email}`);
+//       await axios.delete(`https://online-community-system.onrender.com/removeStudent/${dummy.email}`);
 //       dummy.status = true;
 //       props.removeStudentByEmail(dummy.email);
 //     } catch (error) {
@@ -115,7 +115,7 @@ console.log(dummy)
 },[])
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8000/removeStudent/${dummy.email}`);
+      await axios.delete(`https://online-community-system.onrender.com/removeStudent/${dummy.email}`);
       dummy.status = true;
       props.removeStudentByEmail(dummy.email);
     } catch (error) {

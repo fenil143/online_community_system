@@ -133,11 +133,11 @@ const EventListComponent = () => {
         addEvent.community_id = localStorage.getItem("ownCommunity");
 
         axios
-          .post("http://localhost:8000/addEvent", addEvent)
+          .post("https://online-community-system.onrender.com/addEvent", addEvent)
           .then((response) => {
             const event_id = response.data.event_id;
             const url =
-              "http://localhost:8000/addCommunityEvent/" +
+              "https://online-community-system.onrender.com/addCommunityEvent/" +
               response.data.community_id;
             axios
               .post(url, { event_id: event_id })

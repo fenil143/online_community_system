@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getJoinedCommunities = async (email) => {
   try {
-    const apiUrl = `http://localhost:8000/getJoinedCommunities/${email}`;
+    const apiUrl = `https://online-community-system.onrender.com/getJoinedCommunities/${email}`;
     
     const response = await axios.get(apiUrl);
 
@@ -22,7 +22,7 @@ const getJoinedCommunities = async (email) => {
 
 const fetchJoinedCommunitiesDetails = async (communityIds) => {
   try {
-    const apiUrl = `http://localhost:8000/allCommunities`;
+    const apiUrl = `https://online-community-system.onrender.com/allCommunities`;
 
     const response = await axios.get(apiUrl);
     

@@ -2,16 +2,16 @@ import axios from 'axios';
 
 const getFilteredCommunities = async (studentEmail) => {
   try {
-    const allCommunitiesResponse = await axios.get('http://localhost:8000/allCommunities');
+    const allCommunitiesResponse = await axios.get('https://online-community-system.onrender.com/allCommunities');
     const allCommunities = allCommunitiesResponse.data;
 
-    const joinedCommunitiesResponse = await axios.get(`http://localhost:8000/getJoinedCommunities/${studentEmail}`);
+    const joinedCommunitiesResponse = await axios.get(`https://online-community-system.onrender.com/getJoinedCommunities/${studentEmail}`);
     const joinedCommunities = joinedCommunitiesResponse.data.joined_community_id || [];
 
-    const pendingCommunitiesResponse = await axios.get(`http://localhost:8000/getPendingCommunities/${studentEmail}`);
+    const pendingCommunitiesResponse = await axios.get(`https://online-community-system.onrender.com/getPendingCommunities/${studentEmail}`);
     const pendingCommunities = pendingCommunitiesResponse.data.pending_community_id || [];
 
-    const createdComunitiesResponse = await axios.get(`http://localhost:8000/getCreatedCommunities/${studentEmail}`);
+    const createdComunitiesResponse = await axios.get(`https://online-community-system.onrender.com/getCreatedCommunities/${studentEmail}`);
     const createdCommunities = createdComunitiesResponse.data.created_community_id || [];
 
     const filteredCommunities = allCommunities.filter(community =>

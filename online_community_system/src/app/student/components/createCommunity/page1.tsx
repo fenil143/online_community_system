@@ -45,7 +45,7 @@
 //             formData["owner_email"] = email;
 //             formData["image"] = data.url;
 //             console.log(formData);
-//             axios.post('http://localhost:8000/storeCommunity', formData)
+//             axios.post('https://online-community-system.onrender.com/storeCommunity', formData)
 //                 .then(response => {
 //                     console.log(response.data);
 //                     if (response.data.error) {
@@ -200,7 +200,7 @@ export default function student() {
             formData["owner_email"] = email;
             formData["image"] = data.url;
             console.log(formData);
-            axios.post('http://localhost:8000/storeCommunity', formData)
+            axios.post('https://online-community-system.onrender.com/storeCommunity', formData)
                 .then(response => {
                     console.log(response.data);
                     if (response.data.error) {

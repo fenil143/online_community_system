@@ -11,10 +11,10 @@
 //     try {
 //       const studentEmail = email;
 
-//       await axios.post(`http://localhost:8000/addJoinRequest/${name}`, { student_email: studentEmail });
+//       await axios.post(`https://online-community-system.onrender.com/addJoinRequest/${name}`, { student_email: studentEmail });
 
 //       const newCommunityId = community.community_name;
-//       await axios.patch(`http://localhost:8000/requestCommunity/${studentEmail}`, { newCommunityId });
+//       await axios.patch(`https://online-community-system.onrender.com/requestCommunity/${studentEmail}`, { newCommunityId });
 
 //       removeByName(newCommunityId);
 
@@ -64,10 +64,10 @@ const Child = ({ community, removeByName }) => {
     try {
       const studentEmail = email;
 
-      await axios.post(`http://localhost:8000/addJoinRequest/${name}`, { student_email: studentEmail });
+      await axios.post(`https://online-community-system.onrender.com/addJoinRequest/${name}`, { student_email: studentEmail });
 
       const newCommunityId = community.community_name;
-      await axios.patch(`http://localhost:8000/requestCommunity/${studentEmail}`, { newCommunityId });
+      await axios.patch(`https://online-community-system.onrender.com/requestCommunity/${studentEmail}`, { newCommunityId });
 
       removeByName(newCommunityId);
 

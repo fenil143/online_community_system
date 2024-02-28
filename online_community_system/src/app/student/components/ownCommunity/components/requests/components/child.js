@@ -7,9 +7,9 @@ export default function Product(props) {
   const communityName = localStorage.getItem("ownCommunity");
   const handleAccept = async () => {
     try {
-      await axios.patch(`http://localhost:8000/joinCommunity/${dummy.email}`, { newCommunityId : communityName });
-      await axios.patch(`http://localhost:8000/cancelRequest/${dummy.email}`, { communityIdToRemove : communityName });
-      await axios.post(`http://localhost:8000/addJoinedStudent/${communityName}`, { student_email : dummy.email });
+      await axios.patch(`https://online-community-system.onrender.com/joinCommunity/${dummy.email}`, { newCommunityId : communityName });
+      await axios.patch(`https://online-community-system.onrender.com/cancelRequest/${dummy.email}`, { communityIdToRemove : communityName });
+      await axios.post(`https://online-community-system.onrender.com/addJoinedStudent/${communityName}`, { student_email : dummy.email });
 
       props.removeStudentByEmail(dummy.email);
     } catch (error) {
@@ -19,8 +19,8 @@ export default function Product(props) {
 
   const handleReject = async () => {
     try {
-      await axios.patch(`http://localhost:8000/cancelRequest/${dummy.email}`, { communityIdToRemove : communityName });
-      await axios.post(`http://localhost:8000/rejectJoinRequest/${communityName}`, { student_email : dummy.email });
+      await axios.patch(`https://online-community-system.onrender.com/cancelRequest/${dummy.email}`, { communityIdToRemove : communityName });
+      await axios.post(`https://online-community-system.onrender.com/rejectJoinRequest/${communityName}`, { student_email : dummy.email });
       props.removeStudentByEmail(dummy.email);
     } catch (error) {
       console.error('Error rejecting student:', error);

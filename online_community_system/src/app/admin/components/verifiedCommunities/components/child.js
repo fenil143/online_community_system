@@ -5,7 +5,7 @@
 
 //   const handleReject = async () => {
 //     try {
-//       await axios.delete(`http://localhost:8000/deleteCommunity/${data.community_name}`);
+//       await axios.delete(`https://online-community-system.onrender.com/deleteCommunity/${data.community_name}`);
 //       removeCommunityByName(data.community_name);
 //     } catch (error) {
 //       console.error('Error rejecting community:', error);
@@ -57,7 +57,7 @@ const Child = ({ data, removeCommunityByName }) => {
 
   const handleReject = async () => {
     try {
-      await axios.delete(`http://localhost:8000/deleteCommunity/${data.community_name}`);
+      await axios.delete(`https://online-community-system.onrender.com/deleteCommunity/${data.community_name}`);
       removeCommunityByName(data.community_name);
     } catch (error) {
       console.error('Error rejecting community:', error);

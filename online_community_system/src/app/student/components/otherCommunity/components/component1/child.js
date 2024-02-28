@@ -38,7 +38,7 @@ const EventListComponent = ({ event }) => {
     const email = localStorage.getItem("student");
     const eventId = event.event_id;
 
-    const url = "http://localhost:8000/addStudentToEvent/" + eventId;
+    const url = "https://online-community-system.onrender.com/addStudentToEvent/" + eventId;
     axios
       .patch(url, { student_email: email })
       .then((response) => {
@@ -53,7 +53,7 @@ const EventListComponent = ({ event }) => {
   const leaveEvent = () => {
     const email = localStorage.getItem("student");
     const eventId = event.event_id;
-    const url = "http://localhost:8000/removeStudentFromEvent/" + eventId;
+    const url = "https://online-community-system.onrender.com/removeStudentFromEvent/" + eventId;
     axios.patch(url, { student_email : email}).then((response) => {
         setCurrentAttendees(response.data.current_attendees);
         setAlreadyPart(false);

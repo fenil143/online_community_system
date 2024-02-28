@@ -53,9 +53,9 @@ const Child = ({ post, index }) => {
     obj.user_email = localStorage.getItem("student");
     obj.comment_message = newComment;
     console.log("final comment : ",newComment);
-    axios.post("http://localhost:8000/createComment",obj).then((response) => {
+    axios.post("https://online-community-system.onrender.com/createComment",obj).then((response) => {
       const comment_id = response.data.comment_id;
-      const url = "http://localhost:8000/addCommentToPost/" + post.post_id;
+      const url = "https://online-community-system.onrender.com/addCommentToPost/" + post.post_id;
       axios.patch(url,{"comment_id":comment_id}).then((response) =>{
         handleViewComments();
         setNewComment("");

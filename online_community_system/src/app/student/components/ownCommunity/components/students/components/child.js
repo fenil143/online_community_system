@@ -8,11 +8,11 @@
 
 //   const handleDelete = async () => {
 //     try {
-//       await axios.patch(`http://localhost:8000/leaveCommunity/${dummy.email}`, {
+//       await axios.patch(`https://online-community-system.onrender.com/leaveCommunity/${dummy.email}`, {
 //         communityIdToRemove: communityName,
 //       });
 //       await axios.post(
-//         `http://localhost:8000/removeJoinedStudent/${communityName}`,
+//         `https://online-community-system.onrender.com/removeJoinedStudent/${communityName}`,
 //         { student_email: dummy.email }
 //       );
 //       props.removeStudentByEmail(dummy.email);
@@ -124,11 +124,11 @@ export default function Product(props) {
 
   const handleDelete = async () => {
     try {
-      await axios.patch(`http://localhost:8000/leaveCommunity/${dummy.email}`, {
+      await axios.patch(`https://online-community-system.onrender.com/leaveCommunity/${dummy.email}`, {
         communityIdToRemove: communityName,
       });
       await axios.post(
-        `http://localhost:8000/removeJoinedStudent/${communityName}`,
+        `https://online-community-system.onrender.com/removeJoinedStudent/${communityName}`,
         { student_email: dummy.email }
       );
       props.removeStudentByEmail(dummy.email);

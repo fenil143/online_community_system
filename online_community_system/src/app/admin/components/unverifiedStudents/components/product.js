@@ -7,7 +7,7 @@ export default function Product(props) {
   let dummy = props.data;
   const handleAccept = async () => {
     try {
-      await axios.patch(`http://localhost:8000/updateStudentInfo/${dummy.email}`, { status: true });
+      await axios.patch(`https://online-community-system.onrender.com/updateStudentInfo/${dummy.email}`, { status: true });
       dummy.status = true;
       props.removeStudentByEmail(dummy.email);
     } catch (error) {
@@ -17,7 +17,7 @@ export default function Product(props) {
 
   const handleReject = async () => {
     try {
-      await axios.delete(`http://localhost:8000/removeStudent/${dummy.email}`);
+      await axios.delete(`https://online-community-system.onrender.com/removeStudent/${dummy.email}`);
       dummy.status = true;
       props.removeStudentByEmail(dummy.email);
     } catch (error) {

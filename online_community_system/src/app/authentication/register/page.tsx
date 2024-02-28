@@ -84,7 +84,7 @@ function register() {
     //         formData["image"] = data.url;
     //         formData["name"] = formData["firstName"] + " " + formData["lastName"];
     //         console.log(formData);
-    //         axios.post('http://localhost:8000/storeStudent', formData)
+    //         axios.post('https://online-community-system.onrender.com/storeStudent', formData)
     //             .then(response => {
     //                 console.log(response.data);
     //                 if (response.data.message) {
@@ -154,7 +154,7 @@ function register() {
                 formData["name"] = formData["firstName"] + " " + formData["lastName"];
                 console.log(formData);
     
-                axios.post('http://localhost:8000/storeStudent', formData)
+                axios.post('https://online-community-system.onrender.com/storeStudent', formData)
                     .then(response => {
                         console.log(response.data);
                         if (response.data.message) {

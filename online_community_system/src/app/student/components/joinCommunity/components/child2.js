@@ -11,10 +11,10 @@ const Child = ({ community, removeByName }) => {
       try {
         const studentEmail = email;
   
-        await axios.post(`http://localhost:8000/rejectJoinRequest/${name}`, { student_email: studentEmail });
+        await axios.post(`https://online-community-system.onrender.com/rejectJoinRequest/${name}`, { student_email: studentEmail });
   
         const CommunityIdToRemove = community.community_name;
-        await axios.patch(`http://localhost:8000/cancelRequest/${studentEmail}`, { communityIdToRemove : CommunityIdToRemove });
+        await axios.patch(`https://online-community-system.onrender.com/cancelRequest/${studentEmail}`, { communityIdToRemove : CommunityIdToRemove });
   
         removeByName(CommunityIdToRemove);
       } catch (error) {

@@ -17,7 +17,7 @@ const studentId = localStorage.getItem("student");
 
 const getStudentDetails = async () => {
   try {
-    const requestsDetails = await axios.get(`http://localhost:8000/getStudentInfo/${localStorage.getItem("student")}`);
+    const requestsDetails = await axios.get(`https://online-community-system.onrender.com/getStudentInfo/${localStorage.getItem("student")}`);
     console.log(requestsDetails.data);
     setStudent(requestsDetails.data);
     setEmail(requestsDetails.data.email);

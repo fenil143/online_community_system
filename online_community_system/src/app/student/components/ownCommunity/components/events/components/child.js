@@ -18,7 +18,7 @@ const EventListComponent = ({ event }) => {
     }
   };
   const getDetails = async ()=>{
-    axios.post("http://localhost:8000/getdetails", {
+    axios.post("https://online-community-system.onrender.com/getdetails", {
       email: localStorage.getItem("student"),
       event:event.event_id
   }).then((response) => {

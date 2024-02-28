@@ -4,9 +4,9 @@
 // const Child = ({ data, removeCommunityByName }) => {
 //   const handleAccept = async () => {
 //     try {
-//       await axios.patch(`http://localhost:8000/activateCommunity/${data.community_name}`, { status: true });
+//       await axios.patch(`https://online-community-system.onrender.com/activateCommunity/${data.community_name}`, { status: true });
 
-//       await axios.patch(`http://localhost:8000/addCommunity/${data.owner_email}`,{ newCommunityId : data.community_name})
+//       await axios.patch(`https://online-community-system.onrender.com/addCommunity/${data.owner_email}`,{ newCommunityId : data.community_name})
 //       removeCommunityByName(data.community_name);
 //     } catch (error) {
 //       console.error('Error accepting community:', error);
@@ -15,7 +15,7 @@
 
 //   const handleReject = async () => {
 //     try {
-//       await axios.delete(`http://localhost:8000/deleteCommunity/${data.community_name}`);
+//       await axios.delete(`https://online-community-system.onrender.com/deleteCommunity/${data.community_name}`);
 //       removeCommunityByName(data.community_name);
 //     } catch (error) {
 //       console.error('Error rejecting community:', error);
@@ -72,9 +72,9 @@ import axios from "axios";
 const Child = ({ data, removeCommunityByName }) => {
   const handleAccept = async () => {
     try {
-      await axios.patch(`http://localhost:8000/activateCommunity/${data.community_name}`, { status: true ,email:data.owner_email});
+      await axios.patch(`https://online-community-system.onrender.com/activateCommunity/${data.community_name}`, { status: true ,email:data.owner_email});
 
-      await axios.patch(`http://localhost:8000/addCommunity/${data.owner_email}`,{ newCommunityId : data.community_name,description:data.description})
+      await axios.patch(`https://online-community-system.onrender.com/addCommunity/${data.owner_email}`,{ newCommunityId : data.community_name,description:data.description})
       removeCommunityByName(data.community_name);
     } catch (error) {
       console.error('Error accepting community:', error);
@@ -83,7 +83,7 @@ const Child = ({ data, removeCommunityByName }) => {
 
   const handleReject = async () => {
     try {
-      await axios.delete(`http://localhost:8000/deleteCommunity/${data.community_name}`,{email:data.owner_email});
+      await axios.delete(`https://online-community-system.onrender.com/deleteCommunity/${data.community_name}`,{email:data.owner_email});
       removeCommunityByName(data.community_name);
     } catch (error) {
       console.error('Error rejecting community:', error);

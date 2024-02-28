@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getCommunitiesPosts = async (communityName) => {
   try {
-    const communityResponse = await axios.get(`http://localhost:8000/getCommunityByName/${communityName}`);
+    const communityResponse = await axios.get(`https://online-community-system.onrender.com/getCommunityByName/${communityName}`);
     if (!communityResponse.data._id) {
       throw new Error("Community not found");
     }
@@ -10,7 +10,7 @@ const getCommunitiesPosts = async (communityName) => {
     console.log(posts);
     const postsDetails = await Promise.all(
       posts.map(async (post) => {
-        const postResponse = await axios.get(`http://localhost:8000/getPostById/${post}`);
+        const postResponse = await axios.get(`https://online-community-system.onrender.com/getPostById/${post}`);
         return postResponse.data;
       })
     );

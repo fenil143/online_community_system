@@ -2,7 +2,7 @@ import axios from 'axios';
 
 async function getAllCommunities() {
     try {
-      const response = await axios.get('http://localhost:8000/allCommunities');
+      const response = await axios.get('https://online-community-system.onrender.com/allCommunities');
   
       const allCommunities = response.data;
   

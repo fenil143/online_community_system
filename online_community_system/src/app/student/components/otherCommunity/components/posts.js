@@ -65,11 +65,11 @@ const Posts = () => {
         console.log(newPost);
 
         axios
-          .post("http://localhost:8000/addPost", newPost)
+          .post("https://online-community-system.onrender.com/addPost", newPost)
           .then((response) => {
             const post_id = response.data.post_id;
             const url =
-              "http://localhost:8000/addCommunityPost/" +
+              "https://online-community-system.onrender.com/addCommunityPost/" +
               response.data.community_id;
 
             axios.post(url, { post_id: post_id }).then((response) => {
