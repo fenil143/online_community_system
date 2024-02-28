@@ -34,22 +34,24 @@ const News = () => {
       <Loading/>// Show a loading indicator or message
     ) : (
     data.map((article, index) => (
-      <div key={index} className='bg-white shadow-lg mt-5 rounded-xl'>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-  <img src={article.urlToImage} alt="Article" style={{ maxWidth: '100%', height: 'auto' }} />
-</div>     <h2 className='font-bold ml-3 mt-3 mb-3'>{article.title}</h2>
+      <div key={index} className='bg-white shadow-lg mt-5 rounded-xl w-2/3 mx-auto'>
+      <div className='m-5' style={{ display: 'flex', justifyContent: 'center' }}>
+        <img src={article.urlToImage} alt="Article" className='object-contain rounded-lg m-5 ' style={{ width: '100%' }} />
+      </div>
+      <h2 className='font-bold ml-3 mt-3 mb-3'>{article.title}</h2>
       <p className='font-poppins ml-3'><i class="fa fa-file-text mr-4" aria-hidden="true"></i>{article.description}</p>
       <p className='font-poppins ml-3'> <i class="fa fa-calendar mr-4" aria-hidden="true"></i>Published on: {article.publishedAt}</p>
       {/* <p>Source: {article.source}</p> */}
       <a
-  href={article.url}
-  className='font-semibold text-cyan-500 underline ml-5 mb-5' // Add the 'underline' class here
-  target="_blank"
-  rel="noopener noreferrer"
->
-  Read More
-</a>
-</div>
+        href={article.url}
+        className='font-semibold text-cyan-500 underline ml-5 m-10'
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Read More
+      </a>
+    </div>
+    
     )))}
   </>);
 }
