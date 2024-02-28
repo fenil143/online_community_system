@@ -34,7 +34,7 @@ const News = () => {
       <Loading/>// Show a loading indicator or message
     ) : (
     data.map((article, index) => (
-      <div key={index} className='bg-white shadow-lg mt-5 h-auto rounded-xl w-2/3 mx-auto'>
+      <div key={index} className='bg-white hover:scale-105 transition-transform duration-500 shadow-lg mt-5 h-auto rounded-xl w-2/3 mx-auto'>
       <div className='m-5' style={{ display: 'flex', justifyContent: 'center' }}>
         <img src={article.urlToImage} alt="Article" className='object-contain rounded-lg m-5 ' style={{ width: '100%' }} />
       </div>
