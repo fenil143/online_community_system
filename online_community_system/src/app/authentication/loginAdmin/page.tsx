@@ -22,7 +22,7 @@ function login() {
                 if (response.data.correct) {
                     alert("Welcome, sir");
                     localStorage.setItem('admin','yes');
-                    Router.push("/admin/unverifiedStudents");
+                    Router.push("/admin");
                 } else {
                     alert("Email or password incorrect");
                 }
