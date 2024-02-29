@@ -17,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
        <head>
+
        <script
         src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
         type="module"
