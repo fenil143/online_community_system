@@ -1,6 +1,6 @@
 import React from "react";
 import "./landing.css";
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import Banner from "./components/Banner";
 function App(){
     return(
