@@ -2,8 +2,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import "../../verifiedCommunities/components/style.css";
+import { Modal } from '../../verifiedCommunities/components/child';
 
 export default function Product(props) {
+    const [isOpen, setIsOpen] = useState(false)
+  const showModal = () => setIsOpen(true)
   let dummy = props.data;
   const handleAccept = async () => {
     try {
@@ -117,10 +121,19 @@ export default function Product(props) {
     //     </div>
     //   </div>
     // </div>
+    <>
+       {isOpen && (
+        <Modal
+          src={dummy.image}
+          alt="snow"
+          caption={dummy.name}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
     <div class="font-poppins ml-5 mr-10 mx-auto hover:scale-105 transition-transform duration-500 bg-white rounded-xl shadow-md overflow-hidden mt-4">
     <div class="md:flex">
         <div class="md:shrink-0 flex flex-col items-center md:items-start justify-center">
-            <img class="h-48 w-full object-cover md:h-auto md:w-48 ml-2 mr-2 rounded" src={dummy.image} alt="User Image" />
+            <img onClick={showModal} class="h-48 w-full object-cover md:h-auto md:w-48 ml-2 mr-2 rounded" src={dummy.image} alt="User Image" />
             <div class="flex justify-center mt-2 md:mt-0">
                 <Link href={dummy.linkedin_link || ""} target="_blank" rel="noopener noreferrer" class="flex p-px pl-2 pb-3 items-center hover:scale-125 transition-transform mr-2 ml-1">
                     <i class="bi bi-linkedin text-xl text-blue-500"></i>
@@ -192,7 +205,7 @@ export default function Product(props) {
         </div>
     </div>
 </div>
-
+</>
 
 
   );

@@ -67,9 +67,12 @@
 // export default Child;
 import React from "react";
 import axios from "axios";
-
-
+import { useState } from "react";
+import { Modal } from "../../verifiedCommunities/components/child";
+import "../../verifiedCommunities/components/style.css";
 const Child = ({ data, removeCommunityByName }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const showModal = () => setIsOpen(true)
   const handleAccept = async () => {
     try {
       await axios.patch(`http://localhost:8000/activateCommunity/${data.community_name}`, { status: true ,email:data.owner_email});
@@ -92,10 +95,18 @@ const Child = ({ data, removeCommunityByName }) => {
 
   return (
     <>
+      {isOpen && (
+        <Modal
+          src={data.image}
+          alt="snow"
+          caption={data.community_name}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
     <div class="w-full font-poppins max-w-md mx-auto hover:scale-105 transition-transform duration-500 shadow-md bg-white rounded-xl  overflow-hidden md:max-w-3xl lg:max-w-4xl mt-4">
  <div class="md:flex">
     <div class="md:w-1/3 w-auto flex items-center justify-center">
-  <img class="w-full h-full object-contain ml-4 mr-4" src={data.image} alt="Modern building architecture"/>
+  <img onClick={showModal} class="w-full h-full object-contain ml-4 mr-4" src={data.image} alt="Modern building architecture"/>
 </div>
       <div class="p-8 md:w-2/3">
         <div class="uppercase tracking-wide  text-indigo-500 font-bold text-2xl">{data.community_name}</div>
