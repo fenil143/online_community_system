@@ -33,11 +33,11 @@ export default function About_us() {
           <div className='shadow-lg m-5'>
             <img className="h-auto max-w-xs m-5" src="http://res.cloudinary.com/da3airmpg/image/upload/v1708540761/wvalcrysiyuf1lc5sta6.jpg" alt="image description" />
             <div class="flex justify-center mt-2 md:mt-0">
-              <a href="https://www.linkedin.com/in/bhavik-patel-3243b2241/" target="_blank" rel="noopener noreferrer" class="flex p-px pl-2 pb-3 items-center hover:scale-125 transition-transform mr-2 ml-1">
+              <a href="https://www.linkedin.com/in/fenil-modi-65598b242/" target="_blank" rel="noopener noreferrer" class="flex p-px pl-2 pb-3 items-center hover:scale-125 transition-transform mr-2 ml-1">
                 <i class="fa fa-linkedin text-xl shadow-lg text-blue-500"></i>
                 <span class="hidden md:inline-block ml-1">LinkedIn</span>
               </a>
-              <a href="https://github.com/Bhavik5025" target="_blank" rel="noopener noreferrer" class="flex items-center pl-2 pb-3 hover:scale-125 transition-transform mr-1">
+              <a href="https://github.com/fenil143" target="_blank" rel="noopener noreferrer" class="flex items-center pl-2 pb-3 hover:scale-125 transition-transform mr-1">
                 <i class="fa fa-github text-xl text-black-500"></i>
                 <span class="hidden md:inline-block ml-1">GitHub</span>
               </a>
