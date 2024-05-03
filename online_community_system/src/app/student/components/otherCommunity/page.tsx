@@ -4,11 +4,12 @@ import Link from "next/link"
 import { useState } from "react";
 import Events from "./components/events";
 import Posts from "./components/posts";
-
+import MyPosts from "./components/MyPosts";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout() {
     const communityName = localStorage.getItem("otherCommunity");
+    
     const [navbar, setNavbar] = useState("posts");
     const renderComponent = () => {
         switch (navbar) {
@@ -16,6 +17,8 @@ export default function RootLayout() {
                 return <Events />;
             case "posts":
                 return <Posts />;
+            case "MyPosts":
+                return <MyPosts/>
             default:
                 return null;
         }
@@ -31,6 +34,9 @@ export default function RootLayout() {
                     <h1 className="text-2xl font-bold text-white">{communityName}</h1>
                 </div>
                 <div className="flex items-center">
+                <Link href="" className={`text-gray-300 ${navbar === "MyPosts" ? "text-white font-bold" : "hover:text-white"} transition duration-300 transform hover:scale-110 mr-8`} onClick={() => setNavbar("MyPosts")}>
+                        My Activity
+                    </Link>
                     <Link href="" className={`text-gray-300 ${navbar === "events" ? "text-white font-bold" : "hover:text-white"} transition duration-300 transform hover:scale-110 mr-8`} onClick={() => setNavbar("events")}>
                         Events
                     </Link>

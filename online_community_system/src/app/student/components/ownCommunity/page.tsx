@@ -7,6 +7,7 @@ import Events from "./components/events/page1";
 import Posts from "./components/posts/page1";
 import Requests from "./components/requests/page1";
 import Students from "./components/students/page1";
+import MyPosts from "./components/myposts/page1";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,6 +24,8 @@ export default function RootLayout() {
                 return <Requests />;
             case "students":
                 return <Students />;
+                case "My Posts":
+                    return <MyPosts/>;
             default:
                 return null;
         }
@@ -38,6 +41,9 @@ export default function RootLayout() {
                     <h1 className="text-2xl font-bold text-white">{communityName}</h1>
                 </div>
                 <div className="flex space-x-6 ">
+                <Link href="" className={`text-gray-300 ${navbar == "My Posts" ? "text-white" : ""} hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("My Posts")} >
+                        My Posts
+                    </Link>
                     <Link href="" className={`text-gray-300 ${navbar == "events" ? "text-white" : ""} hover:text-white transition duration-300 transform hover:scale-110`} onClick = {()=>setNavbar("events")} >
                         Events
                     </Link>

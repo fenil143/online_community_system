@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require("../../models/posts");
+const Community=require("../../models/community");
 const { v4: uuidv4 } = require('uuid');
 
 router.post("/addPost", async (req, res) => {
@@ -47,23 +48,51 @@ router.get("/getPostById/:post_id", async (req, res) => {
   }
 });
 
-router.delete("/deletePost/:post_id", async (req, res) => {
-    try {
-      const { post_id } = req.params;
+// router.delete("/deletePost/:post_id", async (req, res) => {
+//     try {
+//       const { post_id } = req.params;
   
-      const deletedPost = await Post.findOneAndDelete({ post_id : post_id });
+//       const deletedPost = await Post.findOneAndDelete({ post_id : post_id });
   
-      if (!deletedPost) {
-        return res.status(404).json({ error: 'Post not found' });
-      }
+//       if (!deletedPost) {
+//         return res.status(404).json({ error: 'Post not found' });
+//       }
   
-      res.status(200).json(deletedPost);
-    } catch (error) {
-      console.error(error);
-      res.status(400).json({ error: 'Internal Server Error' });
-    }
-  });
+//       res.status(200).json(deletedPost);
+//     } catch (error) {
+//       console.error(error);
+//       res.status(400).json({ error: 'Internal Server Error' });
+//     }
+//   });
 
+router.delete("/deletePost/:post_id", async (req, res) => {
+  try {
+    const { post_id } = req.params;
+
+    // Delete the post
+    const deletedPost = await Post.findOneAndDelete({ post_id: post_id });
+
+    if (!deletedPost) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    // Update the community document to remove the post ID from the community_posts array
+    const updatedCommunity = await Community.findOneAndUpdate(
+      {},
+      { $pull: { community_posts: post_id } },
+      { new: true }
+    );
+
+    if (!updatedCommunity) {
+      return res.status(404).json({ error: 'Community not found' });
+    }
+
+    res.status(200).json(deletedPost);
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
   router.patch("/addCommentToPost/:post_id", async (req, res) => {
     try {
       const { post_id } = req.params;
