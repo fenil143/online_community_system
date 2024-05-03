@@ -5,10 +5,11 @@ import { useState } from "react";
 import Events from "./components/events";
 import Posts from "./components/posts";
 import MyPosts from "./components/MyPosts";
+import Cookies from 'js-cookie';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout() {
-    const communityName = localStorage.getItem("otherCommunity");
+    const communityName = Cookies.get('otherCommunity');
     
     const [navbar, setNavbar] = useState("posts");
     const renderComponent = () => {

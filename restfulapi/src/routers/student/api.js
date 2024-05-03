@@ -68,9 +68,7 @@ router.post("/storeStudent", async (req, res) => {
 
     const savedStudentInfo = await newStudentInfo.save();
 
-    res
-      .status(201)
-      .json({ message: "Student and StudentInfo saved successfully" });
+    res.status(201).json({ message: "Student and StudentInfo saved successfully" });
   } catch (error) {
     console.error(error);
     res.status(200).json({ error: "Internal Server Error" });

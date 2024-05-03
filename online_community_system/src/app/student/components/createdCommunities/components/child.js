@@ -1,8 +1,12 @@
 'use client';
 import React from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import "../../../../admin/components/verifiedCommunities/components/style.css";
+import { Modal } from '../../../../admin/components/verifiedCommunities/components/child';
 const Child = ({ community, changeNavbar }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const showModal = () => setIsOpen(true)
   const { community_name, owner_email, image } = community;
   const owner = owner_email ;
   const name = community_name;
@@ -14,13 +18,21 @@ const Child = ({ community, changeNavbar }) => {
   }
 
   return (
+    <>
+     {isOpen && (
+        <Modal
+          src={image}
+          alt="not found"
+          caption={community_name}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
     <div className="relative group overflow-hidden bg-gradient-to-br bg-purple-950 p-4 mb-4 rounded-md shadow-md hover:shadow-lg transform hover:scale-105 transition-transform duration-300 w-4/5 mx-auto">
      <div className="flex items-center space-x-4">
         <div className="overflow-hidden rounded-full w-16 h-16 group-hover:rotate-6">
           <img
-            src={
-              "https://media.istockphoto.com/id/1339268212/vector/togetherness-diversity-symbol.jpg?s=612x612&w=0&k=20&c=cO4gaFriYBzD3KAWlaTWhGE5jDMD-G2ap-2vg71URqw="
-            }
+            src={image}
+            onClick={showModal}
             alt={name}
             className="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-300 rounded-full border-4 border-white"
           />
@@ -39,6 +51,7 @@ const Child = ({ community, changeNavbar }) => {
           </button>
           </div>
     </div>
+    </>
   );
 };
 

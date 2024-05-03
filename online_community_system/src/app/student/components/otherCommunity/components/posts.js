@@ -4,7 +4,7 @@ import Data from "./component2/data";
 import Child from "./component2/child";
 import axios from "axios";
 import Image from "next/image";
-
+import Cookies from "js-cookie";
 const Posts = () => {
   const [showModal, setShowModal] = useState(false);
   const [temp, setImg] = useState(undefined);
@@ -18,7 +18,7 @@ const Posts = () => {
     }
     const fetchData = async () => {
       try {
-        let data = await Data(localStorage.getItem("otherCommunity"));
+        let data = await Data(Cookies.get('otherCommunity'));
         setPosts(data);
         setIsLoading(false);
       } catch (error) {
@@ -61,7 +61,7 @@ const Posts = () => {
         console.log(data);
         newPost.post_image = data.url;
         newPost.user_email = localStorage.getItem("student");
-        newPost.community_id = localStorage.getItem("ownCommunity");
+        newPost.community_id = Cookies.get('otherCommunity');
         console.log(newPost);
 
         axios

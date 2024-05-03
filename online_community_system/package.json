@@ -12,6 +12,7 @@
     "@dotlottie/player-component": "^2.7.6",
     "@react-hook/media-query": "^1.1.1",
     "axios": "^1.6.5",
+    "js-cookie": "^3.0.5",
     "next": "^14.1.0",
     "react": "^18",
     "react-dom": "^18",
@@ -21,6 +22,7 @@
     "tw-elements": "^1.1.0"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
