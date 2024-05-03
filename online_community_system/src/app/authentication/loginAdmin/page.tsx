@@ -3,10 +3,12 @@ import axios from "axios";
 import Link from "next/link";
 import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
-
+import { useState } from "react";
 function login() {
     const Router = useRouter();
+    const [loading,setLoading]=useState(false);
     function handleFormSubmit(event: FormEvent<HTMLFormElement>): void {
+        setLoading(true);
         event.preventDefault();
         const formData: { [key: string]: any } = {};
         const formElements = event.currentTarget.elements as HTMLFormControlsCollection;
@@ -29,6 +31,8 @@ function login() {
             })
             .catch(error => {
                 console.log(error);
+            }) .finally(() => {
+                setLoading(false);
             });
         console.log('User Data:', formData);
 
@@ -66,7 +70,7 @@ function login() {
                         className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-900 focus:outline-none focus:shadow-outline"
                         type="submit"
                     >
-                        Login
+                      {loading ? 'Please Wait..' : 'Login'}
                     </button>
                 </div>
                 <hr className="mb-6 border-t" />
