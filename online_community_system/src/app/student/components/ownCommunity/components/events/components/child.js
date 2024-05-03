@@ -1,10 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import "../../../../../../admin/components/verifiedCommunities/components/style.css";
+import { Modal } from '../../../../../../admin/components/verifiedCommunities/components/child';
+
 const EventListComponent = ({ event }) => {
   const [readMore, setReadMore] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  const [isOpen, setIsOpen] = useState(false)
+  const showModal = () => setIsOpen(true)
   const toggleReadMore = () => {
     setReadMore(!readMore);
   };
@@ -30,6 +34,15 @@ const EventListComponent = ({ event }) => {
 })
   }
   return (
+    <>
+    {isOpen && (
+       <Modal
+         src={event.event_image[currentImageIndex]}
+         alt="snow"
+         caption={event.name}
+         onClose={() => setIsOpen(false)}
+       />
+     )}
     <div
       key={event.event_id}
       className="event-card bg-white p-4 rounded-md shadow-md w-3/3"
@@ -38,6 +51,7 @@ const EventListComponent = ({ event }) => {
         <div className="w-full h-48 flex items-center justify-center relative">
           <img
             src={event.event_image[currentImageIndex]}
+            onClick={showModal}
             alt={`Event ${event.event_id} Image`}
             className="w-full h-full object-cover rounded-md transition-transform duration-300 transform hover:scale-105"
           />
@@ -117,6 +131,7 @@ const EventListComponent = ({ event }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

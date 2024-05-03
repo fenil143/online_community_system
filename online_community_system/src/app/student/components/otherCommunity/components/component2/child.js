@@ -4,12 +4,15 @@ import React, { useState, useEffect } from "react";
 import Data from "./data1";
 import axios from "axios";
 
+import "../../../../../admin/components/verifiedCommunities/components/style.css";
+import { Modal } from '../../../../../admin/components/verifiedCommunities/components/child';
 const Child = ({ post, index }) => {
   const [expandedPost, setExpandedPost] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments,setComments] = useState([]);
   const [newComment,setNewComment] = useState("");
-
+  const [isOpen, setIsOpen] = useState(false)
+  const showModal = () => setIsOpen(true)
 
   useEffect(() => {
     console.log("New comment:", newComment);
@@ -68,13 +71,23 @@ const Child = ({ post, index }) => {
   }
 
   return (
+    <>
+    {isOpen && (
+       <Modal
+         src={post.post_image}
+         alt="snow"
+         caption={post.name}
+         onClose={() => setIsOpen(false)}
+       />
+     )}
     <div
       key={index}
       className="bg-white p-6 rounded-md shadow-md transition-transform transform hover:scale-105 h-fit duration-300"
     >
       <img
-        src={post.post_image}
-        alt={post.name}
+       src={post.post_image}
+       alt={post.name}
+       onClick={showModal}
         className="w-full h-48 object-cover mb-4 rounded-md"
       />
 
@@ -166,7 +179,7 @@ const Child = ({ post, index }) => {
                 placeholder="Add a comment..."
                 onChange={handleClick} value={newComment}
               ></textarea>
-              <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 transition" onClick={handleAddEvent}>
+              <button className="mt-2 w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 transition" onClick={handleAddEvent}>
                 Add Comment
               </button>
             </div>
@@ -174,6 +187,7 @@ const Child = ({ post, index }) => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

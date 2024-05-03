@@ -5,8 +5,8 @@ import Child from "./component3/child";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Image from "next/image";
-
 const MyPosts = () => {
+
   const [showModal, setShowModal] = useState(false);
   const [temp, setImg] = useState(undefined);
   const [newPost, setNewPost] = useState({});
@@ -91,6 +91,7 @@ const MyPosts = () => {
   };
 
   return (
+   
     <div className="container mx-auto mt-8">
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
@@ -100,6 +101,7 @@ const MyPosts = () => {
         <div className="text-center ml-96">
           <Image
             src="/assets/noData.png"
+          
             width={500}
             height={500}
             alt="Picture of the author"
@@ -235,6 +237,7 @@ const MyPosts = () => {
         </div>
       )}
     </div>
+
   );
 };
 

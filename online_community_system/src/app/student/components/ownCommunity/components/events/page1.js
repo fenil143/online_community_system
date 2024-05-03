@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Data from "./components/data";
 import Child from "./components/child";
 import "./event.css";
+import Event from "./Event";
 import axios from "axios";
 
 const EventListComponent = () => {
@@ -163,17 +164,21 @@ const EventListComponent = () => {
 
   return (
     <div className="event-list flex flex-col items-end gap-4 p-4">
-     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-         {eventsData.map((event, index) => (
-          <div
-            key={event.event_id}
-           
-          >
-            <Child event={event} />
-          </div>
-        ))}
-        <div ref={eventsEndRef} />
-      </div>
+         {eventsData.length === 0 ? (
+        <div className="flex items-center justify-center h-full">
+          <Event/>
+         
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {eventsData.map((event, index) => (
+            <div key={event.event_id}>
+              <Child event={event} />
+            </div>
+          ))}
+          <div ref={eventsEndRef} />
+        </div>
+      )}
 
       <div
         className="add-event-button fixed bottom-4 right-4 bg-blue-500 text-white p-4 w-12 h-12 rounded-full cursor-pointer flex items-center justify-center hover:bg-blue-600 transition duration-300 transform hover:scale-105 shadow-md"

@@ -4,12 +4,15 @@ import React, { useState, useEffect } from "react";
 import Data from "./data1";
 import axios from "axios";
 
+import "../../../../../admin/components/verifiedCommunities/components/style.css";
+import { Modal } from '../../../../../admin/components/verifiedCommunities/components/child';
 const Child = ({ post, index,onDelete }) => {
   const [expandedPost, setExpandedPost] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments,setComments] = useState([]);
   const [newComment,setNewComment] = useState("");
-
+  const [isOpen, setIsOpen] = useState(false)
+  const showModal = () => setIsOpen(true)
 
   useEffect(() => {
     console.log("New comment:", newComment);
@@ -78,6 +81,15 @@ const Child = ({ post, index,onDelete }) => {
   }
 
   return (
+    <>
+    {isOpen && (
+       <Modal
+         src={post.post_image}
+         alt="snow"
+         caption={post.name}
+         onClose={() => setIsOpen(false)}
+       />
+     )}
     <div
       key={index}
       className="bg-white p-6 rounded-md shadow-md transition-transform transform hover:scale-105 h-fit duration-300"
@@ -85,6 +97,7 @@ const Child = ({ post, index,onDelete }) => {
       <img
         src={post.post_image}
         alt={post.name}
+        onClick={showModal}
         className="w-full h-48 object-cover mb-4 rounded-md"
       />
 
@@ -188,6 +201,7 @@ const Child = ({ post, index,onDelete }) => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
