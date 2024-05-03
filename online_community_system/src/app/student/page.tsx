@@ -166,15 +166,21 @@ export default function RootLayout() {
   };
 
     const router = useRouter();
+    const [communityCreated, setCommunityCreated] = useState(false);
     const changeNavbar = (str : string) => {
         setNavbar(str);
     }
+    const handleCommunityCreation = () => {
+        // Update navbar and set communityCreated to true
+        setNavbar("cdCommunity");
+        setCommunityCreated(true);
+    };
     const renderComponent = () => {
         switch (navbar) {
             case "jCommunity":
                 return <JoinCommunity />;
             case "cCommunity":
-                return <CreateCommunity />;
+                return <CreateCommunity handleCommunityCreation={handleCommunityCreation}/>;
             case "jdCommunity":
                 return <JoinedCommunities changeNavbar = {changeNavbar} />;
             case "cdCommunity":
