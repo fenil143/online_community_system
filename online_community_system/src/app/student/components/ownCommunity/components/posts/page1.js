@@ -27,6 +27,10 @@ const Posts = () => {
     fetchData();
   }, []);
 
+  const handlePostDelete = (postId) => {
+    // Filter out the deleted post from the posts array
+    setPosts(posts.filter((post) => post.post_id !== postId));
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewPost((prevPost) => ({ ...prevPost, [name]: value }));
@@ -100,7 +104,7 @@ const Posts = () => {
           <h1 className="text-2xl font-bold mb-4">Community Posts</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => (
-            <Child post={post} key={index} index={index} />
+            <Child post={post} key={index} index={index} onDelete={handlePostDelete} />
           ))}
           </div>
           </>

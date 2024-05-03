@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Data from "./data1";
 import axios from "axios";
 
-const Child = ({ post, index }) => {
+const Child = ({ post, index ,onDelete={handlePostDelete} }) => {
   const [expandedPost, setExpandedPost] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments,setComments] = useState([]);
@@ -66,7 +66,17 @@ const Child = ({ post, index }) => {
       })
     })
   }
-
+  const deletePost = (postId) => {
+    axios.delete(`http://localhost:8000/deletePost/${postId}`)
+      .then((response) => {
+        
+        alert("Post Deleted Successfully");
+        onDelete(postId);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
   return (
     <div
       key={index}
@@ -117,7 +127,10 @@ const Child = ({ post, index }) => {
           View Comments
         </button>
       </div>
-
+      <button
+  className="text-white w-full bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-10 py-3 text-center mb-2 mt-4 mr-0"
+  onClick={() => deletePost(post.post_id)}>Delete
+</button>
       {showComments && (
         <div className="fixed inset-0 flex items-center justify-center overflow-auto bg-gray-800 bg-opacity-50">
           <div className="bg-white p-8 rounded-md max-w-md min-h-[300px] relative">
