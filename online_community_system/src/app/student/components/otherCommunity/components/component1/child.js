@@ -11,7 +11,12 @@ const EventListComponent = ({ event }) => {
   const toggleReadMore = () => {
     setReadMore(!readMore);
   };
-
+  function formatEventTime(eventTime) {
+    const date = new Date(eventTime);
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
+    return date.toLocaleDateString(undefined, options);
+  }
+  
   useEffect(() => {
     setCurrentAttendees(event.current_attendees);
     const email = localStorage.getItem("student");
@@ -106,7 +111,11 @@ const EventListComponent = ({ event }) => {
         </button>
       </div>
       <div className="event-location mb-2">
-        <p className="text-gray-600">{event.location}</p>
+        <p className="text-gray-600"><b>Location :-</b> {event.location}</p>
+        
+        <p className="text-gray-600"><b>Time :-</b> {formatEventTime(event.event_time)}</p>
+        <p className="text-gray-600"><b>Organizer :-</b> {event.organizer}</p>
+
       </div>
       <div className="event-attendees mb-4 flex items-center">
         <div className="flex-grow">
