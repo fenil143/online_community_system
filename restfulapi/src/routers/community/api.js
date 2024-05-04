@@ -122,63 +122,120 @@ router.patch("/activateCommunity/:community_name", async (req, res) => {
     res.status(200).json({ error: "Internal Server Error" });
   }
 });
+// router.delete('/deleteCommunity/:communityName', async (req, res) => {
+//   const { email } = req.body;
+//   const communityName = req.params.communityName;
+//   var transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: 'bhavik5033@gmail.com',
+//       pass: 'phblgjyjsosztbhn'
+//     }
+//   });
+//   const mailOptions = {
+//     from: 'bhavik5033@gmail.com',
+//     to: email,
+//     subject: 'Online Community Management System - Verification Status',
+//     html: `
+//       <div style="font-family: Arial, sans-serif; color: #333;">
+//         <h1 style="font-size: 24px;">Verification Status</h1>
+//         <p style="font-size: 16px;">
+//           Sorry! Your Community <strong>${communityName}</strong> has not been approved by the admin. Please enter valid information.
+//         </p>
+//         <p style="font-size: 16px;">
+//           Thank you.
+//         </p>
+//       </div>
+//     `,
+//   };
+
+
+
+//   try {
+//     const community = await Community.findOneAndDelete({ community_name: communityName });
+
+//     if (!community) {
+//       return res.status(404).json({ error: 'Community not found' });
+//     }
+//     if (community) {
+//       transporter.sendMail(mailOptions, function (error, info) {
+
+//         if (error) {
+
+//           console.log(error);
+
+//         } else {
+
+//           console.log('Email sent: ' + info.response);
+
+//         }
+
+//       });
+//     }
+
+//     return res.status(200).json({ message: 'Community deleted successfully' });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 router.delete('/deleteCommunity/:communityName', async (req, res) => {
-  const { email } = req.body;
-  const communityName = req.params.communityName;
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'bhavik5033@gmail.com',
-      pass: 'phblgjyjsosztbhn'
-    }
-  });
-  const mailOptions = {
-    from: 'bhavik5033@gmail.com',
-    to: email,
-    subject: 'Online Community Management System - Verification Status',
-    html: `
-      <div style="font-family: Arial, sans-serif; color: #333;">
-        <h1 style="font-size: 24px;">Verification Status</h1>
-        <p style="font-size: 16px;">
-          Sorry! Your Community <strong>${communityName}</strong> has not been approved by the admin. Please enter valid information.
-        </p>
-        <p style="font-size: 16px;">
-          Thank you.
-        </p>
-      </div>
-    `,
-  };
-
-
-
   try {
+    const { email } = req.body; // Retrieve email from request body
+    const communityName = req.params.communityName;
+    console.log(email);
+
+    // Find and delete the community
     const community = await Community.findOneAndDelete({ community_name: communityName });
 
     if (!community) {
       return res.status(404).json({ error: 'Community not found' });
     }
-    if (community) {
-      transporter.sendMail(mailOptions, function (error, info) {
 
-        if (error) {
+    // Set up nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'bhavik5033@gmail.com',
+        pass: 'phblgjyjsosztbhn'
+      }
+    });
 
-          console.log(error);
+    // Prepare email options
+    const mailOptions = {
+      from: 'bhavik5033@gmail.com',
+      to: email,
+      subject: 'Online Community Management System - Verification Status',
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #333;">
+          <h1 style="font-size: 24px;">Verification Status</h1>
+          <p style="font-size: 16px;">
+            Sorry! Your Community <strong>${communityName}</strong> has not been approved by the admin. Please enter valid information.
+          </p>
+          <p style="font-size: 16px;">
+            Thank you.
+          </p>
+        </div>
+      `,
+    };
 
-        } else {
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
 
-          console.log('Email sent: ' + info.response);
-
-        }
-
-      });
-    }
-
+    // Return success message
     return res.status(200).json({ message: 'Community deleted successfully' });
   } catch (error) {
-    console.error(error);
+    console.error('Error deleting community:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 router.get("/unverifiedCommunities", async (req, res) => {
   try {
