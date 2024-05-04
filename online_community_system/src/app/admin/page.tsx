@@ -46,7 +46,7 @@ export default function RootLayout() {
 
         if (submenu && arrow) {
             submenu.classList.toggle("hidden");
-            arrow.classList.toggle("rotate-0");
+            arrow.classList.toggle("rotate-180");
         }
     };
 
@@ -176,7 +176,7 @@ export default function RootLayout() {
                                     <i className="bi bi-chat-left-text-fill"></i>
                                     <div className="flex justify-between w-full items-center">
                                         <span className="text-[15px] ml-4 text-gray-200 font-bold">Members</span>
-                                        <span className="text-sm rotate-180" id="arrow">
+                                        <span className="text-sm rotate-0" id="arrow">
                                             <i className="bi bi-chevron-down"></i>
                                         </span>
                                     </div>
