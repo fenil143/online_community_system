@@ -165,7 +165,7 @@ const EventListComponent = () => {
   return (
     <div className="event-list flex flex-col items-end gap-4 p-4">
          {eventsData.length === 0 ? (
-        <div className="flex items-center justify-center h-full">
+        <div className="flex items-center justify-center ">
           <Event/>
          
         </div>
